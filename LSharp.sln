@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSharp.Tests", "LSharp.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSharp.Web", "LSharp.Web\LSharp.Web.csproj", "{DCAD1830-4FA2-478A-BA00-2ECAF006C77E}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\LSharp.Web.Tests\", "LSharp.Web.Tests", "{4A751B46-A7A5-48C5-AA36-9EA69D6EE9C1}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\LSharp.Web.Tests\", "LSharp.Web.Tests\", "{4A751B46-A7A5-48C5-AA36-9EA69D6EE9C1}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.VirtualPath = "/LSharp.Web.Tests"
 		Debug.AspNetCompiler.PhysicalPath = "LSharp.Web.Tests\"
@@ -31,7 +31,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\LSharp.Web.Tests\", 
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1783"
+		VWDPort = "4889"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject

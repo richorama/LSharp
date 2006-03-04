@@ -7,38 +7,27 @@
         <member name="T:LSharp.EventAdapter">
             <summary>
             An adapter which allows event handlers to be written in L Sharp.
-            Events are handled by System.EventHandler delegate, but then passed 
-            onto an LSharp closure through an instance of this adapter which wraps
-            that closure.
+            Events are handled by System.EventHandler delegate, but are then passed
+            onto a generated class that translates the event args into a Cons that
+            can be consumed by a L Sharp Closure.
             </summary>
-        </member>
-        <member name="M:LSharp.EventAdapter.#ctor(LSharp.Closure)">
-            <summary>
-            Creates a new EventAdapter with the specified closure as the 
-            underlying handler.
-            </summary>
-            <param name="closure"></param>
-        </member>
-        <member name="M:LSharp.EventAdapter.HandleEvent(System.Object,System.EventArgs)">
-            <summary>
-            Handles the event by invoking the closure
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
         </member>
         <member name="M:LSharp.EventAdapter.AddEventHandler(System.Object,System.String,LSharp.Closure)">
             <summary>
-            Adds closure as an event handler for eventName on the target object
+            Adds clsoure as an event handler for eventName on the target object
             </summary>
             <param name="target"></param>
             <param name="eventName"></param>
             <param name="closure"></param>
             <returns></returns>
         </member>
-        <member name="P:LSharp.EventAdapter.Closure">
+        <member name="M:LSharp.EventAdapter.CreateNewBindingClass(System.Reflection.EventInfo)">
             <summary>
-            The underlying closure that gets called to handle the event.
+            Create a new class that can act as a binding between the specified event and a LSharp closure.
             </summary>
+            <param name="typeModule">Build the new class in this module builder.</param>
+            <param name="theEvent">Information about the event to bind to.</param>
+            <returns>The typeinfo for the newly constructed class.</returns>
         </member>
         <member name="T:LSharp.TypeCache">
             <summary>

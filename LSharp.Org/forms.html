@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Windows Forms Development with L Sharp</title><link rel="stylesheet" href="docbook.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.69.1" /><meta name="keywords" content="LSharp, Rob, Blackwell, Rob Blackwell, Active Web Solutions, Lisp, .NET, AWS, Arc" /><link rel="start" href="index.html" title="L Sharp .NET" /><link rel="up" href="index.html" title="L Sharp .NET" /><link rel="prev" href="web.html" title="Web Application Development with L Sharp" /><link rel="next" href="faq.html" title="Frequently Asked Questions" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Windows Forms Development with L Sharp</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="web.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="faq.html">Next</a></td></tr></table><hr /></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="forms"></a>Windows Forms Development with L Sharp</h2></div></div></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721861"></a>Getting Started</h3></div></div></div><p>
+        Here is a sample application which creates a new form and a Click
+        event handler. When you click the form, the coordinate of the click
+        point is printed on the Console. Note the use of spawn to create
+        a new thread to service the user interface.
+
+</p><pre class="programlisting">
+          
+(reference "System.Windows.Forms")
+(using "System.Windows.Forms")
+
+(= f (new Form))
+
+(defevent Click f (sender args) 
+	(writeline console "You clicked x {0} y {1}" (x args) (y args)))
+
+(spawn '(run application f))
+
+        </pre><p>
+      </p><p>
+        One cool thing is the ability to incrementally change your application
+        while its still running. At the toploop, try redefining the event handler
+        using defevent - the application updates immediately - no need to stop
+        recompile and start again!
+      </p><p>
+        Add more documentation here.
+      </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="web.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="faq.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Web Application Development with L Sharp </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Frequently Asked Questions</td></tr></table></div></body></html>

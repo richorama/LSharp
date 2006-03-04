@@ -1,0 +1,72 @@
+; LSharp Syntax
+
+C=1
+
+[Syntax]
+Namespace1 = 6
+IgnoreCase = No
+InitKeyWordChars = A-Za-z*$'
+KeyWordChars = -A-Za-z0-9*:_
+BracketChars = ()
+OperatorChars = 
+PreprocStart =
+SyntaxStart =
+SyntaxEnd =
+CommentStart = ;|
+CommentEnd = |;
+CommentStartAlt =
+CommentEndAlt =
+SingleComment = ;
+SingleCommentCol =
+SingleCommentAlt =
+SingleCommentColAlt =
+StringStart = "
+StringEnd = "
+StringAlt =
+StringEsc = \
+CharStart =
+CharEnd =
+CharEsc = \
+
+; ///////////////////////////
+; LSharp functions and Special Forms
+; ///////////////////////////
+[Keywords 1]
+apply
+assembly
+compile
+do
+each
+eql
+eval
+false
+first
+fn
+for
+if
+inspect
+let
+list
+load
+new
+not
+nth
+null
+pr
+prl
+quote
+rest
+the
+throw
+to
+true
+try
+using
+while
++
+=
+*
+/
+-
+++
+--

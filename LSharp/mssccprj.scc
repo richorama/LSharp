@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[LSharp.csproj]
+SCC_Aux_Path = "\\sun\vss.lsharp"
+SCC_Project_Name = "$/LSharp", BAAAAAAA
+
+[Aws.Intextra3.StarterKit.sln]
+SCC_Aux_Path = "\\sun\vss.cprs\"
+SCC_Project_Name = "$/Aws", BAAAAAAA

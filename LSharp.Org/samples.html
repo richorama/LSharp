@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Samples and Examples</title><link rel="stylesheet" href="docbook.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.69.1" /><meta name="keywords" content="LSharp, Rob, Blackwell, Rob Blackwell, Active Web Solutions, Lisp, .NET, AWS, Arc" /><link rel="start" href="index.html" title="L Sharp .NET" /><link rel="up" href="index.html" title="L Sharp .NET" /><link rel="prev" href="reference.html" title="L Sharp Language Reference" /><link rel="next" href="web.html" title="Web Application Development with L Sharp" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Samples and Examples</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="reference.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="web.html">Next</a></td></tr></table><hr /></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="samples"></a>Samples and Examples</h2></div></div></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721155"></a>Introduction</h3></div></div></div><p>
+        These samples are also available in the L Sharp repository at <a href="http://lsharp.sourceforge.net/download/" target="_top">http://lsharp.sourceforge.net/download/</a>.
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721174"></a>HelloWorld.ls</h3></div></div></div><p>
+        Tradition says that Hello World must be the first sample.
+        </p><pre class="programlisting">
+          ;;; Hello World in L Sharp&#13;
+(WriteLine Console "Hello World")
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721198"></a>Factorial.ls</h3></div></div></div><p>
+        Computes the factorial of a number. Demonstrates recursion.
+        </p><pre class="programlisting">
+          ;;; L Sharp Factorial sample&#13;
+&#13;
+;; Factorial&#13;
+(= factorial (fn (n)&#13;
+		(if (eql n 1) &#13;
+			1&#13;
+			(* n (factorial (- n 1))))))&#13;
+			&#13;
+(prl (factorial 5))
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721222"></a>Fibonacci.ls</h3></div></div></div><p>
+        Computes Fibonacci numbers using tree recursion.
+        </p><pre class="programlisting">
+          ;;; L Sharp Fibonacci sample&#13;
+&#13;
+; Fibonacci, tree recursive style&#13;
+(= fibonacci (fn (n)&#13;
+		(if (eql n 0) 0&#13;
+			(if (eql n 1) 1&#13;
+				(+ (fibonacci (- n 1)) (fibonacci (- n 2)))))))&#13;
+&#13;
+; Print the first 15 Fibonacci numbers&#13;
+(to i 15 &#13;
+	(prl (fibonacci i)))
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721246"></a>Rss.ls</h3></div></div></div><p>
+        Retrieves news headlines from an RSS feed.
+        </p><pre class="programlisting">
+          ;;; Lists all the items from an RSS Feed&#13;
+&#13;
+(reference "System.Xml")&#13;
+&#13;
+(= news (new System.Xml.XmlDocument))&#13;
+(call load news "http://www.theregister.co.uk/headlines.rss")&#13;
+(foreach node (selectnodes news "/rss/channel/item/title") &#13;
+	(prl (innertext node)))&#13;
+
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721270"></a>Greeting.ls</h3></div></div></div><p>
+        Displays a greeting depending on the time of day.
+        </p><pre class="programlisting">
+          ;;; Display a greeting depending on the hour&#13;
+&#13;
+(if (&lt; (Hour (Now DateTime)) 12) &#13;
+	(WriteLine Console "Good Morning") &#13;
+	(WriteLine Console "Good Afternoon") )
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721294"></a>Guid.ls</h3></div></div></div><p>
+        Creates Globally Unique Identifiers.
+        </p><pre class="programlisting">
+          ;;; Generate a GUID&#13;
+(prl (NewGuid System.Guid))
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721318"></a>Hashtable.ls</h3></div></div></div><p>
+        Demonstrates the use of Hashtables.
+        </p><pre class="programlisting">
+          ;;; Hashtable Sample&#13;
+&#13;
+(using "System.Collections")&#13;
+&#13;
+;; Convert a list of lists to a Hashtable&#13;
+(= foo (the Hashtable '(("a" "b") ("c" "d") ("e" "f"))))&#13;
+&#13;
+;; Access an item&#13;
+(Item foo "c")&#13;
+&#13;
+;; Add an item&#13;
+(set_Item foo "y" "z")&#13;
+&#13;
+;; Convert the Hashtable back to a list&#13;
+(prl (the Cons foo))
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721341"></a>Iteration.ls</h3></div></div></div><p>
+        Demonstrates L Sharp's loop and iteration forms.
+        </p><pre class="programlisting">
+          ;;; Demonstrate some L Sharp iteration expressions&#13;
+&#13;
+(for (= i 0) (&lt; i 10) (++ i)&#13;
+	(pr i))&#13;
+	&#13;
+(let i 0&#13;
+	(while (&lt; (++ i) 10) (pr i)))&#13;
+	&#13;
+(to i 10 (pr i))&#13;
+&#13;
+(each x '(a b c) (pr x))
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721365"></a>List.ls</h3></div></div></div><p>
+        Demonstrates the use of L Sharp Lists.
+        </p><pre class="programlisting">
+          ;;; Demonstrate some list manipulation&#13;
+(= mylist '(a b c (d e f)))&#13;
+&#13;
+(prl mylist)&#13;
+&#13;
+(prl (first mylist))&#13;
+&#13;
+(prl (rest mylist))&#13;
+&#13;
+(prl (nth 3 mylist))&#13;
+
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721389"></a>MessageBox.ls</h3></div></div></div><p>
+        Shows how to pop up a Message Box.
+        </p><pre class="programlisting">
+          ;;; Display a Windows Forms MessageBox&#13;
+&#13;
+; Load the System.Windows.Forms assembly&#13;
+(reference "System.Windows.Forms")&#13;
+&#13;
+(using "System.Windows.Forms")&#13;
+		&#13;
+(Show MessageBox  "Dont you agree?" "LSharp is Cool")
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721412"></a>Northwind.ls</h3></div></div></div><p>
+        Demonstrates access to a SQL database (the Microsoft Northwind Traders example).
+        </p><pre class="programlisting">
+          ;;; Northwind Database Example&#13;
+(reference &#13;
+	"System.Data")&#13;
+&#13;
+(using &#13;
+	"System.Data" &#13;
+	"System.Data.SqlClient")&#13;
+&#13;
+;; Given a database connection string and a sql expression,&#13;
+;; runs the SQL and returns a dataset&#13;
+(= get-dataset (fn (connection-string sql)&#13;
+	(do&#13;
+		(Open (= cn (new SqlConnection connection-string)))&#13;
+		(= cmd (new SqlDataAdapter sql cn))&#13;
+		(= ds (new DataSet))&#13;
+		(fill cmd ds)&#13;
+		(dispose cmd)&#13;
+		(dispose cn)&#13;
+		ds)))&#13;
+	&#13;
+&#13;
+&#13;
+;; Of course your SQL Server wont have a blank SA password, so edit this&#13;
+;; connection-string accordingly ..&#13;
+(= connection-string "server=localhost;user ID=sa;password=;database=Northwind")&#13;
+&#13;
+;; Get the list of customers&#13;
+(= my-dataset (get-dataset connection-string "SELECT * FROM Customers"))&#13;
+(= my-table (Item (Tables my-dataset) 0))&#13;
+&#13;
+;; Filter the table further&#13;
+(= filteredTable (Select my-table "CompanyName LIKE 'A%'"))&#13;
+&#13;
+;; Print the rows&#13;
+(each row filteredTable&#13;
+	(prl (the Cons row)))&#13;
+
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721438"></a>Queue.ls</h3></div></div></div><p>
+        Demonstrates how to use a Queue data structure.
+        </p><pre class="programlisting">
+          ;;; Queue Sample&#13;
+&#13;
+(using "System.Collections")&#13;
+&#13;
+(= my-queue (the Queue '(a b c d e f)))&#13;
+&#13;
+(Enqueue my-queue 'g)&#13;
+(Enqueue my-queue 'h)&#13;
+&#13;
+(prl (the cons my-queue))&#13;
+&#13;
+(to i (Count my-queue)&#13;
+	(prl (Dequeue my-queue)))
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721461"></a>Shell.ls</h3></div></div></div><p>
+        Shows how to launch another application such as Calculator or Internet Explorer.
+        </p><pre class="programlisting">
+          ;;; Demonstrates how to shell another process&#13;
+(reference "System")&#13;
+(using "System.Diagnostics")&#13;
+&#13;
+(= shell (fn (app args)&#13;
+	(do&#13;
+		(= process (new Process))&#13;
+		(set_EnableRaisingEvents process false)&#13;
+		(set_FileName (StartInfo process) app)&#13;
+		(set_Arguments (StartInfo process) args)&#13;
+		(Start process))))&#13;
+&#13;
+(shell "calc" "")&#13;
+(shell "iexplore" "http://www.aws.net")&#13;
+(shell "notepad" "c:\\junk.txt")
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721486"></a>Try.ls</h3></div></div></div><p>
+        Exception handling.
+        </p><pre class="programlisting">
+          ;;; Example exception handling&#13;
+&#13;
+; try executes its first form (the body) and if an exception is thrown&#13;
+; executes its second form (the catch) with the variable it bound to&#13;
+; the System.Exception object.&#13;
+(try&#13;
+	(throw (new System.NotImplementedException "foobar"))&#13;
+	(prl (Format System.String "It failed, here's why: {0}" it)))
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721509"></a>Whois.ls</h3></div></div></div><p>
+        A simple WHOIS client.
+        </p><pre class="programlisting">
+          ;;; A simple WHOIS Client&#13;
+;;; Rob Blackwell 2004&#13;
+&#13;
+(reference "System")&#13;
+&#13;
+(using &#13;
+	"System.Net.Sockets"&#13;
+	"System.Text"&#13;
+	"System.Collections"&#13;
+	"System.IO")&#13;
+&#13;
+;; A lookup table of Top Level Domains and their associated WHOIS servers&#13;
+(= whois-servers (the Hashtable &#13;
+	(quote ( &#13;
+		("net" "whois.networksolutions.com")&#13;
+		("coop" "whois.nic.coop")&#13;
+		("uk" "whois.nic.uk")&#13;
+		("com" "whois.verisign-grs.com")&#13;
+		("org" "whois.pir.org")&#13;
+		("info" "whois.afilias.net")))))&#13;
+&#13;
+;; Returns the WHOIS server responsible for a given domain&#13;
+(= find-whois-server (fn (domain)&#13;
+	(do&#13;
+		(= tld (first (last (the Cons (Split domain (ToCharArray "."))))))&#13;
+		(get_Item whois-servers tld))))&#13;
+&#13;
+(= whois (fn (server query)&#13;
+	(do&#13;
+		(= buffer (GetBytes (ASCII Encoding) (Concat String query "\n")))&#13;
+		(= stream (GetStream (new TcpClient server 43)))&#13;
+		(Write stream buffer 0 (GetLength buffer 0))&#13;
+		(= result (ReadToEnd (new StreamReader stream)))&#13;
+		(Close stream)&#13;
+		result)))&#13;
+&#13;
+;; Usage is Lsharp.exe whois.ls domain, so domain is the third command line arg&#13;
+(= domain (caddr (GetCommandLineArgs System.Environment)))&#13;
+&#13;
+;; Find the correct whois server&#13;
+(= nic (find-whois-server domain))&#13;
+&#13;
+;; Print the whois information&#13;
+(prl (whois nic domain))&#13;
+
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721532"></a>String.ls</h3></div></div></div><p>
+        String examples.
+        </p><pre class="programlisting">
+          ;;; Recursively print substrings&#13;
+&#13;
+;; Print succesive cdrs of a string &#13;
+(= funny-print (fn (n)&#13;
+	(when n&#13;
+		(prl (the String n))&#13;
+		(funny-print (rest n)))))&#13;
+						&#13;
+&#13;
+&#13;
+;; Concatenate two strings&#13;
+(= my-string (Concat String "Hello " "there"))&#13;
+&#13;
+(funny-print my-string)
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721555"></a>Stack.ls</h3></div></div></div><p>
+        Stack.
+        </p><pre class="programlisting">
+          ;;; Stack Sample&#13;
+&#13;
+(using "System.Collections")&#13;
+&#13;
+(= my-stack (the Stack '(a b c d e f)))&#13;
+&#13;
+(Push my-stack 'g)&#13;
+(Push my-stack 'h)&#13;
+&#13;
+(prl (the Cons my-stack))&#13;
+&#13;
+(to i (Count my-stack)&#13;
+	(prl (Pop my-stack)))
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721577"></a>Sound.ls</h3></div></div></div><p>
+        The L Sharp Sound Library.
+        </p><pre class="programlisting">
+          ;;; Sound Sample&#13;
+&#13;
+(reference "Lsharp.Libraries")&#13;
+&#13;
+(= play-sound (fn (filename)&#13;
+	(Play LSharp.Libraries.Sound filename)))&#13;
+&#13;
+(play-sound "c:\\windows\\media\\tada.wav")
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721600"></a>SortedList.ls</h3></div></div></div><p>
+        Showss the use of SortedList.
+        </p><pre class="programlisting">
+          ;;; SortedList Sample&#13;
+&#13;
+(using "System.Collections")&#13;
+&#13;
+;; Convert a list of lists to a Hashtable&#13;
+(= foo (the SortedList '(("c" "d") ("e" "f") ("a" "b"))))&#13;
+&#13;
+;; Access an item&#13;
+(Item foo "c")&#13;
+&#13;
+;; Add an item&#13;
+(Add foo "y" "z")&#13;
+&#13;
+;; Convert the Hashtable back to a list&#13;
+(prl (the Cons foo))
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721624"></a>Smtp.ls</h3></div></div></div><p>
+        Shows how to programmatically send an email message.
+        </p><pre class="programlisting">
+          ;;; Sends an SMTP email message&#13;
+&#13;
+(reference "System.Web")&#13;
+&#13;
+(using "System.Web.Mail")&#13;
+&#13;
+; Use this SMTP Mail server&#13;
+(= *mailserver* "localhost")&#13;
+&#13;
+(= send-mail (fn (to-address from-address subject body)&#13;
+	(do	&#13;
+		(set_SmtpServer SmtpMail *mailserver* )&#13;
+&#13;
+		(= mailMessage (new MailMessage))&#13;
+&#13;
+		(set_To mailMessage to-address)&#13;
+		(set_From mailMessage from-address)&#13;
+		(set_Subject mailMessage subject)&#13;
+		(set_Body mailMessage body)&#13;
+&#13;
+		(Send SmtpMail mailMessage))))&#13;
+&#13;
+&#13;
+(send-mail "fred.bloggs@hotmail.com" "rob.blackwell@aws.net" "Test Subject" "Test Body")
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721648"></a>Regex.ls</h3></div></div></div><p>
+        Demonstrates the use of regular expressions
+        </p><pre class="programlisting">
+          ;;; Regular expression example&#13;
+&#13;
+(reference "System")&#13;
+&#13;
+(using "System.Text.RegularExpressions")&#13;
+&#13;
+; Returns true if search appears in buffer&#13;
+(= find (fn (buffer search)&#13;
+		(do &#13;
+			(= regex (new Regex (Concat System.String ".*" search)))&#13;
+			(Success (Match regex buffer)))))&#13;
+&#13;
+; Define a regular expression for matching URLs&#13;
+(= urlExpression (new Regex "^(?&lt;proto&gt;\\w+)://[^/]+?(?&lt;port&gt;:\\d+)?/"))&#13;
+&#13;
+; Does it match ?&#13;
+(prl (Match urlExpression "http://www.aws.net:8080/"))&#13;
+&#13;
+; Pull out the protocol and port&#13;
+(prl (Result (Match urlExpression "http://www.aws.net:8080/") "The protocol is ${proto} and the port is ${port}"))&#13;
+&#13;
+
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721671"></a>Http.ls</h3></div></div></div><p>
+        Demonstrates how to use HTTP GET and POST to access resources on the Web.
+        </p><pre class="programlisting">
+          ;;; HTTP GET and POST&#13;
+&#13;
+(reference "System" "System.Web")&#13;
+&#13;
+(using "System.IO" "System.Net" "System.Web" "System.Text")&#13;
+&#13;
+;; ASCII encodes a Byte Array&#13;
+(= ascii-encode (fn (byteArray)&#13;
+	(do&#13;
+		(GetString (ASCII Encoding) byteArray))))&#13;
+&#13;
+&#13;
+;; HTTP POST to a url&#13;
+(= http-post&#13;
+	(fn (url postdata)&#13;
+		(do&#13;
+			(= uri (new Uri url))&#13;
+			(= request (Create WebRequest uri))&#13;
+			(set_Method request "POST")&#13;
+			(set_ContentType request "text/xml")&#13;
+			(set_ContentLength request (Length postdata))&#13;
+			(= writer (new StreamWriter (GetRequestStream request)))&#13;
+			(Write writer postdata)&#13;
+			(Flush writer)&#13;
+			(Close writer)&#13;
+			(= response (GetResponse request))&#13;
+			(= reader (new StreamReader (GetResponseStream response)))&#13;
+			(= result (ReadToEnd reader))&#13;
+			result)))&#13;
+&#13;
+;; Retrieve a web resource using HTTP GET&#13;
+(= http-get&#13;
+	(fn (url)&#13;
+		&#13;
+		(do&#13;
+			(= uri (new Uri url))&#13;
+			(= request (Create WebRequest uri))&#13;
+			(set_Timeout request 120000)&#13;
+			(set_Accept request "image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/x-shockwave-flash, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*")&#13;
+			(set_KeepAlive request false)&#13;
+			(set_UserAgent request "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)")&#13;
+			(set_Method request "GET")&#13;
+			(= response (GetResponse request))&#13;
+			(= reader (new StreamReader (GetResponseStream response)))&#13;
+			(= result (ReadToEnd reader))&#13;
+			(Close reader)&#13;
+			(Close response)&#13;
+			result)))&#13;
+&#13;
+&#13;
+;; Retrieve and print the Slashdot home page&#13;
+(prl (http-get "http://slashdot.org/"))&#13;
+&#13;
+&#13;
+&#13;
+
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721696"></a>File.ls</h3></div></div></div><p>
+        Defines some useful functions for manipulating files.
+        </p><pre class="programlisting">
+          ;;; L Sharp File Sample&#13;
+&#13;
+(using "System.IO")&#13;
+&#13;
+;; Copy a file&#13;
+(= copy-file (fn (from to)&#13;
+	(do&#13;
+		(= fileInfo (new FileInfo from))&#13;
+		(CopyTo fileInfo to true))))&#13;
+&#13;
+;; Move a file		&#13;
+(= move-file (fn (from to)&#13;
+	(do&#13;
+		(= fileInfo (new FileInfo from))&#13;
+		(MoveTo fileInfo to))))&#13;
+&#13;
+;; Delete a file		&#13;
+(= delete-file (fn (filename)&#13;
+	(Delete File filename)))&#13;
+&#13;
+;; Read a file, returning its contents as a string&#13;
+(= read-file (fn (filename)&#13;
+	(do&#13;
+		(= textReader (new StreamReader filename))&#13;
+		(= buffer (ReadToEnd textReader))&#13;
+		(Close textReader)&#13;
+		buffer)))&#13;
+&#13;
+
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721720"></a>Directory.ls</h3></div></div></div><p>
+        Demonstrated some simple functions for manipulating directories. Note how recurse-directory
+        takes a function as an argument; that function is applied to all matching files.
+        </p><pre class="programlisting">
+          ;;; L Sharp Directory sample&#13;
+(using "System.IO")&#13;
+&#13;
+;; Rename / move a directory&#13;
+(= move-directory (fn (from to)&#13;
+	(do&#13;
+		(= directoryInfo (new DirectoryInfo from))&#13;
+		(MoveTo directoryInfo to))))&#13;
+&#13;
+;; Recurse the given directory applying the the function &#13;
+;; or method fun to each file found&#13;
+(= recurse-directory (fn (dir pattern fun)&#13;
+	(do&#13;
+		(= directoryInfo (new DirectoryInfo dir))&#13;
+		(= files (GetFileSystemInfos directoryInfo))&#13;
+		(each file files &#13;
+			(if (eql (GetType file)	(typeof DirectoryInfo))&#13;
+					(recurse-directory (FullName file) pattern fun)))&#13;
+&#13;
+		(= files (GetFileSystemInfos directoryInfo pattern))&#13;
+		(each file files &#13;
+			(if (eql (GetType file)	(typeof FileInfo))&#13;
+					(fun file)))&#13;
+	)))&#13;
+&#13;
+;; Define a function to be called on each file&#13;
+(= myfun (fn (n)&#13;
+	(prl (format string "Filename is {0}" (FullName n)))))&#13;
+&#13;
+;; Recurse the directory calling fun on each dll file&#13;
+(recurse-directory "c:\\windows\\system32" "*.dll" myfun)&#13;
+&#13;
+;; Recurse the directory calling the method FullName on each file &#13;
+(recurse-directory "c:\\windows\\system32" "*.dll" 'FullName)&#13;
+
+        </pre><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721748"></a>Squares.ls</h3></div></div></div><p>
+        </p><pre class="programlisting">
+          ;;; List the squares up to n&#13;
+(= squares (fn (n) &#13;
+	(to i (+ n 1)&#13;
+		(prl (format string "The square of {0} is {1}" i (* i i))))))&#13;
+&#13;
+(squares 12)
+        </pre><p>
+      </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="reference.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="web.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">L Sharp Language Reference </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Web Application Development with L Sharp</td></tr></table></div></body></html>

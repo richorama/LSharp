@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>L Sharp Language Reference</title><link rel="stylesheet" href="docbook.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.69.1" /><meta name="keywords" content="LSharp, Rob, Blackwell, Rob Blackwell, Active Web Solutions, Lisp, .NET, AWS, Arc" /><link rel="start" href="index.html" title="L Sharp .NET" /><link rel="up" href="index.html" title="L Sharp .NET" /><link rel="prev" href="primer.html" title="Quick Start Guide to L Sharp" /><link rel="next" href="samples.html" title="Samples and Examples" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">L Sharp Language Reference</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="primer.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="samples.html">Next</a></td></tr></table><hr /></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="reference"></a>L Sharp Language Reference</h2></div></div></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4718226"></a>Introduction</h3></div></div></div><p>
+        This is the definitive guide to the L Sharp language.
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4718238"></a>Atoms and Lists</h3></div></div></div><p>
+        In L Sharp everything is either an atom or a list. Atoms are things like numbers,
+        symbols and strings. Lists are represented using parenthesis. (a b c). Lists
+        can contain atoms or lists or any combination thereof.
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4718253"></a>The Nature of True and False</h3></div></div></div><p>
+        L Sharp takes a fairly liberal view of true and false. The boolean true is
+        self evident true; in the same way false is false. 0 and null are also considered false.
+        Any other object is considered true.
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4718270"></a>Atoms</h3></div></div></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718276"></a>null</h4></div></div></div><p>
+          </p><pre class="programlisting">null</pre><p>
+        </p><p>
+          The <code class="function">null</code> keyword is a literal that represents a null reference, one that
+          does not refer to any object. <code class="function">null</code> is the default value of
+          reference-type variables. This is NIL in Common Lisp.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718307"></a>true</h4></div></div></div><p>
+          </p><pre class="programlisting">true</pre><p>
+          Evaluates to the boolean value true
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718323"></a>false</h4></div></div></div><p>
+          </p><pre class="programlisting">false</pre><p>
+          The Evaluates to the boolean value false
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718339"></a>Symbols</h4></div></div></div><p>
+          </p><pre class="programlisting">foo</pre><p>
+          A symbol that has previously been set in the environment, returns its value,
+          e.g. </p><pre class="programlisting">(do (= foo 5) foo)</pre><p> returns 5.
+          Unbound symbols evaluate to themselves.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718362"></a>Integers</h4></div></div></div><p>
+          </p><pre class="programlisting">56</pre><p>
+          Integers evaluate to objects of type Int32.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718378"></a>Doubles</h4></div></div></div><p>
+          </p><pre class="programlisting">3.14</pre><p>
+        </p><p>
+          Decimal numbers evaluate to objects of type Double.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718397"></a>Strings</h4></div></div></div><p>
+          </p><pre class="programlisting">"Hello World"</pre><p>
+          Strings evaluate to objects of type System.String.
+        </p></div></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4718415"></a>Functions, Closures, Macros and Special Forms</h3></div></div></div><p>
+        Functions, closures, macros and special forms may all be applied to arguments using
+        expressions of the form
+        </p><pre class="programlisting">(function arguments)</pre><p>.
+        When a built in L Sharp function is called, all arguments are first evaluated using
+        <span class="emphasis"><em>eval</em></span> and then passed as parameters to the function. (Interested
+        readers should look at the Functions.cs file in the LSharp source to see how functions
+        can be implemented, and how easy it is to extend the language yourself).
+      </p><p>
+        A closure is a function defined and implemented in the L Shasp language using <span class="emphasis"><em>fn</em></span>.
+        For example </p><pre class="programlisting">(= square (fn (x) (* x x)))</pre><p>.
+        When you call a closure </p><pre class="programlisting">(square 5)</pre><p> all arguments are first evaluated
+        using <span class="emphasis"><em>eval</em></span> and then passed to the closure.
+      </p><p>
+        A macro is is implemented within L Sharp using <span class="emphasis"><em>macro</em></span>.
+        </p><pre class="programlisting">(= nil! (macro (x) `(== ,x null)))</pre><p>
+        When a macro is called, the macro is first expanded using <span class="emphasis"><em>macroexpand</em></span> and
+        then evalauted in a similar way to a closure above. i.e. all arguments are first evaluated
+        using <span class="emphasis"><em>eval</em></span> before being passed.
+      </p><p>
+        A special form is similar to a function,except that the expressions given as arguments
+        are passed to the special form iplementation <span class="emphasis"><em>without</em></span> being evaluated.
+        This allows the special form to effect the evaluation process as necessary. As an example,
+        consider </p><pre class="programlisting">(= foo 5)</pre><p>. If = was implemented as a function,
+        then foo would be evaluated before execution and we would simply have its value. It wouldnt
+        be possible to perform the assignment. Implementing = as a special form allows us to treat
+        foo in a special way, as a named symbol and be able to perform the necessary assignment.
+        (Interested readrs are reffered to the SpecialForms.cs file in the source code for implementations
+        of all L Sharp special forms).
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4718527"></a>Special Forms</h3></div></div></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718533"></a>and</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (and <span class="emphasis"><em>expression*</em></span>)
+          </pre><p>
+          Evaluates the <span class="emphasis"><em>expression</em></span>s in order, returning true if all
+          <span class="emphasis"><em>expression</em></span>s are
+          true, and false if any single <span class="emphasis"><em>expression</em></span> is false.
+          If a false <span class="emphasis"><em>expression</em></span> is
+          encountered, then the remaining <span class="emphasis"><em>expression</em></span>s are not evaluated
+          (short circuit evaluation).
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718576"></a>backquote</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (<code class="function">backquote</code> <span class="emphasis"><em>expression</em></span>)
+          </pre><p>
+          Returns an expression created by expanding any backquote expressions
+          in the given <span class="emphasis"><em>expression</em></span>. Backquote syntax is often used
+          in macros and is well documented in various Common Lisp references.
+
+
+          </p><pre class="programlisting">
+            &gt; (= x '(a b c))
+            (a b c)
+            &gt; `(,x)
+            ((a b c) )
+            &gt; `(,@x)
+            (a b c)
+            &gt;
+          </pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718616"></a>call</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (call <span class="emphasis"><em>method object argument*</em></span>)
+          </pre><p>
+          Calls a .NET <span class="emphasis"><em>method</em></span> on a given <span class="emphasis"><em>object</em></span>
+          with given <span class="emphasis"><em>arguments</em></span>. This is useful if the method name
+          clashes with a variable which is already bound in the current L Sharp lexical
+          environment.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718650"></a>compile</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (compile <span class="emphasis"><em>filename expression*</em></span>)
+          </pre><p>
+          Compiles the given stament to IL, storing the result in a new EXE packaged
+          assembly filename. (Actually this dosnt work yet).
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718674"></a>cond</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (<code class="function">cond</code> <span class="emphasis"><em>(test expression)* [default]</em></span>)
+          </pre><p>
+          Evaluates <span class="emphasis"><em>tests</em></span> until one returns true. If a test returns true, then evaluates
+          its corresponding expression. If no test return true, then and optionally specified
+          <span class="emphasis"><em>default</em></span> expression
+          is evaluated.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718709"></a>--, decrement</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (<code class="function">--</code> <span class="emphasis"><em>symbol</em></span>)
+          </pre><p>
+          Subtracts one from the variable represented by <span class="emphasis"><em>symbol</em></span>.
+          A shorthand for </p><pre class="programlisting">(= symbol (- symbol 1))</pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718740"></a>defclass</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (<code class="function">defclass</code> ...)
+          </pre><p>
+          Reserved for future use.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718760"></a>do</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (<code class="function">do</code> <span class="emphasis"><em>expression*</em></span>)
+          </pre><p>
+          Evaluates each <span class="emphasis"><em>expression</em></span>, one at a time. Returns the result of
+          the evaluation of the last <span class="emphasis"><em>expression</em></span>.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718791"></a>each</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (each <span class="emphasis"><em>symbol IEnumerable expression</em></span>)
+          </pre><p>
+          Iterates over any object which impelements <span class="emphasis"><em>IEnumerable</em></span>with succesive
+          elements being assigned to a variable named <span class="emphasis"><em>symbol</em></span>; exceutes
+          <span class="emphasis"><em>expression</em></span> on
+          each iteration. Cons (LSharp lists), as well as many .NET collections are IEnumerable.
+          Foreach is a synonym for each.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718828"></a>fn</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (fn <span class="emphasis"><em>arguments</em></span> <span class="emphasis"><em>body</em></span>)
+          </pre><p>
+          Defines a closure with the specified list of <span class="emphasis"><em>arguments</em></span> and
+          the specified <span class="emphasis"><em>body</em></span>, an L Sharp expression. Not unlike a lambda
+          expression in Common Lisp.<span class="emphasis"><em>
+            NB arguments is a simple list, we dont yet
+            support keyword or optional arguments.
+          </em></span>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718867"></a>for</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (for <span class="emphasis"><em>initialiser test iterator statement</em></span>)
+          </pre><p>
+          The <span class="emphasis"><em>for</em></span> special form corresponds to the <span class="emphasis"><em>for</em></span> construct
+          found in most algebraic programming languages. The <span class="emphasis"><em>initialiser</em></span> is
+          executed. The <span class="emphasis"><em>statement</em></span> is executed while <span class="emphasis"><em>test</em></span> is true.
+          The <span class="emphasis"><em>iterator</em></span> is executed at the end of each <span class="emphasis"><em>statement</em></span> execution.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718916"></a>foreach</h4></div></div></div><p>
+          See Each.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718928"></a>if</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (if <span class="emphasis"><em>test</em></span> <span class="emphasis"><em>then</em></span> [<span class="emphasis"><em>else</em></span>])
+          </pre><p>
+          The <span class="emphasis"><em>if</em></span> special form corresponds to the <span class="emphasis"><em>if-then-else</em></span> construct
+          found in most algebraic programming languages. First the form <span class="emphasis"><em>test</em></span> is
+          evauated, if true then the form <span class="emphasis"><em>then</em></span> is evaluated.Otherwise,
+          optionally the form <span class="emphasis"><em>else</em></span> is evaluated.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4718978"></a>increment</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (<code class="function">++</code> <span class="emphasis"><em>symbol</em></span>)
+          </pre><p>
+          Adds one to the variable represented by <span class="emphasis"><em>symbol</em></span>.
+          A shorthand for </p><pre class="programlisting">(= symbol (+ symbol 1))</pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719008"></a>let</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (<code class="function">let</code> <span class="emphasis"><em>symbol value expression*</em></span>)
+          </pre><p>
+          Binds a new local variable <span class="emphasis"><em>symbol</em></span> to <span class="emphasis"><em>value</em></span>
+          in a new local lexical environment, before evaluating <span class="emphasis"><em>expressions</em></span>.
+          Similar to <span class="emphasis"><em>with</em></span>, but often more convenient for decalring a single local
+          variable.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719049"></a>macro</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (<code class="function">macro</code> <span class="emphasis"><em>arguments expression*</em></span>)
+          </pre><p>
+          Defines a macro. Similar in some respects to defining a clsoure using <span class="emphasis"><em>fn</em></span>
+          except that the <span class="emphasis"><em>expressions</em></span> are expanded using <span class="emphasis"><em>macroexpand</em></span>
+          in the current environment before being evaluated.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719086"></a>or</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (or <span class="emphasis"><em>expression*</em></span>)
+          </pre><p>
+          Evaluates the <span class="emphasis"><em>expression</em></span>s in order, returning true if any
+          <span class="emphasis"><em>expression</em></span> is
+          true, and false if all <span class="emphasis"><em>expression</em></span>s are false.
+          If a true <span class="emphasis"><em>expression</em></span> is
+          encountered, then the remaining <span class="emphasis"><em>expression</em></span>s are not evaluated
+          (short circuit evaluation).
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719129"></a>quote</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (quote <span class="emphasis"><em>object</em></span>)
+          </pre><p>
+          Returns <span class="emphasis"><em>object</em></span> without evaluating it.
+          <span class="emphasis"><em>object</em></span> may be any .NET object. The shortend form <span class="emphasis"><em>'object</em></span>
+          is more usual.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719161"></a>setf</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (<code class="function">=</code> <span class="emphasis"><em>{ symbol value}*</em></span>)
+          </pre><p>
+          Setf (Set Form) is the variable assignment operator. Sets each variable <span class="emphasis"><em>symbol</em></span> to
+          <span class="emphasis"><em>value</em></span> in the current environment. Currently the same as setq. The abbreviation
+          = is more commonly used in L Sharp.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719196"></a>setq</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (<code class="function">=</code> <span class="emphasis"><em>{ symbol value}*</em></span>)
+          </pre><p>
+          Setq (Set Quote) is the variable assignment operator. Sets each variable <span class="emphasis"><em>symbol</em></span> to
+          <span class="emphasis"><em>value</em></span> in the current environment. The abbreviation
+          = is more commonly used in L Sharp.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719229"></a>the</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (the <span class="emphasis"><em>type</em></span> <span class="emphasis"><em>value</em></span>)
+          </pre><p>
+        </p><p>
+          Returns <span class="emphasis"><em>value</em></span> converted or cast to an object of the specified <span class="emphasis"><em>type</em></span>. Throws
+          an exception is the cast is not achievable.
+        </p><p>
+          The allows type casting and type conversion. This is much more than a wrapper
+          for the System.Convert class, it has special meaning for conversions to and
+          from Lists and certain common .NET data structures. The following are of
+          particular interest:
+          </p><pre class="programlisting">
+            (the Hashtable list)
+            (the Queue queue)
+            (the Stack stack)
+            (the Cons dataTable)
+            (the SortedList list)
+            (the Cons sortedList)
+            (the Cons anyCollection)
+          </pre><p>
+
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719282"></a>to</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (to <span class="emphasis"><em>variable limit</em></span> <span class="emphasis"><em>expression</em></span>)
+          </pre><p>
+          Starting at 0, assigns <span class="emphasis"><em>variable</em></span> to succesive integers upto and
+          including <span class="emphasis"><em>limit</em></span>. Executes <span class="emphasis"><em>expression</em></span> on each iteration.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719318"></a>trace</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (trace <span class="emphasis"><em>filename</em></span> <span class="emphasis"><em>expression*</em></span>)
+          </pre><p>
+        </p><p>
+          Traces an evaluation of <span class="emphasis"><em>expression*</em></span> (as if in an implicit do), documenting all
+          call and return steps;
+          writes the output as an XML file in <span class="emphasis"><em>filename</em></span>.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719354"></a>try</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (try <span class="emphasis"><em>expression</em></span> <span class="emphasis"><em>catch</em></span> [<span class="emphasis"><em>finally]</em></span>)
+          </pre><p>
+          The <span class="emphasis"><em>try </em></span>special form corresponds to the <span class="emphasis"><em>try-catch-finally</em></span>
+          construct found in C Sharp. If <span class="emphasis"><em>catch</em></span> is <span class="emphasis"><em>null</em></span> then there is
+          deemed to be no catch block at all. If an exception occurs, the variable <span class="emphasis"><em>it</em></span>
+          is bound to the Exception object in the local environment.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719404"></a>when</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (when <span class="emphasis"><em>test expression*</em></span>)
+          </pre><p>
+          Similar to if, but more convenient if there is no else case. Evalautes
+          <span class="emphasis"><em>expressions</em></span> if the evaluation of <span class="emphasis"><em>test</em></span>
+          is true.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719434"></a>while</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (while <span class="emphasis"><em>test expression*</em></span>)
+          </pre><p>
+          The <span class="emphasis"><em>while </em></span>special form corresponds to the <span class="emphasis"><em>while</em></span> construct
+          found in most algebraic programming languages. First <span class="emphasis"><em>test</em></span> is
+          evauated, if true then <span class="emphasis"><em>expression* </em></span>is evaluated. The process
+          continues until the evaluation of <span class="emphasis"><em>test</em></span> is false.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719478"></a>with</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (with <span class="emphasis"><em>([symbol value]* ) expression*</em></span>)
+          </pre><p>
+          Binds new local variables <span class="emphasis"><em>symbols</em></span> to <span class="emphasis"><em>values</em></span>
+          in parallel, in a new local lexical environment, before evaluating <span class="emphasis"><em>expressions</em></span>.
+          Similar to <span class="emphasis"><em>let</em></span>, but allows multiple local variables to be bound.
+          </p><pre class="programlisting">
+            (with (x 'a y 'b)
+            (list x y))
+          </pre><p>
+        </p></div></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4719521"></a>Built in Functions</h3></div></div></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719527"></a>Add, +</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (+ <span class="emphasis"><em></em></span> <span class="emphasis"><em>object*</em></span>)
+          </pre><p>
+        </p><p>
+          Returns the sum of all the specified <span class="emphasis"><em>objects</em></span>. Each object must be
+          a numerical type usch as System.In32 or System.Double.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719558"></a>append</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (append <span class="emphasis"><em>list1 list2 .. listN</em></span>)
+          </pre><p>
+          Returns a new list which is a concatenation of all the lists supplied as arguments. All lists are
+          copied (as if by copy-list) except the last list.
+        </p><p>
+          </p><pre class="programlisting">
+            &gt; (append '(a b c) '(d e f) '(g h j))
+            (a b c d e f g h j)
+          </pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719591"></a>apply</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (apply <span class="emphasis"><em>function</em></span> <span class="emphasis"><em>arguments</em></span>)
+          </pre><p>
+        </p><p>
+          Applies <span class="emphasis"><em>function</em></span> to a list of <span class="emphasis"><em>arguments</em></span>. function may be a
+          built-in lsharp function, a closure defined by <span class="emphasis"><em>fn</em></span>, a macro defined using
+          <span class="emphasis"><em>macro</em></span> or the name of a method in the .NET framework.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719637"></a>assoc</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (assoc <span class="emphasis"><em>item</em></span> <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+        </p><p>
+          Searches the list for a pair who's car is equal to item. If a match is found then the
+          pair is returned, otherwise null.
+          Depending on the size of your list, and the number of times you want to assoc it,
+          you may find it more efficient to use a hashtable.
+          The following is similar to assoc.
+          </p><pre class="programlisting">
+            (using "System.Collections")
+            (= foo (the Hashtable '((a b) (c d) (e f))))
+            (Item foo 'c)
+          </pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719680"></a>caaar</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (caaar <span class="emphasis"><em>list</em></span>&gt;)
+          </pre><p>
+          Returns the caaar of the list. A shorthand for (car (car (car list))).
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719701"></a>caadr</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (caadr <span class="emphasis"><em>list</em></span>&gt;)
+          </pre><p>
+          Returns the caadr of the list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719720"></a>caar</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (caar <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns the caar of the list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719740"></a>cadar</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (cadar <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns the cadar of the list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719760"></a>caddr</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (caddr <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns the caddr of the list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719779"></a>cadr</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (cadr <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns the cadr of the list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719799"></a>car</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (car <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns the car of the list. The car is the first element of the
+          list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719820"></a>cdaar</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (cdaar <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns the cdaar of the list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719839"></a>cdar</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (cdar <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns the cdar of the list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719859"></a>cddar</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (cddar <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns the cddar of the list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719878"></a>cdddr</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (cdddr <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns the cdddr of the list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719898"></a>cddr</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (cddr <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns the cddr of the list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719918"></a>cdr</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (cdr <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns the cdr of the list. Also know as the <span class="emphasis"><em>rest</em></span> of the list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719941"></a>cons</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (cons <span class="emphasis"><em>object1 object 2</em></span>)
+          </pre><p>
+          Returns a new cons with object1 as the car and object2 as the cdr.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719962"></a>copy-list</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (copy-list <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          Returns a shallow copy of list. Only the list structure of list is copied;
+          the elements of the resulting list are the same as the corresponding elements of the given list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4719986"></a>Divide /</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (/<span class="emphasis"><em>object*</em></span>)
+          </pre><p>
+          Divides object1 by object2 upto objectn. The objects are assumed to be
+          numeric types.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720007"></a>environment</h4></div></div></div><p>
+          </p><pre class="programlisting">(environment)</pre><p>
+          Returns the current, local environment object - an instance of LSharp.Environment. This
+          is occasionally useful for debugging and manipulation purposes.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720027"></a>eq</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (eq <span class="emphasis"><em>expression*</em></span>)
+          </pre><p>
+          Returns true if all expressions are reference equal, that is they refer to the
+          same object in memory. As a special case, null is eq to null.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720050"></a>eql, (or ==)</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (eql <span class="emphasis"><em>expression*</em></span>)
+          </pre><p>
+          Returns true if all expressions are equal, that is their implementations of
+          equal return true. As a special case, null is eql to null.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720074"></a>eval</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (eval <span class="emphasis"><em>expression</em></span>)
+          </pre><p>
+        </p><p>
+          Calls on the L Sharp interpreter to evaluate the given expression
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720098"></a>evalstring</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (evalstring <span class="emphasis"><em>string</em></span>)
+          </pre><p>
+        </p><p>
+          Calls on the L Sharp interpreter to evaluate the given expression which is represented as a string.
+          E.g. </p><pre class="programlisting">(evalstring "(+ 1 2)")</pre><p>. Because the evaluation takes place in
+          the current environment, the expression contained in the string can reference variables which have
+          already been defined in that environment.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720132"></a>exit</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (exit <span class="emphasis"><em>[exit-code]</em></span>)
+          </pre><p>
+        </p><p>
+          Terminates this process and gives the underlying operating system the specified
+          <span class="emphasis"><em>exit-code</em></span>.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720161"></a>first</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (first <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+        </p><p>
+          Returns the first element of the list. (Also known as the car)
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720186"></a>Greater Than, &gt;</h4></div></div></div><p>
+          </p><pre class="programlisting">(&gt; object1 object2 object*)</pre><p>
+          Returns true if <span class="emphasis"><em>object1</em></span> is greater than <span class="emphasis"><em>object2</em></span>, <span class="emphasis"><em>object2</em></span> is greater than <span class="emphasis"><em>object3</em></span> and so on.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720217"></a>Greater Than Or Equal, &gt;=</h4></div></div></div><p>
+          </p><pre class="programlisting">(&gt;= object1 object2 object*)</pre><p>
+          Returns true if <span class="emphasis"><em>object1</em></span> is greater than or eql to <span class="emphasis"><em>object2</em></span>, <span class="emphasis"><em>object2</em></span> is greater than or eql to<span class="emphasis"><em>object3</em></span> and so on.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720249"></a>handle-event</h4></div></div></div><p>
+          </p><pre class="programlisting">(handle-event target eventName handler)</pre><p>
+          Sets up a new event handler for events named eventName on target. The
+          handler is an LSharp closure with two arguments, the sender and the
+          event arguments (defun fn (sender args) (prl "Event Handled")).
+          Experimental. See also defevent.
+</p><pre class="programlisting">
+(reference "System.Windows.Forms")
+(using "System.Windows.Forms")
+(= f (new Form))
+
+(defun handler (sender args)
+  (prl "You clicked the form"))
+
+(handle-event f "Click" handler)
+
+(run application f)
+</pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720280"></a>inspect</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (inspect <span class="emphasis"><em>object</em></span>)
+          </pre><p>
+        </p><p>
+          Returns a description of the specified <span class="emphasis"><em>object</em></span>, using reflection.
+          Useful for debugging.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720308"></a>is</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (is <span class="emphasis"><em>type object</em></span>)
+          </pre><p>
+        </p><p>
+          Returns true if <span class="emphasis"><em>object</em></span> is an instance of the specified <span class="emphasis"><em>type</em></span>
+          or supertype.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720339"></a>length</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (length <span class="emphasis"><em>expression</em></span>)
+          </pre><p>
+        </p><p>
+          Returns the length of expression. If expression is null, length returns 0, otherwise the length is
+          calculated by calling the length method on the object, ensuring that length works for strings, lists
+          and most collection-like objects.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720367"></a>Less Than, &lt;</h4></div></div></div><p>
+          </p><pre class="programlisting">(&lt; object1 object2 object*)</pre><p>
+          Less than
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720383"></a>Less Than Or Equal &lt;= </h4></div></div></div><p>
+          </p><pre class="programlisting">(&lt;= object1 object2 object*)</pre><p>
+          Less than or equal
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720400"></a>list</h4></div></div></div><p>
+          </p><pre class="programlisting">(list object*)</pre><p>
+          Creates a new cons, an order list with each <span class="emphasis"><em>object</em></span> as a member.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720419"></a>load</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (load <span class="emphasis"><em>filename</em></span>)
+          </pre><p>
+        </p><p>
+          Loads and evaluates all statements in the given <span class="emphasis"><em>filename</em></span> which must be
+          a text file. Remember that backslash characters must be escaped within strings, so a typical
+          example would be something like </p><pre class="programlisting">(load "c:\\data\\myfile.lsp")</pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720453"></a>Logical And &amp;</h4></div></div></div><p>
+          </p><pre class="programlisting">(&amp; expression*)</pre><p>
+        </p><p>
+          Returns the bitwise logical and of its arguments
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720473"></a>Logical Inclusive Or |</h4></div></div></div><p>
+          </p><pre class="programlisting">(| expression*)</pre><p>
+        </p><p>
+          Returns the bitwise logical inclusive or of its arguments
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720492"></a>Logical Exclusive Or ^</h4></div></div></div><p>
+          </p><pre class="programlisting">(^ expression*)</pre><p>
+        </p><p>
+          Returns the bitwise logical exclusive or of its arguments
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720512"></a>macroexpand</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (macroexpand <span class="emphasis"><em>macro</em></span>)
+          </pre><p>
+          Expands the given macro in the current lexical environment.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720533"></a>map</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (map <span class="emphasis"><em>function list</em></span>)
+          </pre><p>
+          Applies <span class="emphasis"><em>function</em></span> to each element in <span class="emphasis"><em>list</em></span> return
+          a new list of return values.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720561"></a>member</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (member <span class="emphasis"><em>item list</em></span>)
+          </pre><p>
+          Determines whether item is a member of the list (list can be any IEnumerable
+          object). If true, returns item, otherwise returns null.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720584"></a>Multiply, *</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (* <span class="emphasis"><em>object*</em></span>)
+          </pre><p>
+          Returns the result of multiplying each <span class="emphasis"><em>object</em></span> together.
+          Each <span class="emphasis"><em>object</em></span> is assumed to be a numeric value.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720612"></a>nconc</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (nconc list*)
+          </pre><p>
+          Returns a list whose elements are the elements of each list in
+          order. Destructively modifies all but the last list, such that
+          the cdr of the last cons in each list is set to the next list.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720632"></a>new</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (new <span class="emphasis"><em>class</em></span>)
+          </pre><p>
+          Creates a new object, an instance of type <span class="emphasis"><em>class</em></span>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720654"></a>not</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (not <span class="emphasis"><em>bool</em></span>)
+          </pre><p>
+          Returns the logical complement of the given boolean.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720674"></a>Not Equal, !=</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (!= <span class="emphasis"><em>expression*</em></span>)
+          </pre><p>
+          The logical complement of the eql operator.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720694"></a>nth</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (nth <span class="emphasis"><em>n</em></span> <span class="emphasis"><em>IEnumerable</em></span>)
+          </pre><p>
+          Returns the nth element of the <span class="emphasis"><em>IEnumarable</em></span> object for n &gt;=0. It is important to note
+          that the numbering starts at 0 which is the first element.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720724"></a>pr</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (pr <span class="emphasis"><em>object*</em></span>)
+          </pre><p>
+          Prints each object to Console.Out, without a new line. This is really
+          just a shorthand for (Write Console object)
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720746"></a>prl</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (prl <span class="emphasis"><em>object*</em></span>)
+          </pre><p>
+          Prints each object to Console.Out, then prints a new line. This is really
+          just a shorthand for (WriteLine Console object)
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720769"></a>read</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (read <span class="emphasis"><em>stream</em></span> <span class="emphasis"><em>[eof-value]</em></span>)
+          </pre><p>
+          Calls the L Sharp reader to turn textual input from the steam into
+          objects suitable for evaluation by <span class="emphasis"><em>eval</em></span>.
+          The default eof-value is null, but you can specify any eof-value object to avoid ambiguity.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720801"></a>reference</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (reference <span class="emphasis"><em>name*</em></span>)
+          </pre><p>
+        </p><p>
+          Loads the specified .NET assembly, either from the GAC, local directory or from
+          and explicit directory. <span class="emphasis"><em>name</em></span> may either be a fully qualified filename
+          or a partial assembly name.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720833"></a>reset</h4></div></div></div><p>
+          </p><pre class="programlisting">(reset)</pre><p>
+          Resets the global environment.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720849"></a>reverse</h4></div></div></div><p>
+          </p><pre class="programlisting">(reverse list)</pre><p>
+          Reverses the given list.
+          </p><pre class="programlisting">
+            &gt; (reverse '( 1 2 3))
+            (3 2 1)
+          </pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720870"></a>rest</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (rest <span class="emphasis"><em>list</em></span>)
+          </pre><p>
+          A synonym for cdr.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720889"></a>spawn</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (spawn <span class="emphasis"><em>expression</em></span>)
+          </pre><p>
+        </p><p>
+          Like eval except that the expression
+          is evaluated on a new Thread. Returns immediately with
+          the new Thread object, but execution of expressions
+          continues synchronously. Experimental.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720918"></a>Subtract, -</h4></div></div></div><p>
+          </p><pre class="programlisting">(- object*)</pre><p>
+          Returns the result of subtracting <span class="emphasis"><em>object2</em></span> from
+          <span class="emphasis"><em>object1</em></span> etc. <span class="emphasis"><em>objects</em></span> are assumed to be
+          numeric values.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720946"></a>symbol-name</h4></div></div></div><p>
+          </p><pre class="programlisting">(symbol-name symbol)</pre><p>
+          Returns the name of a symbol as a string.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720962"></a>throw</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (throw <span class="emphasis"><em>exception</em></span>)
+          </pre><p>
+          Throws a .NET exception, <span class="emphasis"><em>exception</em></span> must be a System.Exception or
+          derrivitive.
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4720986"></a>typeof</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (typeof <span class="emphasis"><em>symbol</em></span>)
+          </pre><p>
+        </p><p>
+          Returns the System.Type whose name is that of the symbol. (i.e. coverts symbol names to type
+          objects).
+          </p><pre class="programlisting">
+            (typeof Console)
+          </pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4721016"></a>using</h4></div></div></div><p>
+          </p><pre class="programlisting">
+            (using <span class="emphasis"><em>namespace</em></span>)
+          </pre><p>
+        </p><p>
+          Permit the use of types in a namespace, such that, you do not have to qualify
+          the use of a type in that namespace.
+        </p></div></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721043"></a>Built in Macros</h3></div></div></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4721049"></a>defevent</h4></div></div></div><p>
+          </p><pre class="programlisting">(defevent name target args body)</pre><p>
+        </p><p>
+          A more convenient way of using handle-event 
+</p><pre class="programlisting">
+(reference "System.Windows.Forms")
+(using "System.Windows.Forms")
+
+(= f (new Form))
+
+(defevent Click f (sender args)
+  (writeline console "You clicked x {0} y {1}" (x args) (y args)))
+
+(spawn '(run application f))
+</pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4721082"></a>defun</h4></div></div></div><p>
+          </p><pre class="programlisting">(defun name args body)</pre><p>
+        </p><p>
+          A shorthand for </p><pre class="programlisting">(= name (fn args body)))</pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4721103"></a>defmacro</h4></div></div></div><p>
+          </p><pre class="programlisting">(defmacro name args body)</pre><p>
+        </p><p>
+          A shorthand for </p><pre class="programlisting">(= name (macro args body))</pre><p>
+        </p></div><div class="sect3" lang="en" xml:lang="en"><div class="titlepage"><div><div><h4 class="title"><a id="id4721125"></a>listp</h4></div></div></div><p>
+          </p><pre class="programlisting">(listp arg)</pre><p>
+        </p><p>
+          Returns True if arg is a list, False otherwise
+        </p></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="primer.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="samples.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Quick Start Guide to L Sharp </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Samples and Examples</td></tr></table></div></body></html>

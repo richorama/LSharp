@@ -1,0 +1,2379 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+ "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<article>
+  <articleinfo>
+
+    <title>L Sharp .NET</title>
+    <subtitle>A powerful lisp-based scripting language for .NET.</subtitle>
+
+    <author>
+      <firstname>Rob</firstname>
+      <surname>Blackwell</surname>
+      <email>rob.blackwell@lsharp.org</email>
+    </author>
+
+    <copyright>
+      <year>2005-2006</year>
+      <holder>Rob Blackwell</holder>
+    </copyright>
+
+    <keywordset>
+      <keyword>LSharp</keyword>
+      <keyword>Rob</keyword>
+      <keyword>Blackwell</keyword>
+      <keyword>Rob Blackwell</keyword>
+      <keyword>Active Web Solutions</keyword>
+      <keyword>Lisp</keyword>
+      <keyword>.NET</keyword>
+      <keyword>AWS</keyword>
+      <keyword>Arc</keyword>
+    </keywordset>
+
+    <abstract>
+      <para>
+        <informalfigure>
+          <mediaobject>
+            <objectinfo>
+              <title>L Sharp Logo</title>
+            </objectinfo>
+            <textobject>
+              <phrase>L Sharp Logo</phrase>
+            </textobject>
+            <imageobject>
+              <imagedata fileref="images/LSharp.png" format="PNG"/>
+            </imageobject>
+          </mediaobject>
+        </informalfigure>
+
+        L Sharp .NET is a powerful Lisp-like scripting language for .NET.
+        It uses a Lisp dialect similar to Arc but tightly integrates
+        with the .NET Framework which provides a rich set of libraries.
+      </para>
+      <para>
+        L Sharp is free software distributed under the terms of the GNU General Public License.
+        You can download the latest release from <ulink url="http://sourceforge.net/projects/lsharp">Sourceforge</ulink>.
+        You may also want to read  <ulink url="http://www.robblackwell.org.uk/?cat=3">Rob Blackwell's Web Log</ulink>.
+      </para>
+      <para>
+        This documentation is a work in progress and is subject to change.
+      </para>
+
+      <para>
+        <informalfigure>
+          <mediaobject>
+            <objectinfo>
+              <title>Creative Commons</title>
+            </objectinfo>
+            <imageobject>
+              <imagedata fileref="http://creativecommons.org/images/public/somerights20.gif" format="GIF"/>
+            </imageobject>
+          </mediaobject>
+        </informalfigure>This work is licensed under a
+        <ulink url="http://creativecommons.org/licenses/by-sa/2.0/">Creative Commons License</ulink>.
+
+
+
+
+      </para>
+    </abstract>
+  </articleinfo>
+
+
+  <sect1 id="introduction">
+    <title>Introduction</title>
+
+    <para>
+      I'm inspired by Paul Graham's papers on Arc (
+      <ulink url="http://www.paulgraham.com/arc.html">http://www.paulgraham.com/arc.html</ulink>
+      ).
+      I don't agree with <emphasis>everything</emphasis> that Paul says; in particular he says that
+      "Unix won"; from where I'm sitting it seems that Microsoft Windows won.
+      LSharp is my way of playing with
+      Arc and Lisp ideas, and building something useful to me at the same time.
+    </para>
+    <para>
+      I do lots of development on the Microsoft .NET platform. One thing that seems to
+      be missing is a really good scripting language and experimentation
+      environment. I hope that L Sharp will fill this hole.
+    </para>
+    <para>
+      Whatever you feel about Microsoft, the .NET Framework is pretty cool.
+      Any new Lisp implementation will only be successful if it can provide a
+      rich, standardised library; the .NET framework could provide that.
+      It gives us interoperability with large amounts of code, as
+      well as credibility in the real world. I hope that Mono will allow L Sharp to
+      run on an variety of platforms.
+    </para>
+    <para>
+      L Sharp has been developed as part of a Research and Development initiative
+      at <ulink url="http://www.aws.net/">Active Web Solutions</ulink>. I'd like
+      to thank the board of AWS for their generous support.
+    </para>
+    <para>
+      L Sharp is working pretty well, but the language and tools are still changing.
+      It's mostly being used for experimentation and "throw away" scripts, but people
+      are using it successfully in production environments too.
+    </para>
+    <para>
+      I presented a paper at the 2nd European LISP and Scheme Workshop, ECOOP 2005.
+      The paper and slides are available
+      <ulink url="http://lisp-ecoop05.bknr.net/profile/19597">here</ulink>.
+    </para>
+    <para>
+      I'm also grateful to Patrick Dussud at Microsoft who has experimented with LSharp
+      and provided useful feedback.
+    </para>
+
+  </sect1>
+
+
+
+  <sect1 id="primer">
+    <title>Quick Start Guide to L Sharp</title>
+
+    <sect2>
+      <title>Introduction</title>
+      <para>
+        L Sharp .NET is a new way to program the .NET framework. Primarily intended as a
+        scripting language, it uses a Lisp dialect similar to Arc but tightly integrates
+        with the .NET Framework (contrary to Arc thinking!) to give a rich set of libraries.
+      </para>
+      <para>
+        Currently L Sharp only ships with an interpreter, but the intention is to build a
+        compiler which produces .EXE files.
+      </para>
+      <para>
+        You may wish to go and read a LISP or SCHEME primer before reading this
+        document.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Starting L Sharp</title>
+      <para>
+        <programlisting>C:\LSharp\>LSharp.exe</programlisting>
+        Running L Sharp with no arguments starts an interactive session with the interpreter.
+        <programlisting>
+          Welcome to L Sharp .NET, a powerful lisp-based scripting language for .NET.
+          Copyright (C) 2005 Rob Blackwell &amp; Active Web Solutions.
+
+          This program is free software and is distributed under the terms of
+          the GNU General Public License.
+
+          For more information, see www.lsharp.org
+
+          Build 1.11.2164.29780
+          Microsoft Windows NT 5.1.2600 Service Pack 2
+          CLR 2.0.50727.42
+
+          >
+        </programlisting>
+        When L Sharp starts, it prints a welcome message and gives you
+        a single chevron - this is the toploop prompt.
+      </para>
+
+    </sect2>
+
+    <sect2>
+      <title>Evaluating expressions</title>
+      <para>
+        Whatever you type at the toploop gets evaluated by Eval, the L Sharp
+        evaluator.
+        Numbers evaluate to themselves.
+        <programlisting>
+          > 21
+          21
+          >
+        </programlisting>
+        Strings evaluate to themselves.
+        <programlisting>
+          > "Hello World"
+          "Hello World"
+          >
+        </programlisting>
+        An expression consists of an atom or a list. If expression is a list,
+        then the first argument is assumed to be a function, special form or
+        a .NET method call.
+        Here, the function + is applied to three arguments and the evaluator
+        adds those arguments together.
+        <programlisting>
+          > (+ 10 20 30)
+          60
+          >
+        </programlisting>
+        Here the function is really a .NET method call.
+        <programlisting>
+          > (writeline console "Hello World")
+          Hello World
+          null
+          >
+        </programlisting>
+        Hello World is printed because that's what System.Console.WriteLine does. null is just the return value from
+        the expression, in the same way that 60 was the return value in the previous example.
+      </para>
+
+    </sect2>
+
+
+    <sect2>
+      <title>L Sharp as a Scripting Engine</title>
+      <para>
+        If you invoke LSharp.exe with a parameter, the name of an LSharp source file, then
+        the source file runs as a script and exits. This allows you to conveniently write
+        and run command line
+        utilities and programs.
+        <programlisting>
+          C:\LSharp\>LSharp hello.ls
+          Hello World
+          C:\LSharp\>
+        </programlisting>
+      </para>
+    </sect2>
+
+
+    <sect2>
+      <title>Things you Should Know</title>
+      <para>
+        L Sharp is not case sensitive; you can mix upper and lower case. I suggest using all lower
+        case in accordnace with the best practice thinking on Arc.
+        Microsoft .NET is case sensitive,
+        but L Sharp does case insensitive matching on types and methods (like VB.NET), so
+        for example System.Console is the same as system.console.
+      </para>
+      <para>
+        Whilst the dialect is similar to ARC, it's not the same. Reading the Arc materials is
+        worthwhile, but be warned of differences.
+      </para>
+      <para>
+        All numbers are of type System.Double or System.Int32
+      </para>
+      <para>
+        null is used in a similar way to Common Lisp's NIL.
+      </para>
+      <para>
+        If you are reading this then you are an early adopter - the language is still changing
+        and future backwards compatibility is not guaranteed!
+      </para>
+      <para>
+        In the same way that C Sharp isn't C and J Sharp isn't Java, L Sharp isn't
+        Lisp; you can recognise the parentage but they aren't the same thing.
+      </para>
+    </sect2>
+
+
+
+
+
+
+    <sect2>
+      <title>Hello World</title>
+      <para>Tradition says that the first example should be Hello World</para>
+      <para>
+        <programlisting>(WriteLine Console "Hello World")</programlisting>
+      </para>
+      <para>
+        You'll notice that its similar to a C Sharp Hello World, except that it doesn't
+        have all the class baggage.
+      </para>
+      <para>
+        Essentially we are calling the static method "WriteLine" on the "System.Console"
+        object, passing a parameter, the string "Hello World".
+      </para>
+      <para>
+        Because writing to the console is such a frequent task, the function prl
+        meaning "print line" is defined as a short hand.
+      </para>
+      <para>
+        <programlisting>(prl "Hello World")</programlisting>
+      </para>
+      <para>Here is a similar program, GUI style</para>
+      <para>
+        <programlisting>
+          (reference "System.Windows.Forms")
+          (using "System.Windows.Forms")
+
+          (Show MessageBox "Hello World" "L Sharp")
+        </programlisting>
+      </para>
+      <para>
+        The reference function
+        loads an assembly (in this case System.Windows.Forms) from
+        the GAC, or from a specified file. The using directive permits the use of types
+        in a namespace, such that, you do not have to qualify the use of a type in that
+        namespace. The last line is the equivalent of MessageBox.Show ("Hello World",
+        "LSharp") in C Sharp.
+      </para>
+    </sect2>
+
+
+    <sect2>
+      <title>Defining a Variable</title>
+      <para>
+        <programlisting>( = foo 10)</programlisting>
+      </para>
+      <para>
+        This assigns the vale 10 to the variable foo. Note that foo does not have to be
+        explicitly declared, nor does it have a specified type; in LSharp values
+        have types, not variables.
+      </para>
+      <para>
+        Evaluating
+      </para>
+      <para>
+        <programlisting>(+ foo 50)</programlisting>
+      </para>
+      <para>returns 60.</para>
+    </sect2>
+
+
+    <sect2>
+      <title	>Defining a Function</title>
+      <para>
+        Most languages make you name a function; in LSharp functions are named
+        by assigning them to variables.
+      </para>
+      <para>
+        <programlisting>(fn (x) (* x x))</programlisting>
+      </para>
+      <para>
+        declares a function that returns the square of its argument. It may be
+        convenient to assign it to a variable
+      </para>
+      <para>
+        <programlisting>(= square (fn (x) (* x x)))</programlisting>
+      </para>
+      <para>and then it can be used thus</para>
+      <para>
+        <programlisting>(square 10)</programlisting>
+      </para>
+      <para>
+        Treating functions this way makes them first class. They can be assigned to
+        variables and passed as parameters in just the same way as any other object.
+        That turns out to be really useful. (See the Directory.ls sample for an example).
+      </para>
+      <para>
+        Old Lisp hackers may prefer to use the defun macro as a shorthand:
+        <programlisting>(defun square (x) (* x x))</programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Loading a Library</title>
+      <para>
+        You can split your application across multiple files and create libraries. One
+        source code file can effectively include another using load
+      </para>
+      <para>
+        <programlisting>
+          (load "c:\\files\\library.ls")
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Iteration</title>
+      <para>
+        L Sharp includes a number of iteration constructs.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Iteration.ls"></xi:include>
+        </programlisting>
+        A particularly useful idiom in LSharp is the ability to use each on any List or object that is IEnumerable.
+
+        <programlisting>
+          > (each c "Hello" (prl c))
+          #\H
+          #\e
+          #\l
+          #\l
+          #\o
+          null
+          >
+        </programlisting>
+      </para>
+
+    </sect2>
+
+    <sect2>
+      <title>Embedding L Sharp</title>
+      <para>
+        The LSharp.dll assembly is released under the LGPL precisely so that you can
+        embed it into your own project without necessarily making your project open
+        source. It's an ideal way of making your applications scriptable.
+      </para>
+      <programlisting>
+        using LSharp;
+        ...
+        object o = Runtime.EvalString("(+ 10 10)");
+        ...
+      </programlisting>
+    </sect2>
+
+    <sect2>
+      <title>Next Steps</title>
+      <para>
+        Looking at the Samples and Examples section in this
+        documentation is probably the best place to get started.
+        The L Sharp Language Reference section gives a full breakdown of all functions
+        and special forms.
+        Additionally, I'm hoping to start a repository of useful L Sharp programs
+        at <ulink url="http://lsharp.sourceforge.net/download/">http://lsharp.sourceforge.net/download/</ulink>.
+      </para>
+    </sect2>
+  </sect1>
+
+  <sect1 id="reference">
+    <title>L Sharp Language Reference</title>
+
+    <sect2>
+      <title>Introduction</title>
+      <para>
+        This is the definitive guide to the L Sharp language.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Atoms and Lists</title>
+      <para>
+        In L Sharp everything is either an atom or a list. Atoms are things like numbers,
+        symbols and strings. Lists are represented using parenthesis. (a b c). Lists
+        can contain atoms or lists or any combination thereof.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>The Nature of True and False</title>
+      <para>
+        L Sharp takes a fairly liberal view of true and false. The boolean true is
+        self evident true; in the same way false is false. 0 and null are also considered false.
+        Any other object is considered true.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Atoms</title>
+
+      <sect3>
+        <title>null</title>
+        <para>
+          <programlisting>null</programlisting>
+        </para>
+
+        <para>
+          The <function>null</function> keyword is a literal that represents a null reference, one that
+          does not refer to any object. <function>null</function> is the default value of
+          reference-type variables. This is NIL in Common Lisp.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>true</title>
+        <para>
+          <programlisting>true</programlisting>
+          Evaluates to the boolean value true
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>false</title>
+        <para>
+          <programlisting>false</programlisting>
+          The Evaluates to the boolean value false
+        </para>
+
+      </sect3>
+
+      <sect3>
+        <title>Symbols</title>
+        <para>
+          <programlisting>foo</programlisting>
+          A symbol that has previously been set in the environment, returns its value,
+          e.g. <programlisting>(do (= foo 5) foo)</programlisting> returns 5.
+          Unbound symbols evaluate to themselves.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Integers</title>
+        <para>
+          <programlisting>56</programlisting>
+          Integers evaluate to objects of type Int32.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Doubles</title>
+        <para>
+          <programlisting>3.14</programlisting>
+        </para>
+
+        <para>
+          Decimal numbers evaluate to objects of type Double.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Strings</title>
+        <para>
+          <programlisting>"Hello World"</programlisting>
+          Strings evaluate to objects of type System.String.
+        </para>
+      </sect3>
+
+    </sect2>
+
+    <sect2>
+      <title>Functions, Closures, Macros and Special Forms</title>
+      <para>
+        Functions, closures, macros and special forms may all be applied to arguments using
+        expressions of the form
+        <programlisting>(function arguments)</programlisting>.
+        When a built in L Sharp function is called, all arguments are first evaluated using
+        <emphasis>eval</emphasis> and then passed as parameters to the function. (Interested
+        readers should look at the Functions.cs file in the LSharp source to see how functions
+        can be implemented, and how easy it is to extend the language yourself).
+      </para>
+      <para>
+        A closure is a function defined and implemented in the L Shasp language using <emphasis>fn</emphasis>.
+        For example <programlisting>(= square (fn (x) (* x x)))</programlisting>.
+        When you call a closure <programlisting>(square 5)</programlisting> all arguments are first evaluated
+        using <emphasis>eval</emphasis> and then passed to the closure.
+      </para>
+      <para>
+        A macro is is implemented within L Sharp using <emphasis>macro</emphasis>.
+        <programlisting>(= nil! (macro (x) `(== ,x null)))</programlisting>
+        When a macro is called, the macro is first expanded using <emphasis>macroexpand</emphasis> and
+        then evalauted in a similar way to a closure above. i.e. all arguments are first evaluated
+        using <emphasis>eval</emphasis> before being passed.
+      </para>
+      <para>
+        A special form is similar to a function,except that the expressions given as arguments
+        are passed to the special form iplementation <emphasis>without</emphasis> being evaluated.
+        This allows the special form to effect the evaluation process as necessary. As an example,
+        consider <programlisting>(= foo 5)</programlisting>. If = was implemented as a function,
+        then foo would be evaluated before execution and we would simply have its value. It wouldnt
+        be possible to perform the assignment. Implementing = as a special form allows us to treat
+        foo in a special way, as a named symbol and be able to perform the necessary assignment.
+        (Interested readrs are reffered to the SpecialForms.cs file in the source code for implementations
+        of all L Sharp special forms).
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Special Forms</title>
+
+      <sect3>
+        <title>and</title>
+        <para>
+          <programlisting>
+            (and <emphasis>expression*</emphasis>)
+          </programlisting>
+          Evaluates the <emphasis>expression</emphasis>s in order, returning true if all
+          <emphasis>expression</emphasis>s are
+          true, and false if any single <emphasis>expression</emphasis> is false.
+          If a false <emphasis>expression</emphasis> is
+          encountered, then the remaining <emphasis>expression</emphasis>s are not evaluated
+          (short circuit evaluation).
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>backquote</title>
+        <para>
+          <programlisting>
+            (<function>backquote</function> <emphasis>expression</emphasis>)
+          </programlisting>
+          Returns an expression created by expanding any backquote expressions
+          in the given <emphasis>expression</emphasis>. Backquote syntax is often used
+          in macros and is well documented in various Common Lisp references.
+
+
+          <programlisting>
+            > (= x '(a b c))
+            (a b c)
+            > `(,x)
+            ((a b c) )
+            > `(,@x)
+            (a b c)
+            >
+          </programlisting>
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>call</title>
+        <para>
+          <programlisting>
+            (call <emphasis>method object argument*</emphasis>)
+          </programlisting>
+          Calls a .NET <emphasis>method</emphasis> on a given <emphasis>object</emphasis>
+          with given <emphasis>arguments</emphasis>. This is useful if the method name
+          clashes with a variable which is already bound in the current L Sharp lexical
+          environment.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>compile</title>
+        <para>
+          <programlisting>
+            (compile <emphasis>filename expression*</emphasis>)
+          </programlisting>
+          Compiles the given stament to IL, storing the result in a new EXE packaged
+          assembly filename. (Actually this dosnt work yet).
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>cond</title>
+        <para>
+          <programlisting>
+            (<function>cond</function> <emphasis>(test expression)* [default]</emphasis>)
+          </programlisting>
+          Evaluates <emphasis>tests</emphasis> until one returns true. If a test returns true, then evaluates
+          its corresponding expression. If no test return true, then and optionally specified
+          <emphasis>default</emphasis> expression
+          is evaluated.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>--, decrement</title>
+        <para>
+          <programlisting>
+            (<function>--</function> <emphasis>symbol</emphasis>)
+          </programlisting>
+          Subtracts one from the variable represented by <emphasis>symbol</emphasis>.
+          A shorthand for <programlisting>(= symbol (- symbol 1))</programlisting>
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>defclass</title>
+        <para>
+          <programlisting>
+            (<function>defclass</function> ...)
+          </programlisting>
+          Reserved for future use.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>do</title>
+        <para>
+          <programlisting>
+            (<function>do</function> <emphasis>expression*</emphasis>)
+          </programlisting>
+          Evaluates each <emphasis>expression</emphasis>, one at a time. Returns the result of
+          the evaluation of the last <emphasis>expression</emphasis>.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>each</title>
+        <para>
+          <programlisting>
+            (each <emphasis>symbol IEnumerable expression</emphasis>)
+          </programlisting>
+          Iterates over any object which impelements <emphasis>IEnumerable</emphasis>with succesive
+          elements being assigned to a variable named <emphasis>symbol</emphasis>; exceutes
+          <emphasis>expression</emphasis> on
+          each iteration. Cons (LSharp lists), as well as many .NET collections are IEnumerable.
+          Foreach is a synonym for each.
+        </para>
+      </sect3>
+
+
+      <sect3>
+        <title>fn</title>
+        <para>
+          <programlisting>
+            (fn <emphasis>arguments</emphasis> <emphasis>body</emphasis>)
+          </programlisting>
+          Defines a closure with the specified list of <emphasis>arguments</emphasis> and
+          the specified <emphasis>body</emphasis>, an L Sharp expression. Not unlike a lambda
+          expression in Common Lisp.<emphasis>
+            NB arguments is a simple list, we dont yet
+            support keyword or optional arguments.
+          </emphasis>
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>for</title>
+        <para>
+          <programlisting>
+            (for <emphasis>initialiser test iterator statement</emphasis>)
+          </programlisting>
+          The <emphasis>for</emphasis> special form corresponds to the <emphasis>for</emphasis> construct
+          found in most algebraic programming languages. The <emphasis>initialiser</emphasis> is
+          executed. The <emphasis>statement</emphasis> is executed while <emphasis>test</emphasis> is true.
+          The <emphasis>iterator</emphasis> is executed at the end of each <emphasis>statement</emphasis> execution.
+        </para>
+      </sect3>
+
+
+      <sect3>
+        <title>foreach</title>
+        <para>
+          See Each.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>if</title>
+        <para>
+          <programlisting>
+            (if <emphasis>test</emphasis> <emphasis>then</emphasis> [<emphasis>else</emphasis>])
+          </programlisting>
+          The <emphasis>if</emphasis> special form corresponds to the <emphasis>if-then-else</emphasis> construct
+          found in most algebraic programming languages. First the form <emphasis>test</emphasis> is
+          evauated, if true then the form <emphasis>then</emphasis> is evaluated.Otherwise,
+          optionally the form <emphasis>else</emphasis> is evaluated.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>increment</title>
+        <para>
+          <programlisting>
+            (<function>++</function> <emphasis>symbol</emphasis>)
+          </programlisting>
+          Adds one to the variable represented by <emphasis>symbol</emphasis>.
+          A shorthand for <programlisting>(= symbol (+ symbol 1))</programlisting>
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>let</title>
+        <para>
+          <programlisting>
+            (<function>let</function> <emphasis>symbol value expression*</emphasis>)
+          </programlisting>
+          Binds a new local variable <emphasis>symbol</emphasis> to <emphasis>value</emphasis>
+          in a new local lexical environment, before evaluating <emphasis>expressions</emphasis>.
+          Similar to <emphasis>with</emphasis>, but often more convenient for decalring a single local
+          variable.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>macro</title>
+        <para>
+          <programlisting>
+            (<function>macro</function> <emphasis>arguments expression*</emphasis>)
+          </programlisting>
+          Defines a macro. Similar in some respects to defining a clsoure using <emphasis>fn</emphasis>
+          except that the <emphasis>expressions</emphasis> are expanded using <emphasis>macroexpand</emphasis>
+          in the current environment before being evaluated.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>or</title>
+        <para>
+          <programlisting>
+            (or <emphasis>expression*</emphasis>)
+          </programlisting>
+          Evaluates the <emphasis>expression</emphasis>s in order, returning true if any
+          <emphasis>expression</emphasis> is
+          true, and false if all <emphasis>expression</emphasis>s are false.
+          If a true <emphasis>expression</emphasis> is
+          encountered, then the remaining <emphasis>expression</emphasis>s are not evaluated
+          (short circuit evaluation).
+        </para>
+      </sect3>
+
+
+      <sect3>
+        <title>quote</title>
+        <para>
+          <programlisting>
+            (quote <emphasis>object</emphasis>)
+          </programlisting>
+          Returns <emphasis>object</emphasis> without evaluating it.
+          <emphasis>object</emphasis> may be any .NET object. The shortend form <emphasis>'object</emphasis>
+          is more usual.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>setf</title>
+        <para>
+          <programlisting>
+            (<function>=</function> <emphasis>{ symbol value}*</emphasis>)
+          </programlisting>
+          Setf (Set Form) is the variable assignment operator. Sets each variable <emphasis>symbol</emphasis> to
+          <emphasis>value</emphasis> in the current environment. Currently the same as setq. The abbreviation
+          = is more commonly used in L Sharp.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>setq</title>
+        <para>
+          <programlisting>
+            (<function>=</function> <emphasis>{ symbol value}*</emphasis>)
+          </programlisting>
+          Setq (Set Quote) is the variable assignment operator. Sets each variable <emphasis>symbol</emphasis> to
+          <emphasis>value</emphasis> in the current environment. The abbreviation
+          = is more commonly used in L Sharp.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>the</title>
+        <para>
+          <programlisting>
+            (the <emphasis>type</emphasis> <emphasis>value</emphasis>)
+          </programlisting>
+        </para>
+        <para>
+          Returns <emphasis>value</emphasis> converted or cast to an object of the specified <emphasis>type</emphasis>. Throws
+          an exception is the cast is not achievable.
+        </para>
+        <para>
+          The allows type casting and type conversion. This is much more than a wrapper
+          for the System.Convert class, it has special meaning for conversions to and
+          from Lists and certain common .NET data structures. The following are of
+          particular interest:
+          <programlisting>
+            (the Hashtable list)
+            (the Queue queue)
+            (the Stack stack)
+            (the Cons dataTable)
+            (the SortedList list)
+            (the Cons sortedList)
+            (the Cons anyCollection)
+          </programlisting>
+
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>to</title>
+        <para>
+          <programlisting>
+            (to <emphasis>variable limit</emphasis> <emphasis>expression</emphasis>)
+          </programlisting>
+          Starting at 0, assigns <emphasis>variable</emphasis> to succesive integers upto and
+          including <emphasis>limit</emphasis>. Executes <emphasis>expression</emphasis> on each iteration.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>trace</title>
+        <para>
+          <programlisting>
+            (trace <emphasis>filename</emphasis> <emphasis>expression*</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Traces an evaluation of <emphasis>expression*</emphasis> (as if in an implicit do), documenting all
+          call and return steps;
+          writes the output as an XML file in <emphasis>filename</emphasis>.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>try</title>
+        <para>
+          <programlisting>
+            (try <emphasis>expression</emphasis> <emphasis>catch</emphasis> [<emphasis>finally]</emphasis>)
+          </programlisting>
+          The <emphasis>try </emphasis>special form corresponds to the <emphasis>try-catch-finally</emphasis>
+          construct found in C Sharp. If <emphasis>catch</emphasis> is <emphasis>null</emphasis> then there is
+          deemed to be no catch block at all. If an exception occurs, the variable <emphasis>it</emphasis>
+          is bound to the Exception object in the local environment.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>when</title>
+        <para>
+          <programlisting>
+            (when <emphasis>test expression*</emphasis>)
+          </programlisting>
+          Similar to if, but more convenient if there is no else case. Evalautes
+          <emphasis>expressions</emphasis> if the evaluation of <emphasis>test</emphasis>
+          is true.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>while</title>
+        <para>
+          <programlisting>
+            (while <emphasis>test expression*</emphasis>)
+          </programlisting>
+          The <emphasis>while </emphasis>special form corresponds to the <emphasis>while</emphasis> construct
+          found in most algebraic programming languages. First <emphasis>test</emphasis> is
+          evauated, if true then <emphasis>expression* </emphasis>is evaluated. The process
+          continues until the evaluation of <emphasis>test</emphasis> is false.
+        </para>
+      </sect3>
+
+
+      <sect3>
+        <title>with</title>
+        <para>
+          <programlisting>
+            (with <emphasis>([symbol value]* ) expression*</emphasis>)
+          </programlisting>
+          Binds new local variables <emphasis>symbols</emphasis> to <emphasis>values</emphasis>
+          in parallel, in a new local lexical environment, before evaluating <emphasis>expressions</emphasis>.
+          Similar to <emphasis>let</emphasis>, but allows multiple local variables to be bound.
+          <programlisting>
+            (with (x 'a y 'b)
+            (list x y))
+          </programlisting>
+        </para>
+      </sect3>
+
+
+    </sect2>
+
+    <sect2>
+      <title>Built in Functions</title>
+
+      <sect3>
+        <title>Add, +</title>
+        <para>
+          <programlisting>
+            (+ <emphasis></emphasis> <emphasis>object*</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Returns the sum of all the specified <emphasis>objects</emphasis>. Each object must be
+          a numerical type usch as System.In32 or System.Double.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>append</title>
+        <para>
+          <programlisting>
+            (append <emphasis>list1 list2 .. listN</emphasis>)
+          </programlisting>
+          Returns a new list which is a concatenation of all the lists supplied as arguments. All lists are
+          copied (as if by copy-list) except the last list.
+        </para>
+        <para>
+          <programlisting>
+            > (append '(a b c) '(d e f) '(g h j))
+            (a b c d e f g h j)
+          </programlisting>
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>apply</title>
+        <para>
+          <programlisting>
+            (apply <emphasis>function</emphasis> <emphasis>arguments</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Applies <emphasis>function</emphasis> to a list of <emphasis>arguments</emphasis>. function may be a
+          built-in lsharp function, a closure defined by <emphasis>fn</emphasis>, a macro defined using
+          <emphasis>macro</emphasis> or the name of a method in the .NET framework.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>assoc</title>
+        <para>
+          <programlisting>
+            (assoc <emphasis>item</emphasis> <emphasis>list</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Searches the list for a pair who's car is equal to item. If a match is found then the
+          pair is returned, otherwise null.
+          Depending on the size of your list, and the number of times you want to assoc it,
+          you may find it more efficient to use a hashtable.
+          The following is similar to assoc.
+          <programlisting>
+            (using "System.Collections")
+            (= foo (the Hashtable '((a b) (c d) (e f))))
+            (Item foo 'c)
+          </programlisting>
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>caaar</title>
+        <para>
+          <programlisting>
+            (caaar <emphasis>list</emphasis>>)
+          </programlisting>
+          Returns the caaar of the list. A shorthand for (car (car (car list))).
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>caadr</title>
+        <para>
+          <programlisting>
+            (caadr <emphasis>list</emphasis>>)
+          </programlisting>
+          Returns the caadr of the list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>caar</title>
+        <para>
+          <programlisting>
+            (caar <emphasis>list</emphasis>)
+          </programlisting>
+          Returns the caar of the list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>cadar</title>
+        <para>
+          <programlisting>
+            (cadar <emphasis>list</emphasis>)
+          </programlisting>
+          Returns the cadar of the list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>caddr</title>
+        <para>
+          <programlisting>
+            (caddr <emphasis>list</emphasis>)
+          </programlisting>
+          Returns the caddr of the list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>cadr</title>
+        <para>
+          <programlisting>
+            (cadr <emphasis>list</emphasis>)
+          </programlisting>
+          Returns the cadr of the list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>car</title>
+        <para>
+          <programlisting>
+            (car <emphasis>list</emphasis>)
+          </programlisting>
+          Returns the car of the list. The car is the first element of the
+          list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>cdaar</title>
+        <para>
+          <programlisting>
+            (cdaar <emphasis>list</emphasis>)
+          </programlisting>
+          Returns the cdaar of the list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>cdar</title>
+        <para>
+          <programlisting>
+            (cdar <emphasis>list</emphasis>)
+          </programlisting>
+          Returns the cdar of the list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>cddar</title>
+        <para>
+          <programlisting>
+            (cddar <emphasis>list</emphasis>)
+          </programlisting>
+          Returns the cddar of the list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>cdddr</title>
+        <para>
+          <programlisting>
+            (cdddr <emphasis>list</emphasis>)
+          </programlisting>
+          Returns the cdddr of the list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>cddr</title>
+        <para>
+          <programlisting>
+            (cddr <emphasis>list</emphasis>)
+          </programlisting>
+          Returns the cddr of the list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>cdr</title>
+        <para>
+          <programlisting>
+            (cdr <emphasis>list</emphasis>)
+          </programlisting>
+          Returns the cdr of the list. Also know as the <emphasis>rest</emphasis> of the list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>cons</title>
+        <para>
+          <programlisting>
+            (cons <emphasis>object1 object 2</emphasis>)
+          </programlisting>
+          Returns a new cons with object1 as the car and object2 as the cdr.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>copy-list</title>
+        <para>
+          <programlisting>
+            (copy-list <emphasis>list</emphasis>)
+          </programlisting>
+          Returns a shallow copy of list. Only the list structure of list is copied;
+          the elements of the resulting list are the same as the corresponding elements of the given list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Divide /</title>
+        <para>
+          <programlisting>
+            (/<emphasis>object*</emphasis>)
+          </programlisting>
+          Divides object1 by object2 upto objectn. The objects are assumed to be
+          numeric types.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>environment</title>
+        <para>
+          <programlisting>(environment)</programlisting>
+          Returns the current, local environment object - an instance of LSharp.Environment. This
+          is occasionally useful for debugging and manipulation purposes.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>eq</title>
+        <para>
+          <programlisting>
+            (eq <emphasis>expression*</emphasis>)
+          </programlisting>
+          Returns true if all expressions are reference equal, that is they refer to the
+          same object in memory. As a special case, null is eq to null.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>eql, (or ==)</title>
+        <para>
+          <programlisting>
+            (eql <emphasis>expression*</emphasis>)
+          </programlisting>
+          Returns true if all expressions are equal, that is their implementations of
+          equal return true. As a special case, null is eql to null.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>eval</title>
+        <para>
+          <programlisting>
+            (eval <emphasis>expression</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Calls on the L Sharp interpreter to evaluate the given expression
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>evalstring</title>
+        <para>
+          <programlisting>
+            (evalstring <emphasis>string</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Calls on the L Sharp interpreter to evaluate the given expression which is represented as a string.
+          E.g. <programlisting>(evalstring "(+ 1 2)")</programlisting>. Because the evaluation takes place in
+          the current environment, the expression contained in the string can reference variables which have
+          already been defined in that environment.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>exit</title>
+        <para>
+          <programlisting>
+            (exit <emphasis>[exit-code]</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Terminates this process and gives the underlying operating system the specified
+          <emphasis>exit-code</emphasis>.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>first</title>
+        <para>
+          <programlisting>
+            (first <emphasis>list</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Returns the first element of the list. (Also known as the car)
+        </para>
+      </sect3>
+      
+      <sect3>
+        <title>Greater Than, &gt;</title>
+        <para>
+          <programlisting>(&gt; object1 object2 object*)</programlisting>
+          Returns true if <emphasis>object1</emphasis> is greater than <emphasis>object2</emphasis>, <emphasis>object2</emphasis> is greater than <emphasis>object3</emphasis> and so on.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Greater Than Or Equal, &gt;=</title>
+        <para>
+          <programlisting>(&gt;= object1 object2 object*)</programlisting>
+          Returns true if <emphasis>object1</emphasis> is greater than or eql to <emphasis>object2</emphasis>, <emphasis>object2</emphasis> is greater than or eql to<emphasis>object3</emphasis> and so on.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>handle-event</title>
+        <para>
+          <programlisting>(handle-event target eventName handler)</programlisting>
+          Sets up a new event handler for events named eventName on target. The
+          handler is an LSharp closure with two arguments, the sender and the
+          event arguments (defun fn (sender args) (prl "Event Handled")).
+          Experimental. See also defevent.
+<programlisting>
+(reference "System.Windows.Forms")
+(using "System.Windows.Forms")
+(= f (new Form))
+
+(defun handler (sender args)
+  (prl "You clicked the form"))
+
+(handle-event f "Click" handler)
+
+(run application f)
+</programlisting>
+        </para>
+      </sect3>
+
+
+      <sect3>
+        <title>inspect</title>
+        <para>
+          <programlisting>
+            (inspect <emphasis>object</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Returns a description of the specified <emphasis>object</emphasis>, using reflection.
+          Useful for debugging.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>is</title>
+        <para>
+          <programlisting>
+            (is <emphasis>type object</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Returns true if <emphasis>object</emphasis> is an instance of the specified <emphasis>type</emphasis>
+          or supertype.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>length</title>
+        <para>
+          <programlisting>
+            (length <emphasis>expression</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Returns the length of expression. If expression is null, length returns 0, otherwise the length is
+          calculated by calling the length method on the object, ensuring that length works for strings, lists
+          and most collection-like objects.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Less Than, &lt;</title>
+        <para>
+          <programlisting>(&lt; object1 object2 object*)</programlisting>
+          Less than
+        </para>
+      </sect3>
+
+
+      <sect3>
+        <title>Less Than Or Equal &lt;= </title>
+        <para>
+          <programlisting>(&lt;= object1 object2 object*)</programlisting>
+          Less than or equal
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>list</title>
+        <para>
+          <programlisting>(list object*)</programlisting>
+          Creates a new cons, an order list with each <emphasis>object</emphasis> as a member.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>load</title>
+        <para>
+          <programlisting>
+            (load <emphasis>filename</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Loads and evaluates all statements in the given <emphasis>filename</emphasis> which must be
+          a text file. Remember that backslash characters must be escaped within strings, so a typical
+          example would be something like <programlisting>(load "c:\\data\\myfile.lsp")</programlisting>
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Logical And &amp;</title>
+        <para>
+          <programlisting>(&amp; expression*)</programlisting>
+        </para>
+        <para>
+          Returns the bitwise logical and of its arguments
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Logical Inclusive Or |</title>
+        <para>
+          <programlisting>(| expression*)</programlisting>
+        </para>
+        <para>
+          Returns the bitwise logical inclusive or of its arguments
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Logical Exclusive Or ^</title>
+        <para>
+          <programlisting>(^ expression*)</programlisting>
+        </para>
+        <para>
+          Returns the bitwise logical exclusive or of its arguments
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>macroexpand</title>
+        <para>
+          <programlisting>
+            (macroexpand <emphasis>macro</emphasis>)
+          </programlisting>
+          Expands the given macro in the current lexical environment.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>map</title>
+        <para>
+          <programlisting>
+            (map <emphasis>function list</emphasis>)
+          </programlisting>
+          Applies <emphasis>function</emphasis> to each element in <emphasis>list</emphasis> return
+          a new list of return values.
+        </para>
+      </sect3>
+      
+      <sect3>
+        <title>member</title>
+        <para>
+          <programlisting>
+            (member <emphasis>item list</emphasis>)
+          </programlisting>
+          Determines whether item is a member of the list (list can be any IEnumerable
+          object). If true, returns item, otherwise returns null.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Multiply, *</title>
+        <para>
+          <programlisting>
+            (* <emphasis>object*</emphasis>)
+          </programlisting>
+          Returns the result of multiplying each <emphasis>object</emphasis> together.
+          Each <emphasis>object</emphasis> is assumed to be a numeric value.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>nconc</title>
+        <para>
+          <programlisting>
+            (nconc list*)
+          </programlisting>
+          Returns a list whose elements are the elements of each list in
+          order. Destructively modifies all but the last list, such that
+          the cdr of the last cons in each list is set to the next list.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>new</title>
+        <para>
+          <programlisting>
+            (new <emphasis>class</emphasis>)
+          </programlisting>
+          Creates a new object, an instance of type <emphasis>class</emphasis>
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>not</title>
+        <para>
+          <programlisting>
+            (not <emphasis>bool</emphasis>)
+          </programlisting>
+          Returns the logical complement of the given boolean.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Not Equal, !=</title>
+        <para>
+          <programlisting>
+            (!= <emphasis>expression*</emphasis>)
+          </programlisting>
+          The logical complement of the eql operator.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>nth</title>
+        <para>
+          <programlisting>
+            (nth <emphasis>n</emphasis> <emphasis>IEnumerable</emphasis>)
+          </programlisting>
+          Returns the nth element of the <emphasis>IEnumarable</emphasis> object for n >=0. It is important to note
+          that the numbering starts at 0 which is the first element.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>pr</title>
+        <para>
+          <programlisting>
+            (pr <emphasis>object*</emphasis>)
+          </programlisting>
+          Prints each object to Console.Out, without a new line. This is really
+          just a shorthand for (Write Console object)
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>prl</title>
+        <para>
+          <programlisting>
+            (prl <emphasis>object*</emphasis>)
+          </programlisting>
+          Prints each object to Console.Out, then prints a new line. This is really
+          just a shorthand for (WriteLine Console object)
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>read</title>
+        <para>
+          <programlisting>
+            (read <emphasis>stream</emphasis> <emphasis>[eof-value]</emphasis>)
+          </programlisting>
+          Calls the L Sharp reader to turn textual input from the steam into
+          objects suitable for evaluation by <emphasis>eval</emphasis>.
+          The default eof-value is null, but you can specify any eof-value object to avoid ambiguity.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>reference</title>
+        <para>
+          <programlisting>
+            (reference <emphasis>name*</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Loads the specified .NET assembly, either from the GAC, local directory or from
+          and explicit directory. <emphasis>name</emphasis> may either be a fully qualified filename
+          or a partial assembly name.
+        </para>
+      </sect3>
+
+
+      <sect3>
+        <title>reset</title>
+        <para>
+          <programlisting>(reset)</programlisting>
+          Resets the global environment.
+        </para>
+
+      </sect3>
+
+      <sect3>
+        <title>reverse</title>
+        <para>
+          <programlisting>(reverse list)</programlisting>
+          Reverses the given list.
+          <programlisting>
+            > (reverse '( 1 2 3))
+            (3 2 1)
+          </programlisting>
+        </para>
+
+      </sect3>
+
+
+      <sect3>
+        <title>rest</title>
+        <para>
+          <programlisting>
+            (rest <emphasis>list</emphasis>)
+          </programlisting>
+          A synonym for cdr.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>spawn</title>
+        <para>
+          <programlisting>
+            (spawn <emphasis>expression</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Like eval except that the expression
+          is evaluated on a new Thread. Returns immediately with
+          the new Thread object, but execution of expressions
+          continues synchronously. Experimental.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>Subtract, -</title>
+        <para>
+          <programlisting>(- object*)</programlisting>
+          Returns the result of subtracting <emphasis>object2</emphasis> from
+          <emphasis>object1</emphasis> etc. <emphasis>objects</emphasis> are assumed to be
+          numeric values.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>symbol-name</title>
+        <para>
+          <programlisting>(symbol-name symbol)</programlisting>
+          Returns the name of a symbol as a string.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>throw</title>
+        <para>
+          <programlisting>
+            (throw <emphasis>exception</emphasis>)
+          </programlisting>
+          Throws a .NET exception, <emphasis>exception</emphasis> must be a System.Exception or
+          derrivitive.
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>typeof</title>
+        <para>
+          <programlisting>
+            (typeof <emphasis>symbol</emphasis>)
+          </programlisting>
+        </para>
+        <para>
+          Returns the System.Type whose name is that of the symbol. (i.e. coverts symbol names to type
+          objects).
+          <programlisting>
+            (typeof Console)
+          </programlisting>
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>using</title>
+        <para>
+          <programlisting>
+            (using <emphasis>namespace</emphasis>)
+          </programlisting>
+        </para>
+
+        <para>
+          Permit the use of types in a namespace, such that, you do not have to qualify
+          the use of a type in that namespace.
+        </para>
+      </sect3>
+
+    </sect2>
+
+    <sect2>
+      <title>Built in Macros</title>
+
+      <sect3>
+        <title>defevent</title>
+        <para>
+          <programlisting>(defevent name target args body)</programlisting>
+        </para>
+
+        <para>
+          A more convenient way of using handle-event 
+<programlisting>
+(reference "System.Windows.Forms")
+(using "System.Windows.Forms")
+
+(= f (new Form))
+
+(defevent Click f (sender args)
+  (writeline console "You clicked x {0} y {1}" (x args) (y args)))
+
+(spawn '(run application f))
+</programlisting>
+        </para>
+      </sect3>
+      
+      <sect3>
+        <title>defun</title>
+        <para>
+          <programlisting>(defun name args body)</programlisting>
+        </para>
+
+        <para>
+          A shorthand for <programlisting>(= name (fn args body)))</programlisting>
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>defmacro</title>
+        <para>
+          <programlisting>(defmacro name args body)</programlisting>
+        </para>
+        <para>
+          A shorthand for <programlisting>(= name (macro args body))</programlisting>
+        </para>
+      </sect3>
+
+      <sect3>
+        <title>listp</title>
+        <para>
+          <programlisting>(listp arg)</programlisting>
+        </para>
+        <para>
+          Returns True if arg is a list, False otherwise
+        </para>
+      </sect3>
+
+    </sect2>
+  </sect1>
+
+  <sect1 id="samples">
+    <title>Samples and Examples</title>
+
+    <sect2>
+      <title>Introduction</title>
+      <para>
+        These samples are also available in the L Sharp repository at <ulink url="http://lsharp.sourceforge.net/download/">http://lsharp.sourceforge.net/download/</ulink>.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>HelloWorld.ls</title>
+      <para>
+        Tradition says that Hello World must be the first sample.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/HelloWorld.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Factorial.ls</title>
+      <para>
+        Computes the factorial of a number. Demonstrates recursion.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Factorial.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Fibonacci.ls</title>
+      <para>
+        Computes Fibonacci numbers using tree recursion.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Fibonacci.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Rss.ls</title>
+      <para>
+        Retrieves news headlines from an RSS feed.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Rss.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Greeting.ls</title>
+      <para>
+        Displays a greeting depending on the time of day.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Greeting.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Guid.ls</title>
+      <para>
+        Creates Globally Unique Identifiers.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Guid.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Hashtable.ls</title>
+      <para>
+        Demonstrates the use of Hashtables.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Hashtable.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Iteration.ls</title>
+      <para>
+        Demonstrates L Sharp's loop and iteration forms.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Iteration.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+
+    <sect2>
+      <title>List.ls</title>
+      <para>
+        Demonstrates the use of L Sharp Lists.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/List.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>MessageBox.ls</title>
+      <para>
+        Shows how to pop up a Message Box.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/MessageBox.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Northwind.ls</title>
+      <para>
+        Demonstrates access to a SQL database (the Microsoft Northwind Traders example).
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Northwind.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Queue.ls</title>
+      <para>
+        Demonstrates how to use a Queue data structure.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Queue.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Shell.ls</title>
+      <para>
+        Shows how to launch another application such as Calculator or Internet Explorer.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Shell.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Try.ls</title>
+      <para>
+        Exception handling.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Try.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Whois.ls</title>
+      <para>
+        A simple WHOIS client.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Whois.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+
+    <sect2>
+      <title>String.ls</title>
+      <para>
+        String examples.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/String.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Stack.ls</title>
+      <para>
+        Stack.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Stack.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Sound.ls</title>
+      <para>
+        The L Sharp Sound Library.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Sound.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>SortedList.ls</title>
+      <para>
+        Showss the use of SortedList.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/SortedList.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Smtp.ls</title>
+      <para>
+        Shows how to programmatically send an email message.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Smtp.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Regex.ls</title>
+      <para>
+        Demonstrates the use of regular expressions
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Regex.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+
+    <sect2>
+      <title>Http.ls</title>
+      <para>
+        Demonstrates how to use HTTP GET and POST to access resources on the Web.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Http.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>File.ls</title>
+      <para>
+        Defines some useful functions for manipulating files.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/File.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+
+    <sect2>
+      <title>Directory.ls</title>
+      <para>
+        Demonstrated some simple functions for manipulating directories. Note how recurse-directory
+        takes a function as an argument; that function is applied to all matching files.
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Directory.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+
+
+    <sect2>
+      <title>Squares.ls</title>
+      <para>
+        <programlisting>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Squares.ls"></xi:include>
+        </programlisting>
+      </para>
+    </sect2>
+
+  </sect1>
+
+
+  <sect1 id="web">
+    <title>Web Application Development with L Sharp</title>
+
+    <sect2>
+      <title>Getting Started</title>
+      <para>
+        Create a new ASP.NET 2 web application.
+      </para>
+      <para>
+        Create a bin subdirectory and copy in LSharp.dll and LSharp.Web.dll.
+      </para>
+      <para>
+        Modify your web.config file to include
+<programlisting>
+<![CDATA[
+<httpHandlers>
+  <add verb="*" path="*.lsp" type="LSharp.Web.LSharpHttpHandler,LSharp.Web"/>
+</httpHandlers>
+]]>
+</programlisting>
+      </para>
+      <para>
+        Then write your L Sharp Page as a text file with a *.lsp extension.
+        The contents of the file will be passed to the L Sharp evaluator when
+        the page is requested, so it must be a valid L Sharp program.
+        Here is a simple example:
+<programlisting>
+<![CDATA[
+;;; Hello World
+(write *response* "<h1>Hello World</h1>")  ]]>
+</programlisting>
+        As you can see, <programlisting>*response*</programlisting> is bound to the HttpResponse object.
+        <programlisting>*request*</programlisting> <programlisting>*session*</programlisting> and
+        <programlisting>*application*</programlisting>
+          are available similarly.
+          In addition, <programlisting>*context*</programlisting> is bound to the HttpContext. Take a look at the MSDN documentation
+        for System.Web.HttpContext, the object model is fairly self explanatory.
+        Also see the
+        example web site included with the L Sharp source distribution.
+      </para>
+    </sect2>
+  </sect1>
+
+  <sect1 id="forms">
+    <title>Windows Forms Development with L Sharp</title>
+
+    <sect2>
+      <title>Getting Started</title>
+      <para>
+        Here is a sample application which creates a new form and a Click
+        event handler. When you click the form, the coordinate of the click
+        point is printed on the Console. Note the use of spawn to create
+        a new thread to service the user interface.
+
+<programlisting>
+          <![CDATA[
+(reference "System.Windows.Forms")
+(using "System.Windows.Forms")
+
+(= f (new Form))
+
+(defevent Click f (sender args) 
+	(writeline console "You clicked x {0} y {1}" (x args) (y args)))
+
+(spawn '(run application f))
+]]>
+        </programlisting>
+      </para>
+      <para>
+        One cool thing is the ability to incrementally change your application
+        while its still running. At the toploop, try redefining the event handler
+        using defevent - the application updates immediately - no need to stop
+        recompile and start again!
+      </para>
+      <para>
+        Add more documentation here.
+      </para>
+    </sect2>
+  </sect1>
+
+
+  <sect1 id="faq">
+    <title>Frequently Asked Questions</title>
+
+    <sect2>
+      <title>Why write another language? Why not use X instead?</title>
+      <para>
+        Where X is the name of any programming language, Lisp system or Lisp library.
+      </para>
+      <para>
+        Well I wanted a Lisp-like language that I could use for scripting on the .NET platform. I wanted
+        it to be purely managed code, and no such solution existed that met my needs.
+        L Sharp is still one of the simplest, cleanest and most modern implementations.
+      </para>
+      <para>
+        You are free to go and search elsewhere. There are plenty of alternatives now.
+        Here are some links which may interest you.
+
+        <simplelist>
+          <member>
+            <ulink url="http://www.ccs.neu.edu/home/will/Larceny/">http://www.ccs.neu.edu/home/will/Larceny/</ulink>
+          </member>
+          <member>
+            <ulink url="http://www.kenrawlings.com/pages/Tachy">http://www.kenrawlings.com/pages/Tachy</ulink>
+          </member>
+          <member>
+            <ulink url="http://weitz.de/rdnzl/">http://weitz.de/rdnzl/</ulink>
+          </member>
+          <member>
+            <ulink url="http://foil.sourceforge.net/">http://foil.sourceforge.net/</ulink>
+          </member>
+          <member>
+            <ulink url="http://dotlisp.sourceforge.net/dotlisp.htm">http://dotlisp.sourceforge.net/dotlisp.htm</ulink>
+          </member>
+          <member>
+            <ulink url="http://www.newlisp.org/">http://www.newlisp.org/</ulink>
+          </member>
+          <member>
+            <ulink url="http://www.hpwsoft.de/anmeldung/html1/newLISP/newLISP.html">http://www.hpwsoft.de/anmeldung/html1/newLISP/newLISP.html</ulink>
+          </member>
+        </simplelist>
+
+      </para>
+      <para>
+        One of the nice things about L Sharp is how easy it is to change. There is a great opportunity
+        here to make L Sharp whatever we need it to be. Any feedback welcome.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>L Sharp wont start, why?</title>
+      <para>
+        A prerequisite for L Sharp is that you have installed the
+        <ulink url="http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5&amp;DisplayLang=en">.NET framework 2.0 from Microsoft</ulink>.
+        (Unless of course, you are using Mono and compiling L Sharp from source yourself).
+
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Where can I get L Sharp examples programs?</title>
+      <para>
+        The L Sharp repository is available at <ulink url="http://lsharp.sourceforge.net/download/">http://lsharp.sourceforge.net/download/</ulink>.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>Does L Sharp run on Mono?</title>
+      <para>Yes, but there are a few wrinkles.</para>
+    </sect2>
+
+    <sect2>
+      <title>Why can't I specify more than 3 arguments to a Format String?</title>
+      <para>
+        Unfortunately the .NET framework only provides methods for one, two
+        or three arguments. C Sharp appears to allow more arguments by converting
+        your arguments to an Object Array behind the scenes (?)
+        I L Sharp you can  specify an Object Array of arguments
+        directly, thus avoiding the problem.
+      </para>
+      <programlisting>(Format String "{0},{1},{2},{3},{4}" (the Array (list 1 2 3 4 5)))</programlisting>
+    </sect2>
+
+    <sect2>
+      <title>What editors and IDEs are available for L Sharp?</title>
+      <para>
+        Today, most people are using Emacs (See below), but there is a new editor called Xacc
+        which has LSharp built in! It's a modern IDE with a more gentle learning curve.
+        See
+        <ulink url="http://sourceforge.net/projects/xacc">http://sourceforge.net/projects/xacc</ulink>
+        and
+        <ulink url="http://blogs.wdevs.com/leppie/">http://blogs.wdevs.com/leppie/</ulink> for more
+        information.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>How can I use Emacs to edit my L Sharp files ?</title>
+      <para>
+        Put the following in your .emacs file (change the path according to where you installed LSharp).
+        <programlisting>
+          (cond ((fboundp 'global-font-lock-mode)
+          ;; Turn on font-lock in all modes that support it
+          (global-font-lock-mode t)
+          ;; Maximum colors
+          (setq font-lock-maximum-decoration t)))
+
+          (setq inferior-lisp-program "C:/LSharp/LSharp.exe")
+        </programlisting>
+        Then start emacs. Type <programlisting>M-x run-lisp</programlisting>.
+        You edit an LSharp program in another Lisp buffer and send expressions to the inferior Lisp process using
+        <programlisting>C-x C-e </programlisting>
+        You may also like to try
+        <programlisting>C-c C-l</programlisting> to load and evaluate the entire file
+        <programlisting>ESC C-q</programlisting> at the start of an S-expression to properly indent and format it
+        <programlisting>C-h m</programlisting> for help on Lisp mode
+
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>How do I get L Sharp to work with XEmacs under Windows?</title>
+
+      <para>In XEmacs, if you try to use LSharp.exe with inferior lisp mode then XEmacs hangs. I don't know why exactly, but the following is a workaround:
+      </para>
+      <para>
+       Create a new batch file called LSharp.BAT and put this in your L Sharp directory. It should contain the following line:
+      </para>
+      <para>
+        <programlisting>cmd /c c:\LSharp\Lsharp.exe</programlisting>
+      </para>
+      <para>
+        Then change your .emacs file to reference this batch file instead of the .EXE
+      </para>
+      <para>
+        <programlisting>(setq inferior-lisp-program "C:/LSharp/LSharp.bat")</programlisting>
+      </para>
+      <para>Now everything should work okay.</para>
+    </sect2>
+
+    <sect2>
+      <title>How can I use TextPad to edit my L Sharp files ?</title>
+      <para>
+        Copy the lsharp.syn file provided to your text pad samples. Define a new
+        document class called LSharp which includes *.ls file and uses the lsharp.syn
+        sntax definition file.
+      </para>
+      <para>
+        The most useful feature is being able to put the cursor next to a bracket and
+        pressing CTRL-m repeatedly to match corresponding brackets.
+      </para>
+    </sect2>
+
+    <sect2>
+      <title>How do I define a new class and methods?</title>
+      <para>
+        You can't do this easily yet, sorry! I suggest that if you need some feature like this,
+        you write an assembly in either C Sharp or VB.NET and then just call it from L Sharp. That's
+        the beauty of .NET, language interoperability.
+      </para>
+      <para>
+        Technically a user can use classes in System.Reflection.Emit to build types and methods, but thats
+        fairly advanced. We intend to provide some wrappers for these at some point in the future.
+      </para>
+
+    </sect2>
+    <sect2>
+      <title>How can I access command line arguments from my script?</title>
+      <programlisting>(the cons (GetCommandLineArgs System.Environment))</programlisting>
+
+    </sect2>
+    <sect2>
+      <title>Why can't I say (Console.WriteLine "Hello World") ?</title>
+      <para>
+        C Sharp programmers are used to this notation of object.method - We experimented with
+        it, but "java dot" notation is just syntactic sugar where the thing before the dot
+        is essentially the first argument. We think that the following is more consistent and
+        more in the spirit of Lisp - you'll get used to it!.
+        <programlisting>(WriteLine Console "Hello World")</programlisting>
+      </para>
+
+    </sect2>
+
+    <sect2>
+      <title>How can I call a .NET method with the same name as an L Sharp Function ?</title>
+      <para>
+        If you try
+        <programlisting>
+          (= news (new System.Xml.XmlDocument))
+          (load news "http://www.theregister.co.uk/headlines.rss")
+        </programlisting>
+        then it won't work as intended, because the L Sharp built in function load is run
+        in preference to the Load method on XmlDocument. The solution is to use the <emphasis>call</emphasis>
+        special form.
+        <programlisting>
+          (= news (new System.Xml.XmlDocument))
+          (call load news "http://www.theregister.co.uk/headlines.rss")
+        </programlisting>
+      </para>
+
+    </sect2>
+
+    <sect2>
+      <title>How can I launch an L Sharp GUI program without starting a command line?</title>
+      <para>
+        Create a shortcut that runs the LSharp.Launcher.exe program with your yourscript.ls as its argument.
+      </para>
+    </sect2>
+  </sect1>
+
+  <sect1 id="download">
+    <title>Download</title>
+    <para>
+      The latest software is always available from
+      <ulink url="http://sourceforge.net/project/showfiles.php?group_id=135252">Sourceforge</ulink>.
+    </para>
+  </sect1>
+
+  <sect1 id="license">
+    <title>Licence</title>
+    <para>
+      The LSharp.dll assembly is distributed under the terms of the GNU Library General Public License.
+      In this way, it can be incorporated into other applications.
+    </para>
+    <para>
+      The LSharp interpreter is distributed under the terms of the GNU General Public License.
+    </para>
+    <para>
+      This document is licensed under a
+      <ulink url="http://creativecommons.org/licenses/by-sa/2.0/">Creative Commons License</ulink>.
+    </para>
+  </sect1>
+
+  <sect1 id="services">
+    <title>Consultancy, Support and Training</title>
+    <para>
+      The software is provided as-is, without warranty of any kind.
+    </para>
+    <para>
+      If you'd like any help, support or training with L Sharp, please contact
+      <ulink url="http://www.aws.net">Active Web Solutions</ulink>
+      who would be delighted to discuss your requirements on a commercial basis.
+    </para>
+  </sect1>
+
+  <sect1 id="feedback">
+    <title>Bugs and Feedback</title>
+    <para>
+      If you have any comments or feedback on L Sharp, please email
+      <email>feedback@lsharp.org</email>. I'd be delighted to hear
+      about any applcations that you have written.
+    </para>
+    <para>
+      If you find a bug in L Sharp or any associated tools, please email
+      <email>bugs@lsharp.org</email>
+      with a detailed description and, if possible, a solution, fix or patch.
+    </para>
+  </sect1>
+
+
+
+  <sect1 id="acknowledgements">
+    <title>Acknowledgements</title>
+    <para>
+      My thanks to all at
+      <ulink url="http://www.aws.net">Active Web Solutions</ulink>
+       for help, support, constructive comments and criticism.
+    </para>
+    <para>
+      Were it not for Paul Graham's book, Hackers and Painters, L Sharp would probably never
+      have been born.
+    </para>
+    <para>
+      The following books have been particularly helpful:
+      <simplelist>
+        <member>Applied Microsoft .NET Framework Programming - Jeffrey Richter</member>
+        <member>C# In a Nutshell - Peter Drayton</member>
+        <member>Essential .NET - Don Box</member>
+        <member>ANSI Common Lisp - Paul Graham</member>
+      </simplelist>
+    </para>
+    <para>
+      About halfway through the L Sharp development, I happened upon the DotLisp project by Rich Hickey and found
+      the source code to be interesting reading and a useful source of ideas and inspiration.
+    </para>
+    <para>
+      Several people have contributed by providing encouragement, bug reports, comments and fixes; particular thanks to
+      Patrick Dussud, Hans-Peter Wickern and Alex Peake.
+    </para>
+  </sect1>
+
+  <sect1 id="colophon">
+    <title>Colophon</title>
+    <para>
+      This information was prepared in XML using the DocBook standards.
+      The Web site was then created using Tim Waugh's xmlto toolchain
+      under Cygwin.
+      The output is styled using a Cascading Style Sheet based on <ulink url="http://www.freebsd.org/cgi/cvsweb.cgi/doc/share/misc/docbook.css">The FreeBSD DocBook/CSS stylesheet</ulink>.
+    </para>
+    <para>
+      Last updated <?dbtimestamp format="Y-m-d H:M:S"?>.
+    </para>
+  </sect1>
+
+</article>

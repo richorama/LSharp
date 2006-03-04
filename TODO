@@ -1,0 +1,74 @@
+This file contains a (partial) list of bugs and todo items for ongoing LSharp development.
+
+(typeof string) doesnt work on Mono
+
+Class definition facility to be able to subclass existing classes and implement existing interfaces.
+
+Build a compiler to generate *.exe or *.dll from an LSharp source.
+
+Build a better GUI based inspector.
+
+Build a CLOS like object system.
+
+A bignumber facility for arbitrary length, arbitrary precision numbers and arithmentic.
+
+Ensure MONO can be a fully supported platform
+
+Provide an initialisation file - say init.ls which is run when the interpreter is invoked to allow the user to customise their environment.
+
+Provide a means of persisting one's environment, say (save filename) between interpreter sessions.
+
+Write a good L Sharp specific mode for GNU Emacs, or maybe support SLIME.
+
+Implement a wider range of ReaderMacros.
+
+Implement some kind of FASL facility to fast load files.
+
+Some Special Forms and functions should make more use of LSharpExeception to detect and handle errors.
+
+When an error occurs, show the line number of the source code file.
+
+Consider whether if, while, cond etc should bind "it" to the result of the expression as per ARC.
+ 
+Consider (3 string) as per ARC syntax.
+
+Do we need an unbind or unassign function which removes a binding from the environment?
+ 
+Implement rfn - The recursive function.
+
+Bug - typename collisions are not flagged - you just get the first type found.
+
+How do you get at fields of a class that dont have an accessor method?
+
+Profile the interpreter and look for opportunities for performance optimisation.
+
+Optional and Keyword arguments to closures and macros.
+ 
+Can we produce a CODEDOM for LSharp ?
+
+MS Visual Studio hosted development. Bracket matching in VS2005.
+
+Consider implementing the notion of setfable forms, and avoiding (set_property object value).
+
+If your brackets dont match you get a stack overflow - we need a more explanatory error message.
+
+Trace should include execution timings.
+
+There are no built in div and mod operators.
+
+Do we need funcall ?
+
+&rest or . Like scheme?
+
+no such method - give more details about types		
+
+SortedList, Stack and Queue seem to be reversed
+
+Add (Source x)
+
+PS: Could you consider to make a additional framed HTML reference.
+(You can take a look at a newer newLISP distribution. There we have a left frame where 
+all keyword are listed (and grouped) where you can click a hyperlink and the main window 
+jumps to the keyword.)
+
+  

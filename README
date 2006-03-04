@@ -1,0 +1,18 @@
+L Sharp
+
+L Sharp .NET is a powerful Lisp-like scripting language for .NET. It uses a Lisp dialect similar to Arc but tightly integrates with the .NET Framework which provides a rich set of libraries. 
+
+L Sharp is free software distributed under the terms of the GNU General Public License and GNU Lesser General Public License. 
+
+This is the root directoty of the source code distribution.
+
+For all the latest information visit the L Sharp home page (www.lsharp.org).
+
+Rob Blackwell
+Feb 2006
+
+
+
+
+
+

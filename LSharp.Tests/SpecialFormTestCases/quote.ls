@@ -1,0 +1,1 @@
+(eql (quote foo) 'foo)

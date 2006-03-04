@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LSharp.Launcher</name>
+    </assembly>
+    <members>
+        <member name="T:LSharp.Launcher.Program">
+            <summary>
+            A Launcher program which executes L Sharp scripts without
+            creaing a Console window
+            </summary>
+        </member>
+    </members>
+</doc>

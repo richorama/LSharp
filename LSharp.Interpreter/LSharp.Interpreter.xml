@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LSharp.Interpreter</name>
+    </assembly>
+    <members>
+        <member name="T:LSharp.Interpreter.Program">
+            <summary>
+            Provides a command line interpreter for L Sharp
+            </summary>
+        </member>
+        <member name="M:LSharp.Interpreter.Program.Banner">
+            <summary>
+            Displays an introductory banner message
+            </summary>
+        </member>
+        <member name="M:LSharp.Interpreter.Program.Main(System.String[])">
+            <summary>
+            The main entry point for the application.
+            </summary>
+            [STAThread]
+        </member>
+    </members>
+</doc>

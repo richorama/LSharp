@@ -1,0 +1,1467 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LSharp</name>
+    </assembly>
+    <members>
+        <member name="T:LSharp.EventAdapter">
+            <summary>
+            An adapter which allows event handlers to be written in L Sharp.
+            Events are handled by System.EventHandler delegate, but then passed 
+            onto an LSharp closure through an instance of this adapter which wraps
+            that closure.
+            </summary>
+        </member>
+        <member name="M:LSharp.EventAdapter.#ctor(LSharp.Closure)">
+            <summary>
+            Creates a new EventAdapter with the specified closure as the 
+            underlying handler.
+            </summary>
+            <param name="closure"></param>
+        </member>
+        <member name="M:LSharp.EventAdapter.HandleEvent(System.Object,System.EventArgs)">
+            <summary>
+            Handles the event by invoking the closure
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:LSharp.EventAdapter.AddEventHandler(System.Object,System.String,LSharp.Closure)">
+            <summary>
+            Adds closure as an event handler for eventName on the target object
+            </summary>
+            <param name="target"></param>
+            <param name="eventName"></param>
+            <param name="closure"></param>
+            <returns></returns>
+        </member>
+        <member name="P:LSharp.EventAdapter.Closure">
+            <summary>
+            The underlying closure that gets called to handle the event.
+            </summary>
+        </member>
+        <member name="T:LSharp.TypeCache">
+            <summary>
+            Provides a hashtable cache of common language types in order to
+            avoid repetitive reflection. Provides features for finding types
+            with unqualified names.
+            </summary>
+        </member>
+        <member name="M:LSharp.TypeCache.Clear">
+            <summary>
+            Clears the cache and resets its state to default values
+            </summary>
+        </member>
+        <member name="M:LSharp.TypeCache.#ctor">
+            <summary>
+            Private constructor ensures singleton design pattern
+            </summary>
+        </member>
+        <member name="M:LSharp.TypeCache.Instance">
+            <summary>
+            Return the singleton instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.TypeCache.FindType(System.String)">
+            <summary>
+            Finds a type given its fully qualified or unqualified name
+            Takes advantage of the cache to speed up lookups
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LSharp.Reader">
+            <summary>
+            Reads arbitrary LSharp objects from textual descriptions
+            </summary>
+        </member>
+        <member name="T:LSharp.ReadTable">
+            <summary>
+            The ReadTable is a lookup table which directs the reader on
+            how to react to the presence of certain character combinations
+            in the input stream
+            </summary>
+        </member>
+        <member name="T:LSharp.Environment">
+            <summary>
+            An environment is essentially a hashtable that maps variables to values.
+            In addition, environments can be nested to support local variables.
+            </summary>
+        </member>
+        <member name="M:LSharp.Environment.#ctor">
+            <summary>
+            Creates a new, global environment
+            </summary>
+        </member>
+        <member name="M:LSharp.Environment.#ctor(LSharp.Environment)">
+            <summary>
+            Creates a new environment which has access to a previous environment
+            </summary>
+            <param name="environment"></param>
+        </member>
+        <member name="M:LSharp.Environment.Contains(LSharp.Symbol)">
+            <summary>
+            Determines whether the environment contains a definition for
+            a variable with the given symbol
+            </summary>
+            <param name="symbol"></param>
+            <returns>True or false</returns>
+        </member>
+        <member name="M:LSharp.Environment.Assign(LSharp.Symbol,System.Object)">
+            <summary>
+            Sets a variable with given symbol to a given value
+            </summary>
+            <param name="symbol"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Environment.AssignLocal(LSharp.Symbol,System.Object)">
+            <summary>
+            Asssigns value to a local variable symbol in this
+            local environment (irrespective of whether symbol
+            is defined in any parent environments).
+            </summary>
+            <param name="symbol"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Environment.Contents">
+            <summary>
+            Returns the contents of the environment as a string suitable for use
+            in a debugger or IDE.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:LSharp.XmlTracer">
+            <summary>
+            A profiler which traces LSharp programs and writes the trace to an XML file
+            </summary>
+        </member>
+        <member name="T:LSharp.IProfiler">
+            <summary>
+            Provides an interface so that tracers, debuggers and profilers can hook into
+            the evaluation process.
+            </summary>
+        </member>
+        <member name="T:LSharp.Runtime">
+            <summary>
+            Allows LSharp programs to be executed
+            </summary>
+        </member>
+        <member name="M:LSharp.Runtime.EvalList(System.Object,LSharp.Environment)">
+            <summary>
+            Maps eval to a list of expressions
+            </summary>
+            <param name="list"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Runtime.Eval(System.Object,LSharp.Environment)">
+            <summary>
+            Evaluates an expression in a given lexical environment
+            </summary>
+            <param name="form"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Runtime.MakeInstance(System.Type,System.Object)">
+            <summary>
+            Makes a new instance of type type by calling the
+            appropriate constructor, passing the given arguments
+            </summary>
+            <param name="type">The type of object to create</param>
+            <param name="arguments">the arguments to the constructor</param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Runtime.Call(System.String,LSharp.Cons)">
+            <summary>
+            Calls a .NET method.
+            The first argument is the object to which the method is attached.
+            Passes the rest of the arguments to the appropriate constructor
+            </summary>
+            <param name="method"></param>
+            <param name="arguments"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Runtime.Apply(System.Object,System.Object,LSharp.Environment)">
+            <summary>
+            Applies a function to its arguments. The function can be a built in L Sharp function,
+            a closure or a .net method
+            </summary>
+            <param name="function"></param>
+            <param name="arguments"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LSharp.Macros">
+            <summary>
+            Built in macros
+            </summary>
+        </member>
+        <member name="T:LSharp.Functions">
+            <summary>
+            Definitions of built in L Sharp functions
+            </summary>
+        </member>
+        <member name="M:LSharp.Functions.Add(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (add object*)
+            Returns the sum of all the specified objects. 
+            Each object must be a numerical type usch as System.In32 or System.Double.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Apply(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (apply function list)
+            Applies function to a list of arguments. function may be a built-in lsharp function, 
+            a closure defined by fn a macro defined by macro or the name of a method in the 
+            .NET framework. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Assoc(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (assoc item alist)
+            return the first cons in alist whose car is equal to item, 
+            or nil if no such cons is found.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Caaar(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (caaar list) A shorthand for (car (car (car list)))
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Caadr(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (caadr list)
+            A shorthand for (car (car (cdr list)))  
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Caar(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (caar list) 
+            A shorthand for (car (car list))
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Cadar(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (cadar list)
+            A shorthand for (car (cdr (car list)))
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Caddr(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (caddr list)
+            A shorthand for (car (cdr (cdr list))) 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Cadr(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (cadr list)
+            A shorthand for (car (cdr list)) 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Car(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (car list) 
+            Returns the first element of a list or other IEnumerable data structure
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Cdaar(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (cdaar list)
+            A shorthand for (cdr (car (car x))) 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Cdadr(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (cdadr list)
+            A shorthand for (cdr (car (cdr x))) 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Cdar(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (cdar list)
+            A shorthand for (cdr (car x)) 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Cddar(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (cddar list)
+            A shorthand for (cdr (cdr (car x))) 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Cdddr(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (cdddr list)
+            A shorthand for (cdr (cdr (cdr list)))
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Cddr(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (cddr list)
+            A shorthand for (cdr (cdr list))
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Cdr(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            Returns the Cdr (second part) of a cons
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Cons(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            Creates a fresh cons, the car of which is object-1 and the cdr of which is object-2. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.CopyList(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            Returns a shallow copy of the list given as its argument
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Divide(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (/ numerator denominator+) 
+            Divides a numerator by one or more denominators
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Environment(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            Returns an object representing the curent lexical environment
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Eq(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (eq expression*) Returns true if all expressions are reference equal, 
+            that is they refer to the same object in memory. As a special case, null is eq to null. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Eql(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (eql expression*) Returns true if all expressions are equal, that is 
+            their implementations of equal return true. As a special case, null 
+            is eql to null. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Eval(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            Evaluates an LSharp expression in a given environment
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.EvalString(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            Evaluates an LSharp expression contained in a string within a given
+            environment
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Exit(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (exit [exit-code])
+            Terminates the current process and returns the specified exit-code to the 
+            calling process.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Gensym(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            Generates a new symbol
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.GreaterThan(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (> object1 object2 object*) Returns true if object1 is greater than 
+            object2, object2 is greater than object3 and so on. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.GreaterThanEqual(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (>= object1 object2 object*) Returns true if object1 is greater 
+            than or eql to object2, object2 is greater than or eql to object3 and so on. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.HandleEvent(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (handle-event target eventName handler)
+            Sets up a new event handler for events named eventName on target. The
+            handler is an LSharp closure with two arguments, the sender and the
+            event arguments (defun fn (sender args) (prl "Event Handled")).
+            Experimental.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Inspect(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (inspect object) Returns a description of the specified object, using reflection. 
+            Useful for debugging. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Is(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (is type expression) 
+            Used to check whether the run-time type of an object is 
+            compatible with a given type.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Length(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (length expression)
+            Returns the length of expression. If expression is null, length returns 0, 
+            otherwise the length is calculated by calling the length method on the object, 
+            ensuring that length works for strings, lists and most collection-like objects. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:LSharp.Functions.LessThan(LSharp.Cons,LSharp.Environment)" -->
+        <!-- Badly formed XML comment ignored for member "M:LSharp.Functions.LessThanEqual(LSharp.Cons,LSharp.Environment)" -->
+        <member name="M:LSharp.Functions.List(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (list object*)
+            Creates a new cons, an ordered list with each object as a member. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Load(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (load filename) Loads and evaluates all statements in the given 
+            filename which must be a text file. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:LSharp.Functions.LogAnd(LSharp.Cons,LSharp.Environment)" -->
+        <member name="M:LSharp.Functions.LogIor(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (| expression*)
+            Performs a bitwise logical inclusive or operation on its arguments
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.LogXor(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (^ expression*)
+            Performs a bitwise logical exclusive or operation on its arguments
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Map(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (map function list) Maps function to each element in list return a new 
+            list of return values. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Member(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (member item list)
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Multiply(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (* number*)
+            Returns the result of multiplying all number arguments
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Nconc(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (nconc list*)
+            Returns a list whose elements are the elements of each list in
+            order. Destructively modifies all but the last list, such that
+            the cdr of the last cons in each list is the next list. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.New(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (new class) Creates a new object, an instance of type class 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Not(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (not bool) Returns the logical complement of the given boolean. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.NotEql(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (!= expression*) The logical complement of the eql operator. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Nth(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (nth n list) Returns the (n+1)th element of list.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Pr(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (pr object*) Prints each object to Console.Out, without a new line. 
+            This is really just a shorthand for (Write Console object) 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Prl(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (prl object*) Prints each object to Console.Out, then prints 
+            a new line. This is really just a shorthand for (WriteLine Console object) 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Read(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (read TextReader [eof])
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Reference(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (reference name*) Loads the specified .NET assembly, either from the GAC, 
+            local directory or from and explicit directory. 
+            name may either be a fully qualified filename or a partial assembly name. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Reset(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (reset) Resets the global environment.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Spawn(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (spawn expression) is like eval except that the expression
+            is evaluated on a new thread. Returns immediately with
+            the new thread object, but execution of expressions
+            continues synchronously. Experimental.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Subtract(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (- number*) Subtraction
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.SymbolName(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (symbol-name symbol) Returns the name of a symbol as a string
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Throw(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (throw exception) Throws a System.Exception
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.TypeOf(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (typeof symbol) Returns the type object of the same name as the given symbol.
+            </summary>
+            <example>(typeof Console)</example>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Functions.Using(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            Permit the use of types in a namespace, such that, you do not have to 
+            qualify the use of a type in that namespace
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LSharp.Cons">
+            <summary>
+            A Cons is a compound object having two components, called the car 
+            and the cdr, each of which can be any object. Lists are created
+            by setting the cdr to another cons. Trees are created by setting the car to
+            another cons.
+            </summary>
+        </member>
+        <member name="M:LSharp.Cons.#ctor(System.Object)">
+            <summary>
+            Constructs a new List with one element, the car
+            </summary>
+            <param name="car"></param>
+        </member>
+        <member name="M:LSharp.Cons.#ctor(System.Object,System.Object)">
+            <summary>
+            Constructs a new List with cat at the head and cdr at the tail.
+            </summary>
+            <param name="car"></param>
+            <param name="cdr"></param>
+        </member>
+        <member name="M:LSharp.Cons.GetEnumerator">
+            <summary>
+            Returns an enumerator for enumerating all elements of the List
+            started by this cons.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.Car">
+            <summary>
+            Returns the Car (First) of this cons
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.Cdr">
+            <summary>
+            Returns the Cdr (Rest) of this cons
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.Caar">
+            <summary>
+            Returns the Car of the Car of this cons 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.Cadr">
+            <summary>
+            Returns the Car of the Cdr of this cons
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.Cdar">
+            <summary>
+            Returns the Cdr of the Car of this cons
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.Cddr">
+            <summary>
+            Returns the Cdr or the Cdr of this cons
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.FromString(System.String)">
+            <summary>
+            Creates a list of characters from a string
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.FromArray(System.Object[])">
+            <summary>
+            Creates a list from a one dimensional array
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.FromDataRow(System.Data.DataRow)">
+            <summary>
+            Creates a list given a DataRow
+            </summary>
+            <param name="dataRow"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.FromDataTable(System.Data.DataTable)">
+            <summary>
+            Creates a list given a DataTable
+            </summary>
+            <param name="dataTable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.FromHashtable(System.Collections.Hashtable)">
+            <summary>
+            Creates a list given a Hashtable
+            </summary>
+            <param name="hashtable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.FromSortedList(System.Collections.SortedList)">
+            <summary>
+            Creates a list from a SortedList
+            </summary>
+            <param name="sortedList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.FromICollection(System.Collections.ICollection)">
+            <summary>
+            Creates a list from any ICollection
+            </summary>
+            <param name="collection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.Length">
+            <summary>
+            Returns the length of the list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.ToArray">
+            <summary>
+            Returns the list expressed as an array of objects
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.Last">
+            <summary>
+            Returns the last item in a list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.Reverse">
+            <summary>
+            Returns a new list with the items reversed
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Cons.CopyList">
+            <summary>
+            Returns a shallow copy of the list given as its argument
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LSharp.Compiler">
+            <summary>
+            Compile an L Sharp program. Actually this is just a proof of concept
+            at the moment and is not yet implemented.
+            Maybe this should use CODEDOM ?
+            </summary>
+        </member>
+        <member name="T:LSharp.ClassBuilder">
+            <summary>
+            Experimental, unfinished
+            </summary>
+        </member>
+        <member name="T:LSharp.Symbol">
+            <summary>
+            Symbols are used for their object identity to name various entities 
+            including (but not limited to) linguistic entities such as variables 
+            and functions. 
+            In L Sharp all symbols are interned. The symbol table is also
+            encapsulated within this Symbol class.
+            </summary>
+        </member>
+        <member name="M:LSharp.Symbol.ToString">
+            <summary>
+            Returns a string represntation of the Symbol
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Symbol.FromName(System.String)">
+            <summary>
+            Returns a symbol given its name. If necessary the symbol is
+            created and interned.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="P:LSharp.Symbol.Name">
+            <summary>
+            Returns the Symbol's name
+            </summary>
+        </member>
+        <member name="T:LSharp.Printer">
+            <summary>
+            Formats and prints LSharp objects
+            </summary>
+        </member>
+        <member name="T:LSharp.Primitives">
+            <summary>
+            LSharp primitives and utilities.
+            </summary>
+        </member>
+        <member name="M:LSharp.Primitives.IsAtom(System.Object)">
+            <summary>
+            Returns true if the given object is an atom, false otherwise
+            </summary>
+            <param name="x"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Primitives.IsList(System.Object)">
+            <summary>
+            Returns true if the Object is a List, false otherwise
+            </summary>
+            <param name="x"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LSharp.DefaultProfiler">
+            <summary>
+            The DefaultProfiler does nothing except provide
+            a placeholder implementation of IProfiler
+            </summary>
+        </member>
+        <member name="T:LSharp.ListEnumerator">
+            <summary>
+            An IEnumerator implementation allowing Lists to be enumerated
+            </summary>
+        </member>
+        <member name="T:LSharp.Inspector">
+            <summary>
+            Provides a tool inspecting objects arbitrary objects as part of the 
+            debugging process
+            </summary>
+        </member>
+        <member name="M:LSharp.Inspector.Fields(System.Object)">
+            <summary>
+            Reflects over all the fields of an object
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Inspector.Methods(System.Object)">
+            <summary>
+            Reflects over all the methods of an object
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Inspector.Events(System.Object)">
+            <summary>
+            Reflects over all the events for an object
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Inspector.Properties(System.Object)">
+            <summary>
+            Reflects over all the properties for an object
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Inspector.TypeInfo(System.Type)">
+            <summary>
+            Reflects over a type object
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Inspector.Inspect(System.Object)">
+            <summary>
+            Inspects an object by reflecting over its values and meta data
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LSharp.Conversions">
+            <summary>
+            Allows conversions between various .net data structures and LSharp types
+            </summary>
+        </member>
+        <member name="M:LSharp.Conversions.The(System.Object,System.Object)">
+            <summary>
+            The is Cast on steroids
+            </summary>
+            <param name="type">The type to cast to</param>
+            <param name="value">The value to be cast</param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Conversions.ObjectToBoolean(System.Object)">
+            <summary>
+            Converts any LSharp form (actually any object) to a
+            Boolean true or false.
+            </summary>
+            <param name="arg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Conversions.ConsToString(System.Object)">
+            <summary>
+            Converts a list to a string
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Conversions.ConsToQueue(System.Object)">
+            <summary>
+            Converts a list to a Queue
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Conversions.ConsToStack(System.Object)">
+            <summary>
+            Returns a new Stack poluated with data items from the given
+            LSharp.List object
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Conversions.ConsToSortedList(System.Object)">
+            <summary>
+            Converts a list to a SortedList
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Conversions.ConsToHashtable(System.Object)">
+            <summary>
+            Converts a list to a Hashtable
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LSharp.TopLoop">
+            <summary>
+            Provides an toploop allowing interactive access to the
+            L Sharp interpreter
+            </summary>
+        </member>
+        <member name="M:LSharp.TopLoop.Run">
+            <summary>
+            Starts the toploop running using default input, output and error streams
+            </summary>
+        </member>
+        <member name="M:LSharp.TopLoop.Run(System.IO.TextReader,System.IO.TextWriter,System.IO.TextWriter)">
+            <summary>
+             Starts the toploop running using specified input, output and error streams
+            
+            </summary>
+            <param name="reader"></param>
+            <param name="writer"></param>
+            <param name="error"></param>
+        </member>
+        <member name="P:LSharp.TopLoop.Prompt">
+            <summary>
+            Allows the input prompt to be set
+            </summary>
+        </member>
+        <member name="T:LSharp.ThreadAdapter">
+            <summary>
+            ThreadAdapter allows LSharp expressions to be evaluated on
+            a new thread.
+            </summary>
+        </member>
+        <member name="M:LSharp.ThreadAdapter.#ctor(System.Object,LSharp.Environment)">
+            <summary>
+            Creates a new ThreadAdapter that will evaluate expression
+            within the given environment on a new Thread.
+            TODO: Is environment thread safe ?
+            </summary>
+            <param name="expression"></param>
+            <param name="environment"></param>
+        </member>
+        <member name="M:LSharp.ThreadAdapter.Fork(System.Object,LSharp.Environment)">
+            <summary>
+            Evalauates expression within the given environment on
+            a new thread - Returns immediately, but the new thread 
+            continues to execure expression asynchronously.
+            </summary>
+            <param name="expression"></param>
+            <param name="environment"></param>
+            <returns>The new Thread</returns>
+        </member>
+        <member name="M:LSharp.ThreadAdapter.Invoke">
+            <summary>
+            Evaluate the expression
+            </summary>
+        </member>
+        <member name="T:LSharp.SpecialForms">
+            <summary>
+            Special forms take their arguents un-evaluated so that
+            they can themselves decide upon the evaluation process.
+            </summary>
+        </member>
+        <member name="M:LSharp.SpecialForms.And(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            Returns true if all arguments are true, false otherwise.
+            Performs short circuit evaluation on its arguments.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Call(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (call method object argument*)
+            Calls a .NET method on a given object with given arguments. 
+            This is useful if the method name clashes with a variable which is already 
+            bound in the current L Sharp lexical environment. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Compile(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (compile filename expression*)
+            Compiles the given stament to IL, storing the result in a new EXE packaged 
+            assembly filename. (Actually this dosnt work yet). 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Cond(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (cond (test expression)* [default])
+            Evaluates tests until one returns true. If a test returns true, 
+            then evaluates its corresponding expression. If no test return true, 
+            then and optionally specified default expression is evaluated. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Decrement(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (-- symbol)
+            Subtracts one from the variable represented by symbol. 
+            A shorthand for (= symbol (- symbol 1))
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Do(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (do expression*)
+            Evaluates each expression, one at a time. 
+            Returns the result of the evaluation of the last expression. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Fn(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (fn arguments body)
+            Defines a closure with the specified list of arguments and the specified body, 
+            an L Sharp expression. Not unlike a lambda expression in Common Lisp.NB arguments 
+            is a simple list, we dont yet support keyword or optional arguments. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.For(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (for initialiser test iterator statement)
+            The for special form corresponds to the for construct found in most algebraic 
+            programming languages. The initialiser is executed. The statement is executed 
+            while test is true. The iterator is executed at the end of each statement execution. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.ForEach(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (each symbol IEnumerable expression)
+            Iterates over any object which impelements IEnumerablewith succesive 
+            elements being assigned to a variable named symbol; exceutes expression 
+            on each iteration. Cons (LSharp lists), as well as many .NET collections 
+            are IEnumerable. Foreach is a synonym for each. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.If(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (if test then [else])
+            The if special form corresponds to the if-then-else construct found in 
+            most algebraic programming languages. First the form test is evauated, 
+            if true then the form then is evaluated.Otherwise, optionally the form 
+            else is evaluated. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Increment(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (++ symbol)
+            Adds one to the variable represented by symbol. A shorthand for 
+            (= symbol (+ symbol 1))
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Let(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (let symbol value expression*)
+            Binds a new local variable symbol to value in a new local lexical environment, 
+            before evaluating expressions. Similar to with, but often more convenient for 
+            decalring a single local variable. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Macro(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (macro arguments expression*)
+            Defines a macro. Similar in some respects to defining a clsoure using fn 
+            except that the expressions are expanded using macroexpand in the current 
+            environment before being evaluated. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Or(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (or expression*)
+            Evaluates the expressions in order, returning true if any expression is true, 
+            and false if all expressions are false. If a true expression is encountered, 
+            then the remaining expressions are not evaluated (short circuit evaluation). 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Quote(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (quote object)
+            Returns object without evaluating it. object may be any .NET object. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Setq(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (= { symbol value}*)
+            Setq (Set Quote) is the variable assignment operator. 
+            Sets each variable symbol to value in the current environment. 
+            The abbreviation = is more commonly used in L Sharp.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.The(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (the type value)
+            Returns value converted or cast to an object of the specified type. 
+            Throws an exception is the cast is not achievable. 
+            The allows type casting and type conversion. This is much more than 
+            a wrapper for the System.Convert class, it has special meaning for 
+            conversions to and from Lists and certain common .NET data structures.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.To(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (to variable limit expression)
+            Starting at 0, assigns variable to succesive integers upto and 
+            including limit. Executes expression on each iteration. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Trace(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (trace filename expression*) 
+            Traces an evaluation of expression* (as if in an implicit do), 
+            documenting all call and return steps; writes the output as an 
+            XML file in filename. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.Try(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (try expression catch [finally])
+            The try special form corresponds to the try-catch-finally construct found 
+            in C Sharp. If   catch is null then there is deemed to be no catch block 
+            at all. If an exception occurs, the variable it is bound to the Exception 
+            object in the local environment. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.When(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (when test expression*) Similar to if, but more convenient if there 
+            is no else case. Evalautes expressions if the evaluation of test 
+            is true. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.While(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (while test expression*) 
+            The while special form corresponds to the while construct found 
+            in most algebraic programming languages. First test is evauated, 
+            if true then expression* is evaluated. The process continues until 
+            the evaluation of test is false. 
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.SpecialForms.With(LSharp.Cons,LSharp.Environment)">
+            <summary>
+            (with ((symbol value)* ) expression*) 
+            Binds new local variables symbols to values in a new local 
+            lexical environment, before evaluating expressions. Similar to 
+            let, but allows multiple local variables to be bound.
+            </summary>
+            <param name="args"></param>
+            <param name="environment"></param>
+            <returns></returns>
+        </member>
+        <member name="T:LSharp.Closure">
+            <summary>
+            A closure is a function defined with a captured environment
+            </summary>
+        </member>
+        <member name="M:LSharp.Closure.#ctor(LSharp.Cons,LSharp.Cons,LSharp.Environment)">
+            <summary>
+            Defines a closure (function) in terms of its arguments, body and
+            the environment in which it is defined
+            </summary>
+            <param name="argumentNames">A list of argument names</param>
+            <param name="body"> An LSharp program which is the body of the function</param>
+            <param name="environment"></param>
+        </member>
+        <member name="M:LSharp.Closure.Invoke">
+            <summary>
+            Invokes the closure with no arguments
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Closure.Invoke(LSharp.Cons)">
+            <summary>
+            Invokes the closure with arguments bound to the values specified in the 
+            argument list
+            </summary>
+            <param name="arguments"></param>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.Closure.ToString">
+            <summary>
+            Returns a string that describes this closure
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:LSharp.LSharpException">
+            <summary>
+            The class of exception thown by the evaluation process when
+            an error is detected in user code
+            </summary>
+        </member>
+        <member name="T:LSharp.Function">
+            <summary>
+            An L Sharp built in function takes a list of arguments and 
+            returns some object as a result.
+            </summary>
+        </member>
+        <member name="T:LSharp.AssemblyCache">
+            <summary>
+            Keeps a list of the assemblies that are loaded. Ensures that we don't
+            load an assembly more than once. Uses a Singleton design pattern (there can
+            only be one AssemblyCache).
+            </summary>
+        </member>
+        <member name="M:LSharp.AssemblyCache.#ctor">
+            <summary>
+            Private constructor ensures singleton design pattern
+            </summary>
+        </member>
+        <member name="M:LSharp.AssemblyCache.Instance">
+            <summary>
+            Returns the singleton instance (creating it if necessary).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LSharp.AssemblyCache.LoadAssembly(System.String)">
+            <summary>
+            Loads an assembly, either from the GAC or from a file
+            </summary>
+            <param name="assembly">An assembly name or assembly file name</param>
+            <returns>An Assembly object</returns>
+        </member>
+        <member name="M:LSharp.AssemblyCache.Add(System.Reflection.Assembly)">
+            <summary>
+            Adds a new assembly to the assembly cache
+            </summary>
+            <param name="assembly"></param>
+        </member>
+        <member name="M:LSharp.AssemblyCache.Remove(System.Reflection.Assembly)">
+            <summary>
+            Removes an assembly from the assembly cache
+            </summary>
+            <param name="assembly"></param>
+        </member>
+        <member name="M:LSharp.AssemblyCache.Assemblies">
+            <summary>
+            Returns an array of all loaded assemblies
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:LSharp.StandardClass">
+            <summary>
+            Experimental, unfinished
+            </summary>
+        </member>
+        <member name="T:LSharp.ReaderMacro">
+            <summary>
+            A delegate which allows configurable ReadTable actions
+            </summary>
+        </member>
+        <member name="T:LSharp.SpecialForm">
+            <summary>
+            All special forms take a list of arguments and a lexical environment
+            </summary>
+        </member>
+        <member name="T:LSharp.Macro">
+            <summary>
+            A Macro is transforms its arguments into a new expression
+            which can be passed to the reader. In this way it is
+            possible to write programs that write programs.
+            </summary>
+        </member>
+        <member name="M:LSharp.Macro.ToString">
+            <summary>
+            Returns a string that describes this macro
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

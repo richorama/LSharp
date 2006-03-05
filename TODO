@@ -24,7 +24,7 @@ Implement a wider range of ReaderMacros.
 
 Implement some kind of FASL facility to fast load files.
 
-Some Special Forms and functions should make more use of LSharpExeception to detect and handle errors.
+Some Special Forms and functions should make more use of LSharpException to detect and handle errors.
 
 When an error occurs, show the line number of the source code file.
 

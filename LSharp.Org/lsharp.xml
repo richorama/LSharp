@@ -53,6 +53,9 @@
       <para>
         L Sharp is free software distributed under the terms of the GNU General Public License.
         You can download the latest release from <ulink url="http://sourceforge.net/projects/lsharp">Sourceforge</ulink>.
+        You can get the latest (potentially unstable!) source code by pointing your
+        favourite Subversion client at
+        <ulink url="https://svn.sourceforge.net/svnroot/lsharp">https://svn.sourceforge.net/svnroot/lsharp</ulink>.
         You may also want to read  <ulink url="http://www.robblackwell.org.uk/?cat=3">Rob Blackwell's Web Log</ulink>.
       </para>
       <para>
@@ -1254,6 +1257,19 @@
           Returns the first element of the list. (Also known as the car)
         </para>
       </sect3>
+
+      <sect3>
+        <title>gensym</title>
+        <para>
+<programlisting>
+ (gensym)
+</programlisting>
+        </para>
+
+        <para>
+          Returns a new, unique uninterned symbol
+        </para>
+      </sect3>
       
       <sect3>
         <title>Greater Than, &gt;</title>
@@ -2285,8 +2301,11 @@
   <sect1 id="download">
     <title>Download</title>
     <para>
-      The latest software is always available from
+      The latest release is always available from
       <ulink url="http://sourceforge.net/project/showfiles.php?group_id=135252">Sourceforge</ulink>.
+      You can get the latest bleading edge source code by pointing your favourite Subversion client at
+      <ulink url="https://svn.sourceforge.net/svnroot/lsharp">https://svn.sourceforge.net/svnroot/lsharp</ulink>.
+
     </para>
   </sect1>
 

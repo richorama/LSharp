@@ -909,6 +909,15 @@
             <param name="x"></param>
             <returns></returns>
         </member>
+        <member name="M:LSharp.Primitives.ProcessArguments(LSharp.Cons,LSharp.Cons,LSharp.Environment)">
+            <summary>
+            Process the arguments passed to a closure, and add them to the given enviroment.
+            </summary>
+            <param name="argumentNameList">The list of names and kewords the closure was created with.</param>
+            <param name="argumentList">The arguments passed to the closure.</param>
+            <param name="localEnvironment">The closure's local variables.</param>
+            <returns>Nothing.</returns>
+        </member>
         <member name="T:LSharp.DefaultProfiler">
             <summary>
             The DefaultProfiler does nothing except provide

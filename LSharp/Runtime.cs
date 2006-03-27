@@ -145,6 +145,45 @@ namespace LSharp
 			}			
 		}
 
+        /// <summary>
+        /// Return the best matching constructor for type given  types and values of
+        /// from the construction request
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="types"></param>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static ConstructorInfo GetConstructor(Type type, Type[] types, object[] values) {
+
+            ConstructorInfo constructorInfo = type.GetConstructor(types);
+
+            if (constructorInfo == null) {
+
+                ConstructorInfo[] constructorInfos = type.GetConstructors();
+                foreach (ConstructorInfo c in constructorInfos)
+                {
+                    ParameterInfo[] parameterInfos = c.GetParameters();
+
+                    if (parameterInfos.Length == types.Length)
+                    {
+
+                        int i = 0;
+                        bool congruent = true;
+                        foreach (ParameterInfo p in parameterInfos)
+                        {
+                            congruent = ((p.ParameterType == types[i]) || (values[i] == null));
+                            i++;
+                        }
+                        if (congruent)
+                            return c;
+                    }
+                }
+                
+            }
+
+            return constructorInfo;
+        }
+
 		/// <summary>
 		/// Makes a new instance of type type by calling the
 		/// appropriate constructor, passing the given arguments
@@ -155,26 +194,33 @@ namespace LSharp
 		public static object MakeInstance(Type type, object arguments) 
 		{
 			Type[] types = new Type[0];
-			object[] paramters = new object[0];
+			object[] values = new object[0];
 			if (arguments != null) 
 			{
 				types = new Type[((Cons)arguments).Length()];
-				paramters = new object[((Cons)arguments).Length()];
+				values = new object[((Cons)arguments).Length()];
 				int loop = 0;
 				foreach (object argument in (Cons)arguments) 
 				{
-					types[loop] = argument.GetType();
-					paramters[loop] = argument;
+                    if (argument == null)
+                        types[loop] = typeof(System.Object);
+                    else
+					    types[loop] = argument.GetType();
+					values[loop] = argument;
 					loop++;
 				}
 			}
 			
-			ConstructorInfo constructorInfo = type.GetConstructor(types);
+			//ConstructorInfo constructorInfo = type.GetConstructor(types);
 
+            ConstructorInfo constructorInfo = GetConstructor(type, types, values);
+
+  
 			if (constructorInfo == null) 
+                // TODO: Look for other potential constructors where null can match any type
 				throw new LSharpException(string.Format("No such constructor for {0}",type));
 
-			return constructorInfo.Invoke(paramters);
+			return constructorInfo.Invoke(values);
 		}
 
 		/// <summary>

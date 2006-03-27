@@ -12,7 +12,9 @@ Bug fix - load fails when last line in file is a comment
 The Console Main is no longer marked [STAThread]. This allows Windows Forms apps to
 be developed, run on a secondary thread using (spawn '(run application f)) and
 be dynamically and incremntally refined using the toploop on the first thread.
-Cons now implements ICollecttion
+Cons now implements ICollection
+Bug Fix - constructors can now pass null as an argument
+&optional and &key paramaters
 
 
 Version 1.21 29 Jan 2006

@@ -855,6 +855,9 @@ namespace LSharp
 		/// <returns></returns>
 		public static Object Map(Cons args, Environment environment) 
 		{
+            if (args.Second() == null)
+                return null;
+
 			Cons temp = null;
 			foreach (object o in (IEnumerable)args.Second()) 
 			{

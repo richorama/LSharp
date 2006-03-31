@@ -15,6 +15,7 @@ be dynamically and incremntally refined using the toploop on the first thread.
 Cons now implements ICollection
 Bug Fix - constructors can now pass null as an argument
 &optional and &key paramaters
+Bug fix - map on empty list
 
 
 Version 1.21 29 Jan 2006

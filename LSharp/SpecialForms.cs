@@ -509,12 +509,12 @@ namespace LSharp
 		/// <returns></returns>
 		public static Object When(Cons args, Environment environment) 
 		{
-			object test;
-			if ((Conversions.ObjectToBoolean(test = Runtime.Eval(args.First(),environment)))) 
+			object test = null;
+			if ((Conversions.ObjectToBoolean(Runtime.Eval(args.First(),environment)))) 
 			{
 				foreach (object item in (Cons)args.Rest()) 
 				{
-					Runtime.Eval(item, environment);
+					test = Runtime.Eval(item, environment);
 				}
 			}
 			return test;

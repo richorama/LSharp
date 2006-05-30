@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Samples and Examples</title><link rel="stylesheet" href="docbook.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.69.1" /><meta name="keywords" content="LSharp, Rob, Blackwell, Rob Blackwell, Active Web Solutions, Lisp, .NET, AWS, Arc" /><link rel="start" href="index.html" title="L Sharp .NET" /><link rel="up" href="index.html" title="L Sharp .NET" /><link rel="prev" href="reference.html" title="L Sharp Language Reference" /><link rel="next" href="web.html" title="Web Application Development with L Sharp" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Samples and Examples</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="reference.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="web.html">Next</a></td></tr></table><hr /></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="samples"></a>Samples and Examples</h2></div></div></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721162"></a>Introduction</h3></div></div></div><p>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Samples and Examples</title><link rel="stylesheet" href="docbook.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.69.1" /><meta name="keywords" content="LSharp, Rob, Blackwell, Rob Blackwell, Active Web Solutions, Lisp, .NET, AWS, Arc" /><link rel="start" href="index.html" title="L Sharp .NET" /><link rel="up" href="index.html" title="L Sharp .NET" /><link rel="prev" href="reference.html" title="L Sharp Language Reference" /><link rel="next" href="web.html" title="Web Application Development with L Sharp" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Samples and Examples</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="reference.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="web.html">Next</a></td></tr></table><hr /></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="samples"></a>Samples and Examples</h2></div></div></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721180"></a>Introduction</h3></div></div></div><p>
         These samples are also available in the L Sharp repository at <a href="http://lsharp.sourceforge.net/download/" target="_top">http://lsharp.sourceforge.net/download/</a>.
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721180"></a>HelloWorld.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721199"></a>HelloWorld.ls</h3></div></div></div><p>
         Tradition says that Hello World must be the first sample.
-        </p><pre class="programlisting">
-          ;;; Hello World in L Sharp&#13;
+        </p><pre class="programlisting">;;; Hello World in L Sharp&#13;
 (WriteLine Console "Hello World")
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721205"></a>Factorial.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721222"></a>Factorial.ls</h3></div></div></div><p>
         Computes the factorial of a number. Demonstrates recursion.
-        </p><pre class="programlisting">
-          ;;; L Sharp Factorial sample&#13;
+        </p><pre class="programlisting">;;; L Sharp Factorial sample&#13;
 &#13;
 ;; Factorial&#13;
 (= factorial (fn (n)&#13;
@@ -21,10 +19,9 @@
 			&#13;
 (prl (factorial 5))
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721229"></a>Fibonacci.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721246"></a>Fibonacci.ls</h3></div></div></div><p>
         Computes Fibonacci numbers using tree recursion.
-        </p><pre class="programlisting">
-          ;;; L Sharp Fibonacci sample&#13;
+        </p><pre class="programlisting">;;; L Sharp Fibonacci sample&#13;
 &#13;
 ; Fibonacci, tree recursive style&#13;
 (= fibonacci (fn (n)&#13;
@@ -36,10 +33,9 @@
 (to i 15 &#13;
 	(prl (fibonacci i)))
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721253"></a>Rss.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721269"></a>Rss.ls</h3></div></div></div><p>
         Retrieves news headlines from an RSS feed.
-        </p><pre class="programlisting">
-          ;;; Lists all the items from an RSS Feed&#13;
+        </p><pre class="programlisting"> ;;; Lists all the items from an RSS Feed&#13;
 &#13;
 (reference "System.Xml")&#13;
 &#13;
@@ -49,25 +45,22 @@
 	(prl (innertext node)))&#13;
 
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721277"></a>Greeting.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721292"></a>Greeting.ls</h3></div></div></div><p>
         Displays a greeting depending on the time of day.
-        </p><pre class="programlisting">
-          ;;; Display a greeting depending on the hour&#13;
+        </p><pre class="programlisting">;;; Display a greeting depending on the hour&#13;
 &#13;
 (if (&lt; (Hour (Now DateTime)) 12) &#13;
 	(WriteLine Console "Good Morning") &#13;
 	(WriteLine Console "Good Afternoon") )
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721301"></a>Guid.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721315"></a>Guid.ls</h3></div></div></div><p>
         Creates Globally Unique Identifiers.
-        </p><pre class="programlisting">
-          ;;; Generate a GUID&#13;
+        </p><pre class="programlisting">;;; Generate a GUID&#13;
 (prl (NewGuid System.Guid))
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721324"></a>Hashtable.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721338"></a>Hashtable.ls</h3></div></div></div><p>
         Demonstrates the use of Hashtables.
-        </p><pre class="programlisting">
-          ;;; Hashtable Sample&#13;
+        </p><pre class="programlisting">;;; Hashtable Sample&#13;
 &#13;
 (using "System.Collections")&#13;
 &#13;
@@ -83,10 +76,9 @@
 ;; Convert the Hashtable back to a list&#13;
 (prl (the Cons foo))
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721348"></a>Iteration.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721360"></a>Iteration.ls</h3></div></div></div><p>
         Demonstrates L Sharp's loop and iteration forms.
-        </p><pre class="programlisting">
-          ;;; Demonstrate some L Sharp iteration expressions&#13;
+        </p><pre class="programlisting">;;; Demonstrate some L Sharp iteration expressions&#13;
 &#13;
 (for (= i 0) (&lt; i 10) (++ i)&#13;
 	(pr i))&#13;
@@ -98,10 +90,9 @@
 &#13;
 (each x '(a b c) (pr x))
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721372"></a>List.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721383"></a>List.ls</h3></div></div></div><p>
         Demonstrates the use of L Sharp Lists.
-        </p><pre class="programlisting">
-          ;;; Demonstrate some list manipulation&#13;
+        </p><pre class="programlisting">;;; Demonstrate some list manipulation&#13;
 (= mylist '(a b c (d e f)))&#13;
 &#13;
 (prl mylist)&#13;
@@ -113,10 +104,9 @@
 (prl (nth 3 mylist))&#13;
 
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721396"></a>MessageBox.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721406"></a>MessageBox.ls</h3></div></div></div><p>
         Shows how to pop up a Message Box.
-        </p><pre class="programlisting">
-          ;;; Display a Windows Forms MessageBox&#13;
+        </p><pre class="programlisting">;;; Display a Windows Forms MessageBox&#13;
 &#13;
 ; Load the System.Windows.Forms assembly&#13;
 (reference "System.Windows.Forms")&#13;
@@ -125,10 +115,9 @@
 		&#13;
 (Show MessageBox  "Dont you agree?" "LSharp is Cool")
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721419"></a>Northwind.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721428"></a>Northwind.ls</h3></div></div></div><p>
         Demonstrates access to a SQL database (the Microsoft Northwind Traders example).
-        </p><pre class="programlisting">
-          ;;; Northwind Database Example&#13;
+        </p><pre class="programlisting">;;; Northwind Database Example&#13;
 (reference &#13;
 	"System.Data")&#13;
 &#13;
@@ -166,10 +155,9 @@
 	(prl (the Cons row)))&#13;
 
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721444"></a>Queue.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721452"></a>Queue.ls</h3></div></div></div><p>
         Demonstrates how to use a Queue data structure.
-        </p><pre class="programlisting">
-          ;;; Queue Sample&#13;
+        </p><pre class="programlisting">;;; Queue Sample&#13;
 &#13;
 (using "System.Collections")&#13;
 &#13;
@@ -183,10 +171,9 @@
 (to i (Count my-queue)&#13;
 	(prl (Dequeue my-queue)))
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721468"></a>Shell.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721475"></a>Shell.ls</h3></div></div></div><p>
         Shows how to launch another application such as Calculator or Internet Explorer.
-        </p><pre class="programlisting">
-          ;;; Demonstrates how to shell another process&#13;
+        </p><pre class="programlisting">;;; Demonstrates how to shell another process&#13;
 (reference "System")&#13;
 (using "System.Diagnostics")&#13;
 &#13;
@@ -202,10 +189,9 @@
 (shell "iexplore" "http://www.aws.net")&#13;
 (shell "notepad" "c:\\junk.txt")
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721493"></a>Try.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721499"></a>Try.ls</h3></div></div></div><p>
         Exception handling.
-        </p><pre class="programlisting">
-          ;;; Example exception handling&#13;
+        </p><pre class="programlisting">;;; Example exception handling&#13;
 &#13;
 ; try executes its first form (the body) and if an exception is thrown&#13;
 ; executes its second form (the catch) with the variable it bound to&#13;
@@ -214,10 +200,9 @@
 	(throw (new System.NotImplementedException "foobar"))&#13;
 	(prl (Format System.String "It failed, here's why: {0}" it)))
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721516"></a>Whois.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721521"></a>Whois.ls</h3></div></div></div><p>
         A simple WHOIS client.
-        </p><pre class="programlisting">
-          ;;; A simple WHOIS Client&#13;
+        </p><pre class="programlisting">;;; A simple WHOIS Client&#13;
 ;;; Rob Blackwell 2004&#13;
 &#13;
 (reference "System")&#13;
@@ -263,10 +248,9 @@
 (prl (whois nic domain))&#13;
 
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721539"></a>String.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721542"></a>String.ls</h3></div></div></div><p>
         String examples.
-        </p><pre class="programlisting">
-          ;;; Recursively print substrings&#13;
+        </p><pre class="programlisting">;;; Recursively print substrings&#13;
 &#13;
 ;; Print succesive cdrs of a string &#13;
 (= funny-print (fn (n)&#13;
@@ -281,10 +265,9 @@
 &#13;
 (funny-print my-string)
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721562"></a>Stack.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721564"></a>Stack.ls</h3></div></div></div><p>
         Stack.
-        </p><pre class="programlisting">
-          ;;; Stack Sample&#13;
+        </p><pre class="programlisting">;;; Stack Sample&#13;
 &#13;
 (using "System.Collections")&#13;
 &#13;
@@ -298,10 +281,9 @@
 (to i (Count my-stack)&#13;
 	(prl (Pop my-stack)))
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721584"></a>Sound.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721586"></a>Sound.ls</h3></div></div></div><p>
         The L Sharp Sound Library.
-        </p><pre class="programlisting">
-          ;;; Sound Sample&#13;
+        </p><pre class="programlisting">;;; Sound Sample&#13;
 &#13;
 (reference "Lsharp.Libraries")&#13;
 &#13;
@@ -310,10 +292,9 @@
 &#13;
 (play-sound "c:\\windows\\media\\tada.wav")
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721607"></a>SortedList.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721608"></a>SortedList.ls</h3></div></div></div><p>
         Showss the use of SortedList.
-        </p><pre class="programlisting">
-          ;;; SortedList Sample&#13;
+        </p><pre class="programlisting">;;; SortedList Sample&#13;
 &#13;
 (using "System.Collections")&#13;
 &#13;
@@ -329,10 +310,9 @@
 ;; Convert the Hashtable back to a list&#13;
 (prl (the Cons foo))
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721631"></a>Smtp.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721630"></a>Smtp.ls</h3></div></div></div><p>
         Shows how to programmatically send an email message.
-        </p><pre class="programlisting">
-          ;;; Sends an SMTP email message&#13;
+        </p><pre class="programlisting">;;; Sends an SMTP email message&#13;
 &#13;
 (reference "System.Web")&#13;
 &#13;
@@ -357,10 +337,9 @@
 &#13;
 (send-mail "fred.bloggs@hotmail.com" "rob.blackwell@aws.net" "Test Subject" "Test Body")
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721655"></a>Regex.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721653"></a>Regex.ls</h3></div></div></div><p>
         Demonstrates the use of regular expressions
-        </p><pre class="programlisting">
-          ;;; Regular expression example&#13;
+        </p><pre class="programlisting">;;; Regular expression example&#13;
 &#13;
 (reference "System")&#13;
 &#13;
@@ -383,10 +362,9 @@
 &#13;
 
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721678"></a>Http.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721675"></a>Http.ls</h3></div></div></div><p>
         Demonstrates how to use HTTP GET and POST to access resources on the Web.
-        </p><pre class="programlisting">
-          ;;; HTTP GET and POST&#13;
+        </p><pre class="programlisting">;;; HTTP GET and POST&#13;
 &#13;
 (reference "System" "System.Web")&#13;
 &#13;
@@ -443,10 +421,9 @@
 &#13;
 
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721703"></a>File.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721699"></a>File.ls</h3></div></div></div><p>
         Defines some useful functions for manipulating files.
-        </p><pre class="programlisting">
-          ;;; L Sharp File Sample&#13;
+        </p><pre class="programlisting">;;; L Sharp File Sample&#13;
 &#13;
 (using "System.IO")&#13;
 &#13;
@@ -476,11 +453,10 @@
 &#13;
 
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721727"></a>Directory.ls</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721722"></a>Directory.ls</h3></div></div></div><p>
         Demonstrated some simple functions for manipulating directories. Note how recurse-directory
         takes a function as an argument; that function is applied to all matching files.
-        </p><pre class="programlisting">
-          ;;; L Sharp Directory sample&#13;
+        </p><pre class="programlisting">;;; L Sharp Directory sample&#13;
 (using "System.IO")&#13;
 &#13;
 ;; Rename / move a directory&#13;
@@ -516,9 +492,8 @@
 (recurse-directory "c:\\windows\\system32" "*.dll" 'FullName)&#13;
 
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721755"></a>Squares.ls</h3></div></div></div><p>
-        </p><pre class="programlisting">
-          ;;; List the squares up to n&#13;
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721749"></a>Squares.ls</h3></div></div></div><p>
+        </p><pre class="programlisting">;;; List the squares up to n&#13;
 (= squares (fn (n) &#13;
 	(to i (+ n 1)&#13;
 		(prl (format string "The square of {0} is {1}" i (* i i))))))&#13;

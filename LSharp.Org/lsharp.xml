@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
- "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+ "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" >
 <article>
   <articleinfo>
 
@@ -98,15 +98,15 @@
     <para>
       I do lots of development on the Microsoft .NET platform. One thing that seems to
       be missing is a really good scripting language and experimentation
-      environment. I hope that L Sharp will fill this hole.
+      environment. L Sharp is now helping to fill this hole.
     </para>
     <para>
-      Whatever you feel about Microsoft, the .NET Framework is pretty cool.
+      Whatever you feel about Microsoft, the .NET Framework is pretty useful.
       Any new Lisp implementation will only be successful if it can provide a
       rich, standardised library; the .NET framework could provide that.
       It gives us interoperability with large amounts of code, as
-      well as credibility in the real world. I hope that Mono will allow L Sharp to
-      run on an variety of platforms.
+      well as credibility in the real world. Mono is helping to allow L Sharp to
+      run on an variety of platforms (although full Mono support is a work in progress).
     </para>
     <para>
       L Sharp has been developed as part of a Research and Development initiative
@@ -331,7 +331,7 @@
 
 
     <sect2>
-      <title	>Defining a Function</title>
+      <title>Defining a Function</title>
       <para>
         Most languages make you name a function; in LSharp functions are named
         by assigning them to variables.
@@ -378,20 +378,19 @@
       <title>Iteration</title>
       <para>
         L Sharp includes a number of iteration constructs.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Iteration.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Iteration.ls"></xi:include>
         </programlisting>
         A particularly useful idiom in LSharp is the ability to use each on any List or object that is IEnumerable.
 
         <programlisting>
-          > (each c "Hello" (prl c))
-          #\H
-          #\e
-          #\l
-          #\l
-          #\o
-          null
-          >
+> (each c "Hello" (prl c))
+#\H
+#\e
+#\l
+#\l
+#\o
+null
+>
         </programlisting>
       </para>
 
@@ -530,12 +529,13 @@
       <para>
         Functions, closures, macros and special forms may all be applied to arguments using
         expressions of the form
-        <programlisting>(function arguments)</programlisting>.
+        <programlisting>(function arguments)</programlisting>
         When a built in L Sharp function is called, all arguments are first evaluated using
         <emphasis>eval</emphasis> and then passed as parameters to the function. (Interested
         readers should look at the Functions.cs file in the LSharp source to see how functions
         can be implemented, and how easy it is to extend the language yourself).
       </para>
+      <para>The argument list to a macro or function may include &amp;optional &amp;rest or &amp;key parameters.</para>
       <para>
         A closure is a function defined and implemented in the L Shasp language using <emphasis>fn</emphasis>.
         For example <programlisting>(= square (fn (x) (* x x)))</programlisting>.
@@ -1753,8 +1753,7 @@
       <title>HelloWorld.ls</title>
       <para>
         Tradition says that Hello World must be the first sample.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/HelloWorld.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/HelloWorld.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1763,8 +1762,7 @@
       <title>Factorial.ls</title>
       <para>
         Computes the factorial of a number. Demonstrates recursion.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Factorial.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Factorial.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1773,8 +1771,7 @@
       <title>Fibonacci.ls</title>
       <para>
         Computes Fibonacci numbers using tree recursion.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Fibonacci.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Fibonacci.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1783,8 +1780,7 @@
       <title>Rss.ls</title>
       <para>
         Retrieves news headlines from an RSS feed.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Rss.ls"></xi:include>
+        <programlisting> <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Rss.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1793,8 +1789,7 @@
       <title>Greeting.ls</title>
       <para>
         Displays a greeting depending on the time of day.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Greeting.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Greeting.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1803,8 +1798,7 @@
       <title>Guid.ls</title>
       <para>
         Creates Globally Unique Identifiers.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Guid.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Guid.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1813,8 +1807,7 @@
       <title>Hashtable.ls</title>
       <para>
         Demonstrates the use of Hashtables.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Hashtable.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Hashtable.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1823,8 +1816,7 @@
       <title>Iteration.ls</title>
       <para>
         Demonstrates L Sharp's loop and iteration forms.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Iteration.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Iteration.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1834,8 +1826,7 @@
       <title>List.ls</title>
       <para>
         Demonstrates the use of L Sharp Lists.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/List.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/List.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1844,8 +1835,7 @@
       <title>MessageBox.ls</title>
       <para>
         Shows how to pop up a Message Box.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/MessageBox.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/MessageBox.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1854,8 +1844,7 @@
       <title>Northwind.ls</title>
       <para>
         Demonstrates access to a SQL database (the Microsoft Northwind Traders example).
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Northwind.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Northwind.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1864,8 +1853,7 @@
       <title>Queue.ls</title>
       <para>
         Demonstrates how to use a Queue data structure.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Queue.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Queue.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1874,8 +1862,7 @@
       <title>Shell.ls</title>
       <para>
         Shows how to launch another application such as Calculator or Internet Explorer.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Shell.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Shell.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1884,8 +1871,7 @@
       <title>Try.ls</title>
       <para>
         Exception handling.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Try.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Try.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1894,8 +1880,7 @@
       <title>Whois.ls</title>
       <para>
         A simple WHOIS client.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Whois.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Whois.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1905,8 +1890,7 @@
       <title>String.ls</title>
       <para>
         String examples.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/String.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/String.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1915,8 +1899,7 @@
       <title>Stack.ls</title>
       <para>
         Stack.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Stack.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Stack.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1925,8 +1908,7 @@
       <title>Sound.ls</title>
       <para>
         The L Sharp Sound Library.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Sound.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Sound.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1935,8 +1917,7 @@
       <title>SortedList.ls</title>
       <para>
         Showss the use of SortedList.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/SortedList.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/SortedList.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1945,8 +1926,7 @@
       <title>Smtp.ls</title>
       <para>
         Shows how to programmatically send an email message.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Smtp.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Smtp.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1955,8 +1935,7 @@
       <title>Regex.ls</title>
       <para>
         Demonstrates the use of regular expressions
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Regex.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Regex.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1966,8 +1945,7 @@
       <title>Http.ls</title>
       <para>
         Demonstrates how to use HTTP GET and POST to access resources on the Web.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Http.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Http.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1976,8 +1954,7 @@
       <title>File.ls</title>
       <para>
         Defines some useful functions for manipulating files.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/File.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/File.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1988,8 +1965,7 @@
       <para>
         Demonstrated some simple functions for manipulating directories. Note how recurse-directory
         takes a function as an argument; that function is applied to all matching files.
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Directory.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Directory.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>
@@ -1999,8 +1975,7 @@
     <sect2>
       <title>Squares.ls</title>
       <para>
-        <programlisting>
-          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Squares.ls"></xi:include>
+        <programlisting><xi:include xmlns:xi="http://www.w3.org/2001/XInclude" parse="text" href="download/Squares.ls"></xi:include>
         </programlisting>
       </para>
     </sect2>

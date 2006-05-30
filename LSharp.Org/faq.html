@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Frequently Asked Questions</title><link rel="stylesheet" href="docbook.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.69.1" /><meta name="keywords" content="LSharp, Rob, Blackwell, Rob Blackwell, Active Web Solutions, Lisp, .NET, AWS, Arc" /><link rel="start" href="index.html" title="L Sharp .NET" /><link rel="up" href="index.html" title="L Sharp .NET" /><link rel="prev" href="forms.html" title="Windows Forms Development with L Sharp" /><link rel="next" href="download.html" title="Download" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Frequently Asked Questions</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="forms.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="download.html">Next</a></td></tr></table><hr /></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="faq"></a>Frequently Asked Questions</h2></div></div></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721917"></a>Why write another language? Why not use X instead?</h3></div></div></div><p>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Frequently Asked Questions</title><link rel="stylesheet" href="docbook.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.69.1" /><meta name="keywords" content="LSharp, Rob, Blackwell, Rob Blackwell, Active Web Solutions, Lisp, .NET, AWS, Arc" /><link rel="start" href="index.html" title="L Sharp .NET" /><link rel="up" href="index.html" title="L Sharp .NET" /><link rel="prev" href="forms.html" title="Windows Forms Development with L Sharp" /><link rel="next" href="download.html" title="Download" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Frequently Asked Questions</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="forms.html">Prev</a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="download.html">Next</a></td></tr></table><hr /></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="faq"></a>Frequently Asked Questions</h2></div></div></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4721910"></a>Why write another language? Why not use X instead?</h3></div></div></div><p>
         Where X is the name of any programming language, Lisp system or Lisp library.
       </p><p>
         Well I wanted a Lisp-like language that I could use for scripting on the .NET platform. I wanted
@@ -29,20 +29,20 @@
       </p><p>
         One of the nice things about L Sharp is how easy it is to change. There is a great opportunity
         here to make L Sharp whatever we need it to be. Any feedback welcome.
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722032"></a>L Sharp wont start, why?</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722024"></a>L Sharp wont start, why?</h3></div></div></div><p>
         A prerequisite for L Sharp is that you have installed the
         <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5&amp;DisplayLang=en" target="_top">.NET framework 2.0 from Microsoft</a>.
         (Unless of course, you are using Mono and compiling L Sharp from source yourself).
 
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722056"></a>Where can I get L Sharp examples programs?</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722049"></a>Where can I get L Sharp examples programs?</h3></div></div></div><p>
         The L Sharp repository is available at <a href="http://lsharp.sourceforge.net/download/" target="_top">http://lsharp.sourceforge.net/download/</a>.
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722074"></a>Does L Sharp run on Mono?</h3></div></div></div><p>Yes, but there are a few wrinkles.</p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722086"></a>Why can't I specify more than 3 arguments to a Format String?</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722067"></a>Does L Sharp run on Mono?</h3></div></div></div><p>Yes, but there are a few wrinkles.</p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722078"></a>Why can't I specify more than 3 arguments to a Format String?</h3></div></div></div><p>
         Unfortunately the .NET framework only provides methods for one, two
         or three arguments. C Sharp appears to allow more arguments by converting
         your arguments to an Object Array behind the scenes (?)
         I L Sharp you can  specify an Object Array of arguments
         directly, thus avoiding the problem.
-      </p><pre class="programlisting">(Format String "{0},{1},{2},{3},{4}" (the Array (list 1 2 3 4 5)))</pre></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722113"></a>What editors and IDEs are available for L Sharp?</h3></div></div></div><p>
+      </p><pre class="programlisting">(Format String "{0},{1},{2},{3},{4}" (the Array (list 1 2 3 4 5)))</pre></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722106"></a>What editors and IDEs are available for L Sharp?</h3></div></div></div><p>
         Today, most people are using Emacs (See below), but there is a new editor called Xacc
         which has LSharp built in! It's a modern IDE with a more gentle learning curve.
         See
@@ -50,7 +50,7 @@
         and
         <a href="http://blogs.wdevs.com/leppie/" target="_top">http://blogs.wdevs.com/leppie/</a> for more
         information.
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722146"></a>How can I use Emacs to edit my L Sharp files ?</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722139"></a>How can I use Emacs to edit my L Sharp files ?</h3></div></div></div><p>
         Put the following in your .emacs file (change the path according to where you installed LSharp).
         </p><pre class="programlisting">
           (cond ((fboundp 'global-font-lock-mode)
@@ -69,7 +69,7 @@
         </p><pre class="programlisting">ESC C-q</pre><p> at the start of an S-expression to properly indent and format it
         </p><pre class="programlisting">C-h m</pre><p> for help on Lisp mode
 
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722202"></a>How do I get L Sharp to work with XEmacs under Windows?</h3></div></div></div><p>In XEmacs, if you try to use LSharp.exe with inferior lisp mode then XEmacs hangs. I don't know why exactly, but the following is a workaround:
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722195"></a>How do I get L Sharp to work with XEmacs under Windows?</h3></div></div></div><p>In XEmacs, if you try to use LSharp.exe with inferior lisp mode then XEmacs hangs. I don't know why exactly, but the following is a workaround:
       </p><p>
        Create a new batch file called LSharp.BAT and put this in your L Sharp directory. It should contain the following line:
       </p><p>
@@ -78,27 +78,27 @@
         Then change your .emacs file to reference this batch file instead of the .EXE
       </p><p>
         </p><pre class="programlisting">(setq inferior-lisp-program "C:/LSharp/LSharp.bat")</pre><p>
-      </p><p>Now everything should work okay.</p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722251"></a>How can I use TextPad to edit my L Sharp files ?</h3></div></div></div><p>
+      </p><p>Now everything should work okay.</p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722244"></a>How can I use TextPad to edit my L Sharp files ?</h3></div></div></div><p>
         Copy the lsharp.syn file provided to your text pad samples. Define a new
         document class called LSharp which includes *.ls file and uses the lsharp.syn
         sntax definition file.
       </p><p>
         The most useful feature is being able to put the cursor next to a bracket and
         pressing CTRL-m repeatedly to match corresponding brackets.
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722276"></a>How do I define a new class and methods?</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722269"></a>How do I define a new class and methods?</h3></div></div></div><p>
         You can't do this easily yet, sorry! I suggest that if you need some feature like this,
         you write an assembly in either C Sharp or VB.NET and then just call it from L Sharp. That's
         the beauty of .NET, language interoperability.
       </p><p>
         Technically a user can use classes in System.Reflection.Emit to build types and methods, but thats
         fairly advanced. We intend to provide some wrappers for these at some point in the future.
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722304"></a>How can I access command line arguments from my script?</h3></div></div></div><pre class="programlisting">(the cons (GetCommandLineArgs System.Environment))</pre></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722316"></a>Why can't I say (Console.WriteLine "Hello World") ?</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722297"></a>How can I access command line arguments from my script?</h3></div></div></div><pre class="programlisting">(the cons (GetCommandLineArgs System.Environment))</pre></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722308"></a>Why can't I say (Console.WriteLine "Hello World") ?</h3></div></div></div><p>
         C Sharp programmers are used to this notation of object.method - We experimented with
         it, but "java dot" notation is just syntactic sugar where the thing before the dot
         is essentially the first argument. We think that the following is more consistent and
         more in the spirit of Lisp - you'll get used to it!.
         </p><pre class="programlisting">(WriteLine Console "Hello World")</pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722337"></a>How can I call a .NET method with the same name as an L Sharp Function ?</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722330"></a>How can I call a .NET method with the same name as an L Sharp Function ?</h3></div></div></div><p>
         If you try
         </p><pre class="programlisting">
           (= news (new System.Xml.XmlDocument))
@@ -111,6 +111,6 @@
           (= news (new System.Xml.XmlDocument))
           (call load news "http://www.theregister.co.uk/headlines.rss")
         </pre><p>
-      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722374"></a>How can I launch an L Sharp GUI program without starting a command line?</h3></div></div></div><p>
+      </p></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4722367"></a>How can I launch an L Sharp GUI program without starting a command line?</h3></div></div></div><p>
         Create a shortcut that runs the LSharp.Launcher.exe program with your yourscript.ls as its argument.
       </p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="forms.html">Prev</a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="download.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Windows Forms Development with L Sharp </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Download</td></tr></table></div></body></html>

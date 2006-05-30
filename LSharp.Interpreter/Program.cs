@@ -36,7 +36,7 @@ namespace LSharp.Interpreter
 		public static void Banner() 
 		{
 			Console.WriteLine("Welcome to L Sharp .NET, a powerful lisp-based scripting language for .NET.");
-			Console.WriteLine("Copyright (C) 2005 Rob Blackwell & Active Web Solutions.");
+			Console.WriteLine("Copyright (C) 2005 - 2006 Rob Blackwell & Active Web Solutions.");
 			Console.WriteLine("");
 			Console.WriteLine("This program is free software and is distributed under the terms of");
 			Console.WriteLine("the GNU General Public License.");

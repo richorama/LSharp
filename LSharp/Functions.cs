@@ -883,7 +883,8 @@ namespace LSharp
 
             foreach (object o in (IEnumerable)list)
             {
-                if (o == value) return o;
+                if (Primitives.Eql(o,value))
+                    return o;
             }
 
             return null;

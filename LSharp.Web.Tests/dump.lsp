@@ -2,9 +2,6 @@
 
 (write *response* "<h1>Retrieve data passed to the page</h1>")
 
-(write *response* "<p> Data sent as part of the URL is available in the (querystring *request*) collection.")
-(write *response* "<p> Data which is posted can be obtained from (form *request*) .")
-
 (write *response* "<h2>These values are from the querystring</h2>")
 
 (each q (querystring *request*)

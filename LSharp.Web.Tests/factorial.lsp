@@ -1,4 +1,5 @@
-;; Web Apps in L Sharp
+;;; A web page which allows the user to enter a number
+;;; then computes and displays its factorial.
 
 (= factorial (fn (n)
 		(if (eql n 1) 
@@ -12,7 +13,8 @@
 <input type='submit' value='Submit'>
 </form>")
 
-(= n (item (querystring *request*) "number"))
+(= num-string (item (querystring *request*) "number"))
 
-
-(write *response* (factorial n))
+(when num-string
+  (= n (parse int32 num-string))
+  (write *response* (factorial n)))

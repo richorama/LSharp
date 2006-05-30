@@ -1,3 +1,0 @@
-;; Web Apps in L Sharp
-
-(write *response* (+ 1 2))

@@ -64,8 +64,17 @@ namespace LSharp
             }
             else
             {
-                Cons result = ((Cons)args.First()).CopyList();
-                ((Cons)result.Last()).Rplacd(Append((Cons)args.Rest(), environment));
+                Cons result;
+
+                if (args.First() == null)
+                {
+                    result = (Cons)Append((Cons)args.Rest(), environment);   
+                }
+                else
+                {
+                    result = ((Cons)args.First()).CopyList();
+                    ((Cons)result.Last()).Rplacd(Append((Cons)args.Rest(), environment));
+                }
                 return result;
             }
         }

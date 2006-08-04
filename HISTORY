@@ -1,4 +1,4 @@
-Version 1.3 Not yet Released
+Version 1.3 5 August 2006
 
 Some features now require CLR 2
 Added (spawn expression) to allow experimental multi threaded evaluation.
@@ -9,14 +9,14 @@ Added gensym
 Added member
 Inspector shows non public fields
 Bug fix - load fails when last line in file is a comment
-The Console Main is no longer marked [STAThread]. This allows Windows Forms apps to
-be developed, run on a secondary thread using (spawn '(run application f)) and
-be dynamically and incremntally refined using the toploop on the first thread.
+The Console Main is no longer marked [STAThread]. This allows Windows Forms apps to be developed, run on a secondary thread using (spawn '(run application f)) and be dynamically and incremntally refined using the toploop on the first thread.
 Cons now implements ICollection
 Bug Fix - constructors can now pass null as an argument
-&optional and &key paramaters
+&optional and &key parameters
 Bug fix - map on empty list
-
+Added Web Application development features and examples
+Fixed bug in when return value
+Fixed append bug
 
 Version 1.21 29 Jan 2006
 

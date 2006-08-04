@@ -1,5 +1,7 @@
 This file contains a (partial) list of bugs and todo items for ongoing LSharp development.
 
+Several of the special forms should now be redone as macros (e.g. when)
+
 (typeof string) doesnt work on Mono
 
 Class definition facility to be able to subclass existing classes and implement existing interfaces.
@@ -42,8 +44,6 @@ How do you get at fields of a class that dont have an accessor method?
 
 Profile the interpreter and look for opportunities for performance optimisation.
 
-Optional and Keyword arguments to closures and macros.
- 
 Can we produce a CODEDOM for LSharp ?
 
 MS Visual Studio hosted development. Bracket matching in VS2005.
@@ -57,8 +57,6 @@ Trace should include execution timings.
 There are no built in div and mod operators.
 
 Do we need funcall ?
-
-&rest or . Like scheme?
 
 no such method - give more details about types		
 

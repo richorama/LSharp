@@ -68,6 +68,7 @@ namespace LSharp
 			this.AssignLocal(Symbol.FromName("'"),new SpecialForm(SpecialForms.Quote));
 			this.AssignLocal(Symbol.FromName("setf"),new SpecialForm(SpecialForms.Setq));
             this.AssignLocal(Symbol.FromName("setq"), new SpecialForm(SpecialForms.Setq));
+            this.AssignLocal(Symbol.FromName("spawn"), new SpecialForm(SpecialForms.Spawn));
 			this.AssignLocal(Symbol.FromName("="),new SpecialForm(SpecialForms.Setq));
 			this.AssignLocal(Symbol.FromName("the"),new SpecialForm(SpecialForms.The));
 			this.AssignLocal(Symbol.FromName("to"),new SpecialForm(SpecialForms.To));
@@ -137,7 +138,7 @@ namespace LSharp
 			this.AssignLocal(Symbol.FromName("reset"),new Function(Functions.Reset));
 			this.AssignLocal(Symbol.FromName("rest"),new Function(Functions.Cdr));
 			this.AssignLocal(Symbol.FromName("second"),new Function(Functions.Cadr));
-            this.AssignLocal(Symbol.FromName("spawn"), new Function(Functions.Spawn));
+            
 			this.AssignLocal(Symbol.FromName("-"),new Function(Functions.Subtract));
             this.AssignLocal(Symbol.FromName("symbol-name"), new Function(Functions.SymbolName));
 			this.AssignLocal(Symbol.FromName("third"),new Function(Functions.Caddr));

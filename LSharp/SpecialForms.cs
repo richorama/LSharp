@@ -385,6 +385,23 @@ namespace LSharp
 
 		}
 
+        /// <summary>
+        /// (spawn expression) is like eval except that the expression
+        /// is evaluated on a new thread. Returns immediately with
+        /// the new thread object, but execution of expressions
+        /// continues synchronously. Experimental.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <param name="environment"></param>
+        /// <returns></returns>
+        public static Object Spawn(Cons args, Environment environment)
+        {
+            if (args.Length() == 1)
+                return ThreadAdapter.Fork(args.First(), environment);
+            else
+                throw new LSharpException("Incorrect arguments given to spawn");
+        }
+
 		/// <summary>
 		/// (the type value)
 		/// Returns value converted or cast to an object of the specified type. 

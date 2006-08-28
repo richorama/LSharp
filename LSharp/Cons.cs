@@ -457,5 +457,15 @@ namespace LSharp
             get { return this; }
         }
 
+        /// <summary>
+        /// Overrides the default ToString to return the string representation of the list
+        /// as produced by the L Sharp Printer.
+        /// </summary>
+        /// <returns>The string represention of the list.</returns>
+        public override string ToString()
+        {
+            return Printer.WriteToString(this);
+        }
+
     }
 }

@@ -45,7 +45,7 @@ namespace LSharp
 
 		public static Macro ListP(Environment environment) 
 		{
-			return (Macro) Runtime.EvalString("(macro (l) `(eq (typeof LSharp.Cons) (gettype ,l)))",environment);
+            return (Macro)Runtime.EvalString("(macro (l) `(or (eq ,l null) (is LSharp.Cons ,l)))", environment);
 		}
 
 	}

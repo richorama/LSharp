@@ -19,6 +19,7 @@ Fixed bug in when return value
 Fixed append bug
 Cons overrides ToString()
 Fixed listp bug
+Fixed eval to accept a cons that evaluates to a closure as the first argument
 
 
 Version 1.21 29 Jan 2006

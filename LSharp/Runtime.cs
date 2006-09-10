@@ -58,92 +58,116 @@ namespace LSharp
 
 		}
 
-		/// <summary>
-		/// Evaluates an expression in a given lexical environment
-		/// </summary>
-		/// <param name="form"></param>
-		/// <param name="environment"></param>
-		/// <returns></returns>
-		public static Object Eval (Object expression, Environment environment) 
-		{
-			profiler.TraceCall (expression);
-			
-			if (expression == null)
-				return profiler.TraceReturn(null);
+        /// <summary>
+        /// Evaluates an expression in a given lexical environment
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <param name="environment"></param>
+        /// <returns></returns>
+        public static Object Eval(Object expression, Environment environment)
+        {
+            profiler.TraceCall(expression);
 
-			// The expression is either an atom or a list
-			if (Primitives.IsAtom(expression))
-			{
-				// Number
-				if (expression.GetType() == typeof(Double))
-					return profiler.TraceReturn(expression);
+            if (expression == null)
+                return profiler.TraceReturn(null);
 
-				if (expression.GetType() == typeof(int))
-					return profiler.TraceReturn(expression);
+            // The expression is either an atom or a list
+            if (Primitives.IsAtom(expression))
+            {
+                // Number
+                if (expression.GetType() == typeof(Double))
+                    return profiler.TraceReturn(expression);
 
-				// Character
-				if (expression.GetType() == typeof(char))
-					return profiler.TraceReturn(expression);
+                if (expression.GetType() == typeof(int))
+                    return profiler.TraceReturn(expression);
 
-				// String
-				if (expression.GetType() == typeof(string))
-					return profiler.TraceReturn(expression);
+                // Character
+                if (expression.GetType() == typeof(char))
+                    return profiler.TraceReturn(expression);
 
-				if (((Symbol)expression) == Symbol.TRUE)
-					return profiler.TraceReturn(true);
+                // String
+                if (expression.GetType() == typeof(string))
+                    return profiler.TraceReturn(expression);
 
-				if (((Symbol)expression) == Symbol.FALSE)
-					return profiler.TraceReturn(false);
+                if (((Symbol)expression) == Symbol.TRUE)
+                    return profiler.TraceReturn(true);
 
-				if (((Symbol)expression) == Symbol.NULL)
-					return profiler.TraceReturn(null);
+                if (((Symbol)expression) == Symbol.FALSE)
+                    return profiler.TraceReturn(false);
 
-				// If the symbol is bound to a value in this lexical environment
-				if (environment.Contains((Symbol) expression))
-					// Then it's a variable so return it's value
-					return profiler.TraceReturn(environment.GetValue((Symbol) expression));
-				else 
-				{
+                if (((Symbol)expression) == Symbol.NULL)
+                    return profiler.TraceReturn(null);
+
+                // If the symbol is bound to a value in this lexical environment
+                if (environment.Contains((Symbol)expression))
+                    // Then it's a variable so return it's value
+                    return profiler.TraceReturn(environment.GetValue((Symbol)expression));
+                else
+                {
                     // Otherwise symbols evaluate to themselves
                     return profiler.TraceReturn(expression);
-				}
-			} 
-			else 
-			{
-				// The expression must be a list
-				Cons cons = (Cons) expression;
+                }
+            }
+            else
+            {
+                // The expression must be a list
+                Cons cons = (Cons)expression;
 
-				// Lists are assumed to be of the form (function arguments)
+                // Lists are assumed to be of the form (function arguments)
+                object function = null;
 
-				// See if there is a binding to a function, clsoure, macro or special form
-				// in this lexical environment
-				object function = environment.GetValue((Symbol)cons.First());
+                // However, we need to check to see if the function is actually a cons
+                // that evaluates to a function first, as in:
+                // (= foo (fn () "bar"))
+                // (= dispatch (new system.collections.hashtable))
+                // (set_item dispatch "foo" foo)
+                // ((item dispatch "foo"))
+                if (cons.First() is Cons)
+                {
+                    // if the first arg is a Cons, try to evaluate it to a function
+                    function = Eval(cons.First(), environment);
+                }
+                else if (cons.First() is Symbol)
+                {
+                    // See if there is a binding to a function, clsoure, macro or special form
+                    // in this lexical environment
+                    function = environment.GetValue((Symbol)cons.First());
 
-				// If there is no binding, then use the function name directly - it's probably
-				// the name of a .NET method
-				if (function == null)
-					function = cons.First();
+                    if (function == null)
+                        function = cons.First();
+                }
+                else if (cons.First() == null)
+                {
+                    string msg = "Expected a function as the first argument in a list but received null";
+                    throw new System.ArgumentNullException(msg);
+                }
+                else
+                {
+                    string msg = "Expected a function as the first argument in a list but received ";
+                    msg += cons.First().GetType().ToString();
+                    throw new System.ArgumentException(msg);
+                }
 
-				// If it's a special form
-				if (function.GetType() == typeof(SpecialForm)) 
-				{
-					return profiler.TraceReturn(((SpecialForm) function) ((Cons)cons.Cdr(),environment));
-				}
+                // If it's a special form
+                if (function.GetType() == typeof(SpecialForm))
+                {
+                    return profiler.TraceReturn(((SpecialForm)function)((Cons)cons.Cdr(), environment));
+                }
 
-				// If its a macro application
-				if (function.GetType() == typeof(Macro)) 
-				{
-					object expansion = ((Macro) function).Expand((Cons)cons.Cdr());
-					return profiler.TraceReturn(Runtime.Eval(expansion, environment));
-				}
+                // If its a macro application
+                if (function.GetType() == typeof(Macro))
+                {
+                    object expansion = ((Macro)function).Expand((Cons)cons.Cdr());
+                    return profiler.TraceReturn(Runtime.Eval(expansion, environment));
+                }
 
-				// It must be a function, closure or method invocation,
-				// so call apply
-				Object arguments = EvalList((Cons)cons.Cdr(),environment);
-				return profiler.TraceReturn(Runtime.Apply(function, arguments, environment));
-				
-			}			
-		}
+                // It must be a function, closure or method invocation,
+                // so call apply
+                Object arguments = EvalList((Cons)cons.Cdr(), environment);
+                return profiler.TraceReturn(Runtime.Apply(function, arguments, environment));
+
+            }
+        }
 
         /// <summary>
         /// Return the best matching constructor for type given  types and values of

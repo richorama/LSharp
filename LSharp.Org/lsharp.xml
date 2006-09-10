@@ -158,19 +158,20 @@
         <programlisting>C:\LSharp\>LSharp.exe</programlisting>
         Running L Sharp with no arguments starts an interactive session with the interpreter.
         <programlisting>
-          Welcome to L Sharp .NET, a powerful lisp-based scripting language for .NET.
-          Copyright (C) 2005 Rob Blackwell &amp; Active Web Solutions.
+Welcome to L Sharp .NET, a powerful lisp-based scripting language for .NET.
+Copyright (C) 2005 - 2006 Rob Blackwell &amp; Active Web Solutions.
 
-          This program is free software and is distributed under the terms of
-          the GNU General Public License.
+This program is free software and is distributed under the terms of
+the GNU General Public License.
 
-          For more information, see www.lsharp.org
+For more information, see www.lsharp.org
 
-          Build 1.11.2164.29780
-          Microsoft Windows NT 5.1.2600 Service Pack 2
-          CLR 2.0.50727.42
+Build 1.3.0.10748
+Microsoft Windows NT 5.1.2600 Service Pack 2
+CLR 2.0.50727.42
 
-          >
+>
+
         </programlisting>
         When L Sharp starts, it prints a welcome message and gives you
         a single chevron - this is the toploop prompt.
@@ -1294,7 +1295,7 @@ null
           Sets up a new event handler for events named eventName on target. The
           handler is an LSharp closure with two arguments, the sender and the
           event arguments (defun fn (sender args) (prl "Event Handled")).
-          Experimental. See also defevent.
+          See also defevent.
 <programlisting>
 (reference "System.Windows.Forms")
 (using "System.Windows.Forms")
@@ -1305,7 +1306,7 @@ null
 
 (handle-event f "Click" handler)
 
-(run application f)
+(spawn (run application f))
 </programlisting>
         </para>
       </sect3>
@@ -1456,6 +1457,17 @@ null
         </para>
       </sect3>
 
+		<sect3>
+        <title>Modulus %</title>
+        <para>
+          <programlisting>
+            (%<emphasis>object*</emphasis>)
+          </programlisting>
+			The modulus function (%) computes the remainder after dividing successive objects.
+			The objects are assumed to be numeric types.
+		</para>
+      </sect3>
+		
       <sect3>
         <title>Multiply, *</title>
         <para>
@@ -1697,8 +1709,11 @@ null
 
 (= f (new Form))
 
+(defun handler (sender args)
+	(writeline console "You clicked x {0} y {1}" (x args) (y args)))
+
 (defevent Click f (sender args)
-  (writeline console "You clicked x {0} y {1}" (x args) (y args)))
+	(handler sender args))
 
 (spawn '(run application f))
 </programlisting>

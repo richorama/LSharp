@@ -899,6 +899,21 @@ namespace LSharp
             return null;
         }
 
+
+        public static Object Mod(Cons args, Environment environment)
+        {
+            Type type = args.First().GetType();
+            Double result = Convert.ToDouble(args.First());
+            foreach (object item in (Cons)args.Rest())
+            {
+                if (item is Double)
+                    type = item.GetType();
+
+                result %= Convert.ToDouble(item);
+            }
+            return Convert.ChangeType(result, type);
+        }
+
 		/// <summary>
 		/// (* number*)
 		/// Returns the result of multiplying all number arguments

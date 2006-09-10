@@ -100,6 +100,7 @@ namespace LSharp
             this.AssignLocal(Symbol.FromName("cons"),new Function(Functions.Cons));
             this.AssignLocal(Symbol.FromName("copy-list"), new Function(Functions.CopyList));
             this.AssignLocal(Symbol.FromName("/"),new Function(Functions.Divide));
+            this.AssignLocal(Symbol.FromName("%"), new Function(Functions.Mod));
 			this.AssignLocal(Symbol.FromName("environment"),new Function(Functions.Environment));
 			this.AssignLocal(Symbol.FromName("eq"),new Function(Functions.Eq));
 			this.AssignLocal(Symbol.FromName("eql"),new Function(Functions.Eql));

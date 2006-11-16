@@ -397,7 +397,10 @@ namespace LSharp
         public static Object Spawn(Cons args, Environment environment)
         {
             if (args.Length() == 1)
-                return ThreadAdapter.Fork(args.First(), environment);
+                return ThreadAdapter.Fork(args.First(), environment, System.Threading.ApartmentState.MTA);
+            else if (args.Length() == 2)
+                return ThreadAdapter.Fork(args.First(), environment, 
+                    (System.Threading.ApartmentState) Runtime.Eval(args.Second(), environment));
             else
                 throw new LSharpException("Incorrect arguments given to spawn");
         }
@@ -577,7 +580,7 @@ namespace LSharp
 
 			while ((bindings != null) && (bindings.Length() > 1))
 			{
-				localEnvironment.AssignLocal((Symbol) bindings.First(), Runtime.Eval(bindings.Second(),environment));
+                localEnvironment.AssignLocal((Symbol)bindings.First(), Runtime.Eval(bindings.Second(), localEnvironment));
 				bindings = (Cons)bindings.Cddr();
 			}	
 			

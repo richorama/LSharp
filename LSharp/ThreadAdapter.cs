@@ -56,12 +56,13 @@ namespace LSharp
         /// <param name="expression"></param>
         /// <param name="environment"></param>
         /// <returns>The new Thread</returns>
-        public static Thread Fork(Object expression, Environment environment)
+        public static Thread Fork(Object expression, Environment environment, ApartmentState apartmentState)
         {
             ThreadAdapter threadAdapter = new ThreadAdapter(expression, environment);
 
             ThreadStart job = new ThreadStart(threadAdapter.Invoke);
             Thread thread = new Thread(job);
+            thread.SetApartmentState(apartmentState);
             thread.Start();
             return thread;
         }

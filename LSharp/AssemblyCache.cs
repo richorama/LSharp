@@ -70,9 +70,11 @@ namespace LSharp
 			object o = assemblyTable[assembly];
 			if (o == null) 
 			{
-				if (Path.IsPathRooted(assembly))
-					o = Assembly.LoadFrom(assembly);
-				else
+                if (Path.IsPathRooted(assembly))
+                    o = Assembly.LoadFrom(assembly);
+                else
+                    // TODO change this to Assembly.Load
+                    // o = Assembly.Load(assembly);
 					o = Assembly.LoadWithPartialName(assembly);
 				
 				assemblyTable[assembly] = o;

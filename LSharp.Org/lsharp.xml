@@ -1619,7 +1619,7 @@ null
         <title>spawn</title>
         <para>
           <programlisting>
-            (spawn <emphasis>expression</emphasis>)
+            (spawn <emphasis>expression &amp;optional System.Threading.ApartmentState </emphasis>)
           </programlisting>
         </para>
 
@@ -1628,6 +1628,10 @@ null
           is evaluated on a new Thread. Returns immediately with
           the new Thread object, but execution of expressions
           continues synchronously. Experimental.
+        </para>
+        <para> A System.Threading.ApartmentState can also be specified.
+        This allows for COM Interop using StatThread 
+        <programlisting>(sta system.threading.apartmentstate)</programlisting>.
         </para>
       </sect3>
 
@@ -2184,8 +2188,9 @@ null
           (global-font-lock-mode t)
           ;; Maximum colors
           (setq font-lock-maximum-decoration t)))
-
-          (setq inferior-lisp-program "C:/LSharp/LSharp.exe")
+          
+          (add-to-list 'auto-mode-alist '("\\.ls$" . lisp-mode))
+          (setq inferior-lisp-program "cmd /c C:\\LSharp\\LSharp.exe")
         </programlisting>
         Then start emacs. Type <programlisting>M-x run-lisp</programlisting>.
         You edit an LSharp program in another Lisp buffer and send expressions to the inferior Lisp process using

@@ -63,6 +63,9 @@ namespace LSharpTests
 
             actual = Runtime.PrintToString( runtime.EvalString("(+ '(1 2 3) '(4 5 6))"));
             Assert.AreEqual("(1 2 3 4 5 6)", actual);
+
+            actual = Runtime.PrintToString(runtime.EvalString("(+ [1 2 3] [4 5 6])"));
+            Assert.AreEqual("(1 2 3 4 5 6)", actual);
         }
 
         [Test]

@@ -1310,7 +1310,7 @@ namespace LSharp
 
             foreach (object o in foo)
             {
-                bar = Join((ISequence)o, bar);
+                bar = Join(Seq(o), bar);
             }
 
             return bar;

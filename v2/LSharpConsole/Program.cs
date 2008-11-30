@@ -28,39 +28,13 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
-using System;
-using System.IO;
-using System.Linq.Expressions;
-using ExpressionVisualizer;
 using LSharp;
-using Microsoft.VisualStudio.DebuggerVisualizers;
-using System.Reflection;
 
 namespace LSharpConsole
 {
     class Program
     {
         
-        /// <summary>
-        /// (showtree (compile '(+ 1 2))) 
-        /// Allows LINQ expressions to be visualised.
-        /// </summary>
-        private static Expression ShowTree(Expression expr)
-        {
-            string introduction = "The Visualizer may be hidden behind a window. Try the GuiHost.";
-
-            Console.WriteLine(introduction);
-
-            VisualizerDevelopmentHost host = new VisualizerDevelopmentHost(expr,
-                                                 typeof(ExpressionTreeVisualizer),
-                                                 typeof(ExpressionTreeVisualizerObjectSource));
-            host.ShowVisualizer();
-
-            return expr;
-
-
-        }
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -70,12 +44,6 @@ namespace LSharpConsole
 
             Runtime runtime = new Runtime(System.Console.In, System.Console.Out, System.Console.Error);
            
-            // Add a special command to use the LNQ expression tree visualiser
-            runtime.GlobalEnvironment.AssignLocal(Symbol.FromName("showtree"),
-                new Function(new Func<Expression, Expression>(ShowTree),
-                    "x",
-                    "Shows the LINQ expression tree for x.", false));
-
             if (args.Length < 1)
             {
                 // Interactive Read, Eval, Print Loop

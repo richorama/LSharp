@@ -1,0 +1,33 @@
+LSHARP 2 TODO List
+
+Write some documentation!
+Tutorial video
+Unbalanced parenthesis can lead the reader into stack overflow.
+FindUnambiguousMember for virtual methods
+More opportunities to use Sequence rather than Pair?
+move more stuff from C# to L#
+consider a special form (clr console.writeline) that maps to a type, delegate or fn
+runtime quaiquote could use sequence not pair?
+Pre compile optional args to closures
+Lazy sequences?
+Notion of indexable Sequences
+Better documentation strings on functions and macros
+Think about synchronised / threading / parallel operators - pmap?
+More Nunit tests
+Remove other special forms like quasiquote from core and simplify the compiler?
+A wpf sample
+Silverlight runtime hosted version?
+Implement events?
+Does LSharp work with Mono?
+Would using Type.GetTypeCode and TypeCode constants be faster?
+Use activator for constructors?
+Cleanup ssyntax
+Can we build a SWANK backend to use SLIME ?
+Build a more graphical repl like http://tirania.org/blog/archive/2008/Nov-02.html
+Can we hook into visual studio object inspection tools for inspect?
+Can we serialise expression trees to get a kind of FASL file?
+Implement a better Debugger
+Is there a way to do tail call optimsation - there is some support for this now in IL
+
+Rob Blackwell
+November 08

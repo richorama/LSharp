@@ -1,0 +1,13 @@
+L Sharp 2 is copyright (c) Rob Blackwell and is distibuted under the
+terms of the BSD licence, so you can pretty much do what you like with
+it.
+
+Various LSharp code snippets and design aspects bear a remarkable simlarity
+to Arc and so I gratefully acknowledge it's copyright:
+
+copyright (c) Paul Graham and Robert Morris.  Permission to use it is
+granted under the Perl Foundations's Artistic License 2.0.
+
+The ExpressionTreVisualizer is part of The CSharp Samples for Visual
+Studio 2008 http://code.msdn.microsoft.com/csharpsamples distributed 
+under the terms of the Microsoft Public License (Ms-PL).

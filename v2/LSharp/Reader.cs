@@ -33,6 +33,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace LSharp
 {
@@ -146,7 +147,7 @@ namespace LSharp
             
             ReadWhiteSpace(textReader);
 
-            ArrayList a = new ArrayList();
+            List<object> a = new List<object>();
 
             while (true)
             {

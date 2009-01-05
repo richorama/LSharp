@@ -76,5 +76,7 @@ all work with all these data types.
 At the REPL *1 is the result of the last evaluation and *2 the evaluation before that.
 The last exception is *e.
 
+.NET method calls are case sensitive.
+
 Rob Blackwell
-November 2008
+Jan 2009

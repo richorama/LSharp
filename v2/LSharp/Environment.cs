@@ -29,6 +29,7 @@
 #endregion
 
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace LSharp
@@ -36,7 +37,7 @@ namespace LSharp
     public class Environment : IEnumerable
     {
         private const int CAPACITY = 10;
-        private Hashtable hashtable = new Hashtable(CAPACITY);
+        private Dictionary<Symbol, object> hashtable = new Dictionary<Symbol, object>(CAPACITY);
 
         // Maintain a reference to a previous environment to allow nesting
         // of environments, thus supporting local variables in a lexical
@@ -45,7 +46,7 @@ namespace LSharp
 
         public void GlobalReset()
         {
-            hashtable = new Hashtable(CAPACITY);
+            hashtable = new Dictionary<Symbol, object>(CAPACITY);
         }
 
         public Environment()
@@ -65,7 +66,7 @@ namespace LSharp
 
         public object GetValue(Symbol symbol)
         {
-            if (hashtable.Contains(symbol))
+            if (hashtable.ContainsKey(symbol))
             {
                 return hashtable[symbol];
             }
@@ -87,7 +88,7 @@ namespace LSharp
         /// <returns>True or false</returns>
         public bool Contains(Symbol symbol)
         {
-            if (hashtable.Contains(symbol))
+            if (hashtable.ContainsKey(symbol))
                 return true;
 
             if (previousEnvironment != null)
@@ -102,7 +103,7 @@ namespace LSharp
         /// </summary>
         private Environment GetEnvironment(Symbol symbol)
         {
-            if (hashtable.Contains(symbol))
+            if (hashtable.ContainsKey(symbol))
                 return this;
 
             if (previousEnvironment == null)
@@ -117,7 +118,7 @@ namespace LSharp
         /// </summary>
         public object Set(Symbol symbol, object value)
         {
-            if ((hashtable.Contains(symbol)) || (previousEnvironment == null))
+            if ((hashtable.ContainsKey(symbol)) || (previousEnvironment == null))
                 return this.AssignLocal(symbol, value);
 
             

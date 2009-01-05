@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Globalization;
 
 namespace LSharp
 {
@@ -93,7 +94,7 @@ namespace LSharp
                     "& xs",
                     "If the first x is a number, returns the sum of xs, otherwise the concatenation of all xs. (+) returns 0.",
                     true));
-            
+
             globalEnvironment.AssignLocal(Symbol.FromName("-"),
                 new Function(new Func<IEnumerable, object>(Runtime.Subtract),
                     "& xs",
@@ -153,7 +154,7 @@ namespace LSharp
                 new Function(new Func<object, object, object>(Runtime.Coerce),
                     "x t",
                     "Converts objext x to type t.", false));
-             
+
             globalEnvironment.AssignLocal(Symbol.FromName("compile"),
                 new Function(new Func<object, object>(Compile),
                     "expr",
@@ -180,7 +181,7 @@ namespace LSharp
                     "Returns true if x is an empty sequence.", false));
 
             globalEnvironment.AssignLocal(Symbol.FromName("err"),
-                new Function(new Func<object,object>(Runtime.Err),
+                new Function(new Func<object, object>(Runtime.Err),
                     "exception",
                     "Raises an exception", false));
 
@@ -236,7 +237,7 @@ namespace LSharp
 
             // TODO: Should new be a special form that compiles the constructor call?
             globalEnvironment.AssignLocal(Symbol.FromName("new"),
-               new Function(new Func< object[], object>(Runtime.New),
+               new Function(new Func<object[], object>(Runtime.New),
                    "t & xs ",
                    "Constructs a new object of type t with constructir arguments xs.", true));
 
@@ -269,7 +270,7 @@ namespace LSharp
             //   new Function(new Func<double, double>(Runtime.Sleep),
             //       "n",
             //       "Sleeps for n seconds.", false)); 
- 
+
             globalEnvironment.AssignLocal(Symbol.FromName("seq"),
                new Function(new Func<object, ISequence>(Runtime.Seq),
                    "x",
@@ -300,7 +301,7 @@ namespace LSharp
                     "& xs",
                     "xxx", true));
 
-            
+
             globalEnvironment.AssignLocal(Symbol.FromName("toarray"),
                 new Function(new Func<IEnumerable, object>(Runtime.AsArray),
                     "seq",
@@ -329,14 +330,14 @@ namespace LSharp
                     "", false));
 
             globalEnvironment.AssignLocal(Symbol.FromName("using"),
-                new Function(new Func<object[],object>(Runtime.Using),
+                new Function(new Func<object[], object>(Runtime.Using),
                     "xs",
                     "XXX", true));
 
             // Bootstrap L# ..
 
             EvalString("(LSharp.Runtime.VarSet (quote set) (LSharp.Runtime.MakeMacro '(x y) (quote `(LSharp.Runtime.VarSet (quote ,x) ,y  environment)) \"Set a variable\" environment) environment)");
-            EvalString("(set map (fn (f s) \"Maps a function f over a sequence.\" (lsharp.runtime.map f s environment)))");
+            EvalString("(set map (fn (f s) \"Maps a function f over a sequence.\" (LSharp.Runtime.map f s environment)))");
 
             EvalString("(set bound (fn (sym) \"Returns true if sym is bound in the current environment.\" (LSharp.Runtime.Bound sym environment)))");
             EvalString("(set safeset (macro (var val) `(do (if (bound ',var) (prn \"*** redefining \" ',var)) (set ,var ,val))))");
@@ -358,7 +359,7 @@ namespace LSharp
 
             //EvalString("(LSharp.Runtime.VarSet (quote if) (LSharp.Runtime.MakeMacro '(& xs) (quote `(LSharp.Runtime.If (map compile (quote ,xs)) environment)) \"if\" environment) environment)");
             EvalString("(def inspect (x) \"Inspects the object x for debugging purposes.\"  (LSharp.Runtime.Inspect x (stdout)))");
-            EvalString("(def msec () \"Returns the current time in milliseconds.\" (/ (.ticks (datetime.now)) 10000))");
+            EvalString("(def msec () \"Returns the current time in milliseconds.\" (/ (.ticks (DateTime.Now)) 10000))");
             EvalString("(def sleep (n) \"Sleeps for n seconds\" (System.Threading.Thread.Sleep (coerce (* n 1000) \"Int32\")))");
             EvalString("(def macex (x) (LSharp.Runtime.MacroExpand x false environment))");
             EvalString("(def macex1 (x) (LSharp.Runtime.MacroExpand x true environment))");
@@ -371,7 +372,7 @@ namespace LSharp
             EvalString("(def odd (n) \"Returns true if n is odd\" (no (even n)))");
             EvalString("(def isa (x t) \"Returns true if x is of type t.\" (is (type x) t))");
             EvalString("(def pair (xs (f list))(if (no xs) nil (no (cdr xs))(list (list (car xs)))(cons (f (car xs) (cadr xs))(pair (cddr xs) f))))");
-            EvalString("(def reduce (f s) (lsharp.runtime.reduce f s environment))");
+            EvalString("(def reduce (f s) (LSharp.Runtime.reduce f s environment))");
             EvalString("(mac and (& xs) `(LSharp.Runtime.And (map compile (quote ,xs))  environment))");
             EvalString("(mac with (parms & body) `((fn ,(map car (pair parms)) ,@body) ,@(map cadr (pair parms))))");
             EvalString("(mac let (var val & body) `(with (,var ,val) ,@body))");
@@ -390,7 +391,7 @@ namespace LSharp
         }
 
         public Environment GlobalEnvironment
-        {   
+        {
             get { return globalEnvironment; }
         }
 
@@ -403,7 +404,7 @@ namespace LSharp
         {
             if (x is Macro)
                 writer.Write("Macro : ");
-            
+
             if (x is Function)
             {
                 writer.WriteLine("{0} : {1}", ((Function)x).Signature, ((Function)x).Documentation);
@@ -434,7 +435,7 @@ namespace LSharp
             throw new LSharpException("Not a sequence");
         }
 
-        public static bool IsSeq (object o) 
+        public static bool IsSeq(object o)
         {
             return ((o is ISequence) || (o is IEnumerable));
         }
@@ -448,7 +449,7 @@ namespace LSharp
                 return ((Sequence)arg).Last();
 
             return Last(Seq(arg));
-          
+
         }
 
         public static bool Member(object item, object seq)
@@ -578,7 +579,7 @@ namespace LSharp
 
             return ToList(Seq(list));
         }
-       
+
 
         private static object Reverse(object arg)
         {
@@ -589,10 +590,10 @@ namespace LSharp
                 return ((Sequence)arg).Reverse();
 
             return Reverse(Seq(arg));
-            
+
         }
 
-        public static bool Is(object a , object b)
+        public static bool Is(object a, object b)
         {
             if (a == null)
                 return (b == null);
@@ -613,7 +614,7 @@ namespace LSharp
 
         }
 
-        
+
 
         public static bool IsAtom(object arg)
         {
@@ -671,26 +672,26 @@ namespace LSharp
         {
             if (args == null)
                 return false;
-            
+
             foreach (object item in args)
             {
                 if (Boolify(Compiler.Eval(item, environment)))
                     return true;
             }
-           
+
             return false;
         }
 
         public static object Add(IEnumerable args)
         {
-            
+
             if (args == null)
                 return 0;
 
             if ((args is Array) && ((Array)args).Length == 0)
                 return 0;
 
-          
+
             if (AllString(args))
             {
                 return StringAppend(args);
@@ -714,7 +715,7 @@ namespace LSharp
             {
                 result += Convert.ToDouble(item);
             }
-            return Convert.ChangeType(result, type);
+            return Convert.ChangeType(result, type, CultureInfo.InvariantCulture);
 
 
         }
@@ -745,15 +746,16 @@ namespace LSharp
                 {
                     first = false;
                     result += Convert.ToDouble(item);
-                } else 
+                }
+                else
                 {
                     result -= Convert.ToDouble(item);
                 }
 
 
             }
-            return Convert.ChangeType(result, type);
-            
+            return Convert.ChangeType(result, type, CultureInfo.InvariantCulture);
+
         }
 
 
@@ -811,7 +813,7 @@ namespace LSharp
             return s.ToString();
 
         }
-   
+
         public static Object Cons(object a, object b)
         {
             if (b == null)
@@ -945,7 +947,7 @@ namespace LSharp
             if (arg is Sequence)
                 return ((Sequence)arg).Nth(n);
 
-            return Nth(Seq(arg),n);
+            return Nth(Seq(arg), n);
         }
 
 
@@ -964,7 +966,7 @@ namespace LSharp
 
             return IsEmpty(Seq(arg));
         }
-        
+
         public static int Len(object arg)
         {
             if (arg == null)
@@ -977,7 +979,7 @@ namespace LSharp
 
         }
 
-         private  static int SequenceLength(ISequence sequence)
+        private static int SequenceLength(ISequence sequence)
         {
             int i = 1;
             ISequence o = sequence;
@@ -1014,7 +1016,7 @@ namespace LSharp
 
                 result *= Convert.ToDouble(item);
             }
-            return Convert.ChangeType(result, type);
+            return Convert.ChangeType(result, type, CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -1032,7 +1034,7 @@ namespace LSharp
 
                 result /= Convert.ToDouble(item);
             }
-            return Convert.ChangeType(result, type);
+            return Convert.ChangeType(result, type, CultureInfo.InvariantCulture);
         }
 
         public static Object Mod(object[] args)
@@ -1046,7 +1048,7 @@ namespace LSharp
 
                 result %= Convert.ToDouble(item);
             }
-            return Convert.ChangeType(result, type);
+            return Convert.ChangeType(result, type, CultureInfo.InvariantCulture);
         }
 
         public static Object New(object[] args)
@@ -1067,7 +1069,7 @@ namespace LSharp
             object result = null;
             foreach (string s in n)
             {
-           
+
                 if (!namespaces.Contains(s))
                 {
                     namespaces.Add(s);
@@ -1085,7 +1087,7 @@ namespace LSharp
             foreach (string assemblyName in assemblyNames)
             {
                 result = ClrGlue.LoadAssembly(assemblyName);
-             
+
             }
             return result;
         }
@@ -1131,7 +1133,7 @@ namespace LSharp
         {
             Pair c = null;
 
-            foreach(object arg in args) 
+            foreach (object arg in args)
             {
                 c = new Pair(arg, c);
             }
@@ -1152,7 +1154,7 @@ namespace LSharp
         {
             if (o is Exception)
                 throw ((Exception)o);
-   
+
             throw new LSharpException((string)o);
         }
 
@@ -1274,15 +1276,15 @@ namespace LSharp
         }
 
 
-        public static ISequence Map(Function f, object arg,  Environment environment)
+        public static ISequence Map(Function f, object arg, Environment environment)
         {
             if (arg == null)
                 return null;
 
             if (arg is Sequence)
-                return ((Sequence)arg).Map(f,environment);
+                return ((Sequence)arg).Map(f, environment);
 
-            return Map(f,  Seq(arg), environment);
+            return Map(f, Seq(arg), environment);
 
         }
 
@@ -1298,12 +1300,12 @@ namespace LSharp
 
         public static ISequence Join(IEnumerable os)
         {
-            
+
             Pair foo = null;
 
-            foreach (object o in os) 
+            foreach (object o in os)
             {
-                foo = new Pair (o, foo);
+                foo = new Pair(o, foo);
             }
 
             ISequence bar = null;
@@ -1318,7 +1320,7 @@ namespace LSharp
 
         public static ISequence Join(ISequence a, ISequence b)
         {
-            
+
             if (a == null)
                 return b;
 
@@ -1340,11 +1342,11 @@ namespace LSharp
         }
 
 
-        public static object ForLoop(int start, int finish, object body,  Environment environment)
+        public static object ForLoop(int start, int finish, object body, Environment environment)
         {
             object ret = null;
 
-            for (int i = start ; i <= finish ; i++)
+            for (int i = start; i <= finish; i++)
             {
                 ret = Compiler.FunCall(body, new object[] { i }, environment);
             }
@@ -1389,16 +1391,16 @@ namespace LSharp
         {
             return (!((o == null) || (o is bool) && ((bool)o == false)));
         }
-     
+
         public static Function MakeFunction(object parameters, object body, string documentation, Environment environment)
         {
             Closure closure = new Closure(parameters, body, environment);
             string signature = "";
-            
-            if (parameters != null)
-                signature =PrintToString(parameters);
 
-            return new Function(new Func<object[], object>(closure.Invoke),signature,documentation,true);
+            if (parameters != null)
+                signature = PrintToString(parameters);
+
+            return new Function(new Func<object[], object>(closure.Invoke), signature, documentation, true);
         }
 
         public static Macro MakeMacro(object parameters, object body, string documentation, Environment environment)
@@ -1425,13 +1427,13 @@ namespace LSharp
         public static object Coerce(object o, object t)
         {
             Type type;
-            
+
             if (t is String)
                 type = TypeOf(t);
             else
                 type = (Type)t;
-                
-            return Convert.ChangeType(o, type);
+
+            return Convert.ChangeType(o, type, CultureInfo.InvariantCulture);
         }
 
         public static object QuasiQuote(Object form, Environment environment)
@@ -1493,7 +1495,7 @@ namespace LSharp
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            stringBuilder.Append(string.Format("// Value={0}\r\n", PrintToString( o)));
+            stringBuilder.Append(string.Format("// Value={0}\r\n", PrintToString(o)));
             stringBuilder.Append(ClrGlue.TypeInfo(o.GetType()));
             stringBuilder.Append("{\n");
             stringBuilder.Append(ClrGlue.Fields(o));
@@ -1509,13 +1511,13 @@ namespace LSharp
         /// </summary>
         public void Repl()
         {
-            stdout.WriteLine("L Sharp {0} on {1}", ClrGlue.LSharpVersion(), System.Environment.Version);
+            stdout.WriteLine("L Sharp {0} on {1}", ClrGlue.LSharpVersion(), ClrGlue.EnvironmentVersion());
             stdout.WriteLine("Copyright (c) Rob Blackwell. All rights reserved.");
 
             // Keep results of recent evaluations using shorthand *1, *2 and *3
             Symbol starOne = Symbol.FromName("*1");
             VarSet(starOne, null, globalEnvironment);
-            
+
             Symbol starTwo = Symbol.FromName("*2");
             VarSet(starTwo, null, globalEnvironment);
 
@@ -1576,7 +1578,7 @@ namespace LSharp
             object o = Compiler.Eval(arg, environment);
             long stop = DateTime.Now.Ticks / 10000;
 
-            textWriter.WriteLine("time: {0} msec", stop - start); 
+            textWriter.WriteLine("time: {0} msec", stop - start);
 
             return o;
         }

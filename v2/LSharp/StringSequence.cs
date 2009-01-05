@@ -79,7 +79,7 @@ namespace LSharp
 
         public override System.Collections.IEnumerator GetEnumerator()
         {
-            return s.Substring(index).GetEnumerator();
+            return ((System.Collections.IEnumerable)s.Substring(index)).GetEnumerator();
         }
 
         public override int Length()

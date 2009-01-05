@@ -42,9 +42,6 @@ namespace LSharp
     public class ClrGlue
     {
 
-        // Whether or not to be case insensitive when looking up type names
-        const bool IGNORE_CASE = true;
-
         /// <summary>
         /// Searches the list of namespaces for the specified type
         /// </summary>
@@ -66,9 +63,17 @@ namespace LSharp
         /// </summary>
         public static Type FindType(string typeName)
         {
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            #if SILVERLIGHT
+                List<Assembly> assemblies = new List<Assembly>();
+			    assemblies.Add(Assembly.Load("mscorlib"));
+			    assemblies.Add(Assembly.GetCallingAssembly());
+            #else
+                Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            #endif
+
+            foreach (Assembly assembly in assemblies)
             {
-                Type type = assembly.GetType(typeName, false, IGNORE_CASE);
+                Type type = assembly.GetType(typeName, false);
 
                 if (type != null)
                     return type;
@@ -271,9 +276,19 @@ namespace LSharp
             return constructorInfo.Invoke(arguments);
         }
 
+        public static string EnvironmentVersion()
+        {
+            #if SILVERLIGHT
+                return System.Environment.Version + " (Silverlight)";
+            #else
+                return System.Environment.Version.ToString();
+            #endif
+        }
+
         public static string LSharpVersion () 
         {
-            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            return new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version.ToString();
         }
 
         /// <summary>
@@ -287,9 +302,14 @@ namespace LSharp
                 assembly = Assembly.LoadFrom(name);
             else 
             {
+
+                #if SILVERLIGHT
+                assembly = Assembly.LoadFrom(name);
+                #else
                 // LoadWithPartialName is deprecated, but it's too useful not to use ...
                 assembly = Assembly.LoadWithPartialName(name);
-                //assembly = Assembly.Load(new AssemblyName(assembly));
+                #endif
+
             }
 
             return assembly;

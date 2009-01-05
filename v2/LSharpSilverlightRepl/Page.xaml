@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="LSharpSilverlightRepl.Page"
+  					 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid x:Name="LayoutRoot"
+				HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer x:Name="ConsoleScrollViewer" Grid.Row="0" Grid.ColumnSpan="2"
+									BorderThickness="0">
+            <TextBlock x:Name="ConsoleTextBlock"
+								 TextWrapping="Wrap" FontFamily="Courier New" FontSize="13"/>
+        </ScrollViewer>
+        <TextBlock Grid.Row="1" Grid.Column="0"
+							 FontFamily="Courier New" FontSize="13" Text="> "
+							 VerticalAlignment="Center" HorizontalAlignment="Right" />
+        <TextBox x:Name="ConsoleTextBox" Grid.Row="1" Grid.Column="1"
+						 BorderThickness="0" VerticalAlignment="Center" 
+						 FontFamily="Courier New" FontSize="13" 
+						 KeyUp="TextBox_KeyUp"/>
+    </Grid>
+</UserControl>

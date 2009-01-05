@@ -16,7 +16,6 @@ Think about synchronised / threading / parallel operators - pmap?
 More Nunit tests
 Remove other special forms like quasiquote from core and simplify the compiler?
 A wpf sample
-Silverlight runtime hosted version?
 Implement events?
 Does LSharp work with Mono?
 Would using Type.GetTypeCode and TypeCode constants be faster?
@@ -30,4 +29,4 @@ Implement a better Debugger
 Is there a way to do tail call optimsation - there is some support for this now in IL
 
 Rob Blackwell
-November 08
+Jan 09

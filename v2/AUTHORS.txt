@@ -1,1 +1,2 @@
-Rob Blackwell
+Rob Blackwell - Initial version
+Roman Škrabiš - Changes to work with Silverlight

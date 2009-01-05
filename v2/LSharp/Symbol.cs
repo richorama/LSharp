@@ -29,6 +29,7 @@
 #endregion
 
 using System.Collections;
+using System.Collections.Generic;
 
 namespace LSharp
 {
@@ -40,7 +41,7 @@ namespace LSharp
 	public class Symbol
 	{
 		private const int CAPACITY = 1000;
-		private static Hashtable symbolTable = new Hashtable(CAPACITY);
+        private static Dictionary<object, object> symbolTable = new Dictionary<object, object>(CAPACITY);
 
 		private string name;
 
@@ -71,10 +72,15 @@ namespace LSharp
 		/// </summary>
 		public static Symbol FromName(string name)
 		{
-			Symbol symbol = (Symbol)symbolTable[name];
-			if(symbol == null)
+            Symbol symbol;
+
+            if (symbolTable.ContainsKey(name)) 
+            {
+                symbol = (Symbol)symbolTable[name];
+            }
+			else
 			{
-				symbol = new Symbol(name);
+                symbol = new Symbol(name);
 				symbolTable.Add(name, symbol);
 			}
 			return symbol;

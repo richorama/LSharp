@@ -1,5 +1,7 @@
 LSHARP 2 TODO List
 
+BUG - How do you call static properties (LSharp.Console.optimize false) doesnt work
+Make a binary release available
 Write some documentation!
 Tutorial video
 Unbalanced parenthesis can lead the reader into stack overflow.

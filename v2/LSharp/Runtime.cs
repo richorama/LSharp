@@ -1604,6 +1604,42 @@ namespace LSharp
             return Compiler.Eval(Reader.Read(new StringReader(s)), globalEnvironment);
         }
 
+        public Object EvalStrings(string s)
+        {
+            return EvalReader(new StringReader(s), globalEnvironment);
+        }
+
+        public static Object EvalReader(TextReader textReader, Environment environment)
+        {
+            object i;
+            object o = null;
+
+            try
+            {
+                do
+                {
+                    i = Reader.Read(textReader);
+                    if (i != Reader.EOF)
+                    {
+                        
+                        if (i == EXIT)
+                            break;
+
+                        o = Compiler.Eval(i, environment);
+
+                    }
+                } while (i != Reader.EOF);
+            }
+            finally
+            {
+                textReader.Close();
+            }
+
+            
+            return o;
+        }
+        
+
         public Object Load(string filename)
         {
             return Load(filename, globalEnvironment);

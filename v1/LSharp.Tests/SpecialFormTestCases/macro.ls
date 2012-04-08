@@ -1,1 +1,0 @@
-(is (Typeof "Macro") (macro (x) (list x 1)))

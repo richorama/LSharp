@@ -1,1 +1,0 @@
-(is Closure (fn (x) x))

@@ -1,1 +1,0 @@
-(eql (symbol-name 'a) "a")

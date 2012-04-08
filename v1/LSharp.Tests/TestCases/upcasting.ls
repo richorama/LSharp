@@ -1,1 +1,0 @@
-(the Type (typeof string))

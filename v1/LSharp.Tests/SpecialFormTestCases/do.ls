@@ -1,4 +1,0 @@
-(do 
-	false
-	false
-	true)

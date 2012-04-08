@@ -1,2 +1,0 @@
-(reference "system.io")
-true

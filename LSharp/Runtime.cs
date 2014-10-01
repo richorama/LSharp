@@ -1658,13 +1658,10 @@ namespace LSharp
                     i = Reader.Read(textReader);
                     if (i != Reader.EOF)
                     {
-                        Console.Write(".");
-
                         if (i == EXIT)
                             break;
 
                         o = Compiler.Eval(i, environment);
-
                     }
                 } while (i != Reader.EOF);
             }

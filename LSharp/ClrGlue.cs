@@ -49,12 +49,12 @@ namespace LSharp
         {
             foreach (string s in namespaces)
             {
-                Type type = FindType(s + "." + typeName);
-
+                var type = string.IsNullOrEmpty(s) ? FindType(typeName) : FindType(s + "." + typeName);
                 if (type != null)
+                {
                     return type; // Found it !
+                }
             }
-
             return null;
         }
 

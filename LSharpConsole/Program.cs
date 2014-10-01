@@ -29,6 +29,8 @@
 #endregion
 
 using LSharp;
+using System;
+using System.Linq;
 
 namespace LSharpConsole
 {
@@ -58,8 +60,11 @@ namespace LSharpConsole
                 // we must escape it
                 filename = filename.Replace("\\", "\\\\");
 
-                runtime.Load(filename);
-
+                var output = runtime.Load(filename);
+                if (output is Function)
+                {
+                    (output as Function).Call(args.Skip(1).ToArray());
+                }
             }
         }
     }

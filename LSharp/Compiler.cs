@@ -146,7 +146,17 @@ namespace LSharp
         public static Func<Environment, Object> LinqCompile(Expression expression)
         {
             // If necessary, convert the expression to an object type.
-            if (expression.Type != typeof(object))
+            if (expression.Type == typeof(void))
+            {
+                // special case where expressions return void
+                Func<Environment, Object> func = (env) => 
+                {
+                    Expression.Lambda<Action<Environment>>(expression, environmentParameter).Compile().Invoke(env);
+                    return null;
+                };
+                return func;
+            }
+            else if (expression.Type != typeof(object))
                 expression = Expression.Convert(expression, typeof(object));
 
             // Wrap the expression in a lambda and compile into executable code
@@ -430,7 +440,7 @@ namespace LSharp
         public static Expression CompileFunctionCall(Object f, object args, Environment environment)
         {
             // Compile all the arguments so that they'll be evaluated
-            // before th function is called
+            // before the function is called
             Expression[] es = CompileArgs1(args, environment);
 
             Expression[] ees = new Expression[3];

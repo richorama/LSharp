@@ -32,6 +32,7 @@ using LSharp;
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace LSharpConsole
 {
@@ -44,6 +45,7 @@ namespace LSharpConsole
         /// [STAThread]
         static void Main(string[] args)
         {
+            LoadAssemblies();
 
             Runtime runtime = new Runtime(System.Console.In, System.Console.Out, System.Console.Error);
            
@@ -74,5 +76,30 @@ namespace LSharpConsole
                 }
             }
         }
+
+        static void LoadAssemblies()
+        {
+            foreach (var filename in Directory.EnumerateFiles(".", "*.*", SearchOption.AllDirectories))
+            {
+                if (string.Compare(Path.GetExtension(filename), ".exe",true) == 0 || string.Compare(Path.GetExtension(filename), ".dll",true) == 0)
+                {
+                    if (Path.GetFileName(filename) == "lsc.exe" || Path.GetFileName(filename) == "LSharp.dll") continue;
+
+                    try
+                    {
+                        Console.WriteLine("Loading {0}", filename);
+                        Assembly.LoadFrom(filename);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
+                }
+
+            }
+            
+            
+        }
+
     }
 }

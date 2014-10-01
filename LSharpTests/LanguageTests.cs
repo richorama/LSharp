@@ -175,7 +175,7 @@ namespace LSharpTests
         [Test]
         public void Isa()
         {
-            object actual = runtime.EvalString("(isa (fn (x) (+ x 1)) (typeof \"Lsharp.Function\"))");
+            object actual = runtime.EvalString("(isa (fn (x) (+ x 1)) (typeof \"LSharp.Function\"))");
             Assert.AreEqual(true, actual);
             actual = runtime.EvalString("(isa \"foo\" (typeof \"System.String\"))");
             Assert.AreEqual(true, actual);

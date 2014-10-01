@@ -30,6 +30,7 @@
 
 using LSharp;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace LSharpConsole
@@ -59,6 +60,12 @@ namespace LSharpConsole
                 // Windows uses backslash as directory separator, so
                 // we must escape it
                 filename = filename.Replace("\\", "\\\\");
+
+                // support scripts without extensions specified (like node.js and scriptcs)
+                if (string.IsNullOrWhiteSpace(Path.GetExtension(filename)))
+                {
+                    filename = Path.ChangeExtension(filename, ".ls");
+                }
 
                 var output = runtime.Load(filename);
                 if (output is Function)

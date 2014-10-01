@@ -81,19 +81,17 @@ namespace LSharpConsole
         {
             foreach (var filename in Directory.EnumerateFiles(".", "*.*", SearchOption.AllDirectories))
             {
-                if (string.Compare(Path.GetExtension(filename), ".exe",true) == 0 || string.Compare(Path.GetExtension(filename), ".dll",true) == 0)
-                {
-                    if (Path.GetFileName(filename) == "lsc.exe" || Path.GetFileName(filename) == "LSharp.dll") continue;
+                if (!(string.Compare(Path.GetExtension(filename), ".exe", true) == 0 || string.Compare(Path.GetExtension(filename), ".dll", true) == 0)) continue;
+                if (Path.GetFileName(filename) == "lsc.exe" || Path.GetFileName(filename) == "LSharp.dll") continue;
 
-                    try
-                    {
-                        Console.WriteLine("Loading {0}", filename);
-                        Assembly.LoadFrom(filename);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                    }
+                try
+                {
+                    Console.WriteLine("Loading {0}", filename);
+                    Assembly.LoadFrom(filename);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
                 }
 
             }

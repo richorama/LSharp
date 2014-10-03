@@ -1535,7 +1535,8 @@ namespace LSharp
                     stdout.Write("> ");
 
                     // Read
-                    object input = Reader.Read(stdin);
+                    var line = stdin.ReadLine();
+                    object input = Reader.Read(new StringReader(line));
 
                     if (input == EXIT)
                         break;

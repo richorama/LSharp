@@ -57,8 +57,10 @@ namespace LSharpConsole
             }
 
             Runtime runtime = new Runtime(System.Console.In, System.Console.Out, System.Console.Error);
-           
-            if (args.Length < 1)
+
+            var parsedArgs = args.Where(x => !x.StartsWith("--")).ToArray();
+
+            if (parsedArgs.Length < 1)
             {
                 // Interactive Read, Eval, Print Loop
                 runtime.Repl();
@@ -66,7 +68,7 @@ namespace LSharpConsole
             else
             {
                 // Batch mode
-                string filename = args[0];
+                string filename = parsedArgs[0];
 
                 // Windows uses backslash as directory separator, so
                 // we must escape it
@@ -81,7 +83,7 @@ namespace LSharpConsole
                 var output = runtime.Load(filename);
                 if (output is Function)
                 {
-                    (output as Function).Call(args.Skip(1).ToArray());
+                    (output as Function).Call(parsedArgs.Skip(1).ToArray());
                 }
             }
         }

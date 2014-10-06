@@ -45,7 +45,16 @@ namespace LSharpConsole
         /// [STAThread]
         static void Main(string[] args)
         {
-            LoadAssemblies();
+            if (args.Contains("--version"))
+            {
+                Console.WriteLine("L Sharp {0} on {1}", ClrGlue.LSharpVersion(), ClrGlue.EnvironmentVersion());
+                return;
+            }
+
+            if (args.Contains("--load"))
+            {
+                LoadAssemblies();
+            }
 
             Runtime runtime = new Runtime(System.Console.In, System.Console.Out, System.Console.Error);
            
